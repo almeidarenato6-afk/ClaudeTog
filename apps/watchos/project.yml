@@ -1,0 +1,48 @@
+# XcodeGen spec — run `xcodegen generate` in this directory to produce
+# VaiMarciaWatch.xcodeproj. A hand-authored .xcodeproj (a binary-plist-adjacent, extremely
+# fragile pbxproj format) cannot be reliably produced outside of Xcode itself, so this
+# declarative spec is the pragmatic source of truth instead. See README.md.
+name: VaiMarciaWatch
+options:
+  bundleIdPrefix: com.togplay.vaimarcia
+  deploymentTarget:
+    watchOS: "9.0"
+  xcodeVersion: "15.0"
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+
+targets:
+  VaiMarciaWatchApp:
+    type: application.watchapp2
+    platform: watchOS
+    deploymentTarget: "9.0"
+    sources:
+      - path: "VaiMarciaWatch Watch App"
+    info:
+      path: "VaiMarciaWatch Watch App/Info.plist"
+      properties:
+        UIBackgroundModes:
+          - audio
+        WKBackgroundModes:
+          - audio
+        NSBluetoothAlwaysUsageDescription: "Vai Márcia usa Bluetooth para tocar áudios direto na sua caixa de som ou avisar seu celular."
+        WKApplication: true
+        WKWatchKitApp: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.togplay.vaimarcia.watchkitapp
+        TARGETED_DEVICE_FAMILY: "4"
+        ENABLE_PREVIEWS: true
+    dependencies: []
+
+schemes:
+  VaiMarciaWatchApp:
+    build:
+      targets:
+        VaiMarciaWatchApp: all
+    run:
+      config: Debug

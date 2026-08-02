@@ -1,0 +1,15 @@
+{
+  "_comment": "Placeholder mirror of apps/garmin/resources/garmin_capability_table.json (canonical copy lives with the Garmin app per docs/DEVICE_DETECTION.md). Bundled here too so the phone app's first-run probe has an offline fallback before it ever talks to a paired Garmin device via Connect IQ Mobile SDK.",
+  "schemaVersion": 1,
+  "devices": [
+    {
+      "manufacturer": "Garmin",
+      "modelPattern": "*",
+      "hasBluetoothClassicAudio": false,
+      "hasBleAudioSupport": false,
+      "canPlayArbitraryLocalAudio": false,
+      "hasPersistentCompanionChannel": true,
+      "defaultStrategy": "relay"
+    }
+  ]
+}

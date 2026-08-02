@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Vai Márcia</string>
+    <string name="category_energia">🔥 Energia</string>
+    <string name="category_bora">💪 Bora</string>
+    <string name="category_palmas">👏 Palmas</string>
+    <string name="category_humor">😂 Humor</string>
+    <string name="category_favoritos">❤️ Favoritos</string>
+    <string name="setup_title">Vamos configurar seu equipamento</string>
+    <string name="setup_detecting_watch">Detectando relógio…</string>
+    <string name="setup_detecting_speaker">Detectando caixa Bluetooth…</string>
+    <string name="setup_done_direct">Prontinho! Seu relógio vai tocar direto na sua caixa.</string>
+    <string name="setup_done_relay">Prontinho! Seu relógio vai avisar seu celular, que toca na caixa.</string>
+</resources>

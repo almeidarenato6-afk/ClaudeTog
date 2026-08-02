@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iq:manifest xmlns:iq="http://www.garmin.com/xml/connectiq" version="3">
+    <iq:application
+        id="a1b2c3d4-e5f6-4a1b-8c3d-vaimarciagrm1"
+        type="watch-app"
+        name="@Strings.AppName"
+        entry="VaiMarciaApp"
+        launcherIcon="@Drawables.LauncherIcon"
+        minSdkVersion="4.2.0">
+
+        <!-- Communications: the RELAY command channel to the phone (Communications.transmit).
+             Garmin devices mostly cannot play arbitrary third-party audio (see README.md and
+             garmin_capability_table.json), so this app operates in RELAY mode by default. -->
+        <iq:permissions>
+            <iq:uses-permission id="Communications" />
+        </iq:permissions>
+
+        <!-- Realistic subset of Connect IQ-capable devices with Bluetooth + companion app
+             support. Expand via garmin_capability_table.json when adding a device. -->
+        <iq:products>
+            <iq:product id="fenix7" />
+            <iq:product id="fenix7s" />
+            <iq:product id="fenix7x" />
+            <iq:product id="fenix8" />
+            <iq:product id="venu2" />
+            <iq:product id="venu2s" />
+            <iq:product id="venu3" />
+            <iq:product id="forerunner955" />
+            <iq:product id="forerunner965" />
+            <iq:product id="vivoactive5" />
+            <iq:product id="epix2" />
+        </iq:products>
+
+        <iq:languages>
+            <iq:language>por</iq:language>
+            <iq:language>eng</iq:language>
+        </iq:languages>
+
+        <iq:barrels />
+    </iq:application>
+</iq:manifest>

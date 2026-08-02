@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <strings>
+        <string id="AppName">Vai Márcia</string>
+        <string id="CategoryEnergia">🔥 Energia</string>
+        <string id="CategoryBora">💪 Bora</string>
+        <string id="CategoryPalmas">👏 Palmas</string>
+        <string id="CategoryHumor">😂 Humor</string>
+        <string id="CategoryFavoritos">❤️ Favoritos</string>
+        <string id="SendingLabel">Enviando…</string>
+        <string id="SentLabel">Enviado!</string>
+        <string id="PhoneUnreachableLabel">Celular não conectado</string>
+        <string id="RelayModeHint">Toque para tocar no celular</string>
+    </strings>
+</resources>

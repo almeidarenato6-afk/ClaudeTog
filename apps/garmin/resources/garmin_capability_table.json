@@ -1,0 +1,118 @@
+{
+  "_comment": "Static per-model capability table referenced by docs/DEVICE_DETECTION.md step 2 (Garmin probe). The Connect IQ SDK does not expose runtime introspection for third-party audio playback capability, so this table is the source of truth and must be updated by hand when supporting a new device. Kept in JSON (not Monkey C) so it can be shared with backend/admin tooling and the mobile app's device-pairing feature without a Monkey C parser.",
+  "schemaVersion": 1,
+  "defaultStrategy": "RELAY",
+  "devices": [
+    {
+      "productId": "fenix7",
+      "displayName": "Garmin fēnix 7",
+      "hasBluetoothClassicAudio": false,
+      "hasBleAudioSupport": false,
+      "canPlayArbitraryLocalAudio": false,
+      "hasPersistentCompanionChannel": true,
+      "strategy": "RELAY",
+      "estimatedLatencyMs": 150
+    },
+    {
+      "productId": "fenix7s",
+      "displayName": "Garmin fēnix 7S",
+      "hasBluetoothClassicAudio": false,
+      "hasBleAudioSupport": false,
+      "canPlayArbitraryLocalAudio": false,
+      "hasPersistentCompanionChannel": true,
+      "strategy": "RELAY",
+      "estimatedLatencyMs": 150
+    },
+    {
+      "productId": "fenix7x",
+      "displayName": "Garmin fēnix 7X",
+      "hasBluetoothClassicAudio": false,
+      "hasBleAudioSupport": false,
+      "canPlayArbitraryLocalAudio": false,
+      "hasPersistentCompanionChannel": true,
+      "strategy": "RELAY",
+      "estimatedLatencyMs": 150
+    },
+    {
+      "productId": "fenix8",
+      "displayName": "Garmin fēnix 8",
+      "hasBluetoothClassicAudio": false,
+      "hasBleAudioSupport": false,
+      "canPlayArbitraryLocalAudio": false,
+      "hasPersistentCompanionChannel": true,
+      "strategy": "RELAY",
+      "estimatedLatencyMs": 140,
+      "notes": "fēnix 8 adds onboard speaker/mic for calls via LE Audio, but Connect IQ 3rd-party apps do not have an API to route arbitrary local audio files through it as of SDK 7.x; revisit if Garmin exposes Audio APIs to Monkey C."
+    },
+    {
+      "productId": "venu2",
+      "displayName": "Garmin Venu 2",
+      "hasBluetoothClassicAudio": false,
+      "hasBleAudioSupport": false,
+      "canPlayArbitraryLocalAudio": false,
+      "hasPersistentCompanionChannel": true,
+      "strategy": "RELAY",
+      "estimatedLatencyMs": 150
+    },
+    {
+      "productId": "venu2s",
+      "displayName": "Garmin Venu 2S",
+      "hasBluetoothClassicAudio": false,
+      "hasBleAudioSupport": false,
+      "canPlayArbitraryLocalAudio": false,
+      "hasPersistentCompanionChannel": true,
+      "strategy": "RELAY",
+      "estimatedLatencyMs": 150
+    },
+    {
+      "productId": "venu3",
+      "displayName": "Garmin Venu 3",
+      "hasBluetoothClassicAudio": false,
+      "hasBleAudioSupport": false,
+      "canPlayArbitraryLocalAudio": false,
+      "hasPersistentCompanionChannel": true,
+      "strategy": "RELAY",
+      "estimatedLatencyMs": 140
+    },
+    {
+      "productId": "forerunner955",
+      "displayName": "Garmin Forerunner 955",
+      "hasBluetoothClassicAudio": false,
+      "hasBleAudioSupport": false,
+      "canPlayArbitraryLocalAudio": false,
+      "hasPersistentCompanionChannel": true,
+      "strategy": "RELAY",
+      "estimatedLatencyMs": 150
+    },
+    {
+      "productId": "forerunner965",
+      "displayName": "Garmin Forerunner 965",
+      "hasBluetoothClassicAudio": false,
+      "hasBleAudioSupport": false,
+      "canPlayArbitraryLocalAudio": false,
+      "hasPersistentCompanionChannel": true,
+      "strategy": "RELAY",
+      "estimatedLatencyMs": 150
+    },
+    {
+      "productId": "vivoactive5",
+      "displayName": "Garmin vivoactive 5",
+      "hasBluetoothClassicAudio": false,
+      "hasBleAudioSupport": false,
+      "canPlayArbitraryLocalAudio": false,
+      "hasPersistentCompanionChannel": true,
+      "strategy": "RELAY",
+      "estimatedLatencyMs": 150
+    },
+    {
+      "productId": "epix2",
+      "displayName": "Garmin epix (Gen 2)",
+      "hasBluetoothClassicAudio": false,
+      "hasBleAudioSupport": false,
+      "canPlayArbitraryLocalAudio": false,
+      "hasPersistentCompanionChannel": true,
+      "strategy": "RELAY",
+      "estimatedLatencyMs": 150
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+name: wearos-ci
+
+on:
+  push:
+    branches: [main]
+    paths: ["apps/wearos/**"]
+  pull_request:
+    paths: ["apps/wearos/**"]
+
+defaults:
+  run:
+    working-directory: apps/wearos
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew || true
+      - run: ./gradlew lint test --no-daemon

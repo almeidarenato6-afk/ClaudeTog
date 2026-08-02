@@ -1,0 +1,85 @@
+name: vai_marcia
+description: >
+  Vai Márcia — TogPlay's Beach Tennis motivational audio soundboard.
+  One tap, instant motivational sound through a Bluetooth speaker,
+  either from the phone directly or relayed from a paired smartwatch.
+publish_to: "none"
+version: 0.1.0+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # State management / DI
+  flutter_riverpod: ^2.5.1
+  riverpod_annotation: ^2.3.5
+  get_it: ^7.7.0
+  injectable: ^2.4.2
+
+  # Navigation
+  go_router: ^14.2.0
+
+  # Audio
+  just_audio: ^0.9.40
+  audio_session: ^0.1.21
+  record: ^5.1.2
+
+  # Firebase
+  firebase_core: ^3.3.0
+  cloud_firestore: ^5.2.1
+  firebase_auth: ^5.1.4
+  firebase_storage: ^12.1.3
+  firebase_messaging: ^15.0.4
+  firebase_analytics: ^11.2.1
+
+  # Sign-in providers
+  google_sign_in: ^6.2.1
+  sign_in_with_apple: ^6.1.2
+
+  # Local persistence
+  drift: ^2.19.0
+  sqlite3_flutter_libs: ^0.5.24
+  shared_preferences: ^2.2.3
+  path_provider: ^2.1.3
+  path: ^1.9.0
+
+  # Platform / device
+  permission_handler: ^11.3.1
+  url_launcher: ^6.3.0
+  device_info_plus: ^10.1.2
+  flutter_local_notifications: ^17.2.2
+
+  # Models / codegen support
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+  equatable: ^2.0.5
+
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+  build_runner: ^2.4.11
+  freezed: ^2.5.7
+  json_serializable: ^6.8.0
+  injectable_generator: ^2.6.1
+  riverpod_generator: ^2.4.0
+  drift_dev: ^2.19.0
+
+  mocktail: ^1.0.3
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/audio/starter/
+    - assets/images/
+    - assets/icons/
+    - assets/data/garmin_capability_table.json
+    - assets/data/wearos_capability_table.json

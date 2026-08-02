@@ -1,0 +1,17 @@
+{
+  "name": "vai-marcia-seed",
+  "description": "One-off script to populate Firestore with starter categories/audios for Vai Márcia.",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "seed": "ts-node seed.ts"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.6.0"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4",
+    "@types/node": "^20.14.0"
+  }
+}

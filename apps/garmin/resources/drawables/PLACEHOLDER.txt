@@ -1,0 +1,16 @@
+No binary icon assets are included in this scaffold.
+
+Expected assets (to be supplied by design, then wired via a drawables.xml resource
+definition in this directory):
+  - launcher_icon.png  — 40x40 (and @2x/@3x variants per target device screen density)
+  - action_menu_icon.png — used in GameModeView's category menu items, ~30x30
+
+Once real PNGs are added, declare them in resources/drawables/drawables.xml, e.g.:
+
+  <resources>
+      <drawables>
+          <drawable id="LauncherIcon" filename="launcher_icon.png" />
+      </drawables>
+  </resources>
+
+and reference as @Drawables.LauncherIcon (already used in ../../manifest.xml).

@@ -1,0 +1,30 @@
+{
+  "_comment": "Static fallback table for Wear OS models where the companion app cannot introspect Bluetooth Classic capability at runtime (docs/DEVICE_DETECTION.md). Mirrors the compatibility table in ARCHITECTURE.md. This is a starter seed, not exhaustive — the canonical/expanding copy is maintained alongside apps/wearos.",
+  "schemaVersion": 1,
+  "devices": [
+    {
+      "manufacturer": "Samsung",
+      "modelPattern": "Galaxy Watch*",
+      "hasBluetoothClassicAudio": true,
+      "hasBleAudioSupport": false,
+      "canPlayArbitraryLocalAudio": true,
+      "defaultStrategy": "direct"
+    },
+    {
+      "manufacturer": "Google",
+      "modelPattern": "Pixel Watch*",
+      "hasBluetoothClassicAudio": true,
+      "hasBleAudioSupport": false,
+      "canPlayArbitraryLocalAudio": true,
+      "defaultStrategy": "direct"
+    },
+    {
+      "manufacturer": "generic",
+      "modelPattern": "*",
+      "hasBluetoothClassicAudio": false,
+      "hasBleAudioSupport": false,
+      "canPlayArbitraryLocalAudio": false,
+      "defaultStrategy": "relay"
+    }
+  ]
+}

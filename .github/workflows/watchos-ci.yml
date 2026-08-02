@@ -1,0 +1,29 @@
+name: watchos-ci
+
+on:
+  push:
+    branches: [main]
+    paths: ["apps/watchos/**"]
+  pull_request:
+    paths: ["apps/watchos/**"]
+
+defaults:
+  run:
+    working-directory: apps/watchos
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate Xcode project
+        run: xcodegen generate
+      - name: Build Watch App (no codesign)
+        run: |
+          xcodebuild -project "VaiMarciaWatch.xcodeproj" \
+            -scheme "VaiMarciaWatch Watch App" \
+            -sdk watchsimulator \
+            CODE_SIGNING_ALLOWED=NO \
+            build

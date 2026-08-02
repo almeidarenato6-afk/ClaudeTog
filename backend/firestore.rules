@@ -1,0 +1,110 @@
+rules_version = '2';
+
+// Vai Márcia (TogPlay) — Firestore security rules.
+//
+// Roles are carried exclusively as Firebase Auth custom claims (`role`), never mirrored
+// into the `users/{uid}` document — mirroring it would let an authenticated user grant
+// themselves admin by writing their own profile doc. Custom claims can only be set by
+// Cloud Functions using the Admin SDK (see functions/src/api/admin/auth.ts).
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(uid) {
+      return isSignedIn() && request.auth.uid == uid;
+    }
+
+    function hasRole(roles) {
+      return isSignedIn() && request.auth.token.role in roles;
+    }
+
+    function isContentManager() {
+      return hasRole(['admin', 'content_manager']);
+    }
+
+    function isAdmin() {
+      return hasRole(['admin']);
+    }
+
+    // ---------------------------------------------------------------------
+    // Catalog — public read, admin/content_manager write.
+    // ---------------------------------------------------------------------
+
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if isContentManager();
+    }
+
+    match /audios/{audioId} {
+      allow read: if true;
+      allow write: if isContentManager();
+    }
+
+    // ---------------------------------------------------------------------
+    // Users — every user owns exactly their own subtree.
+    // ---------------------------------------------------------------------
+
+    match /users/{uid} {
+      // Profile doc never carries `role`; clients cannot write that field into
+      // Firestore because it simply isn't part of this schema (see UserProfile type).
+      allow read, update: if isOwner(uid);
+      // Creation is normally done server-side by the onUserCreate auth trigger;
+      // this fallback lets the client create its own doc if the trigger hasn't
+      // landed yet (e.g. first read races the trigger).
+      allow create: if isOwner(uid);
+      allow delete: if false;
+
+      match /favorites/{audioId} {
+        // Direct client writes (see api/client/favorites.ts for the design rationale).
+        allow read, write: if isOwner(uid);
+      }
+
+      match /devices/{deviceId} {
+        // Written only via the registerDevice callable (Admin SDK bypasses rules)
+        // so device/analytics fields are always server-validated.
+        allow read: if isOwner(uid);
+        allow write: if false;
+      }
+
+      match /recordings/{recordingId} {
+        // Private by default — never exposed to any other user or the public catalog.
+        allow read, write: if isOwner(uid);
+      }
+    }
+
+    // ---------------------------------------------------------------------
+    // Analytics — write-only from Cloud Functions, never directly from clients.
+    // ---------------------------------------------------------------------
+
+    match /analytics_events/{eventId} {
+      allow read, write: if false;
+    }
+
+    match /analytics_daily/{date} {
+      // Aggregates power the admin dashboard; regular app users never read this.
+      allow read: if hasRole(['admin', 'content_manager', 'viewer']);
+      allow write: if false;
+    }
+
+    // ---------------------------------------------------------------------
+    // Promotions — public read (store banners), admin-only write.
+    // ---------------------------------------------------------------------
+
+    match /promotions/{promotionId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ---------------------------------------------------------------------
+    // Notification send log — admin panel history only.
+    // ---------------------------------------------------------------------
+
+    match /notifications_log/{notificationId} {
+      allow read: if hasRole(['admin', 'content_manager', 'viewer']);
+      allow write: if false;
+    }
+  }
+}

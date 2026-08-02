@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDisplayName</key>
+    <string>Vai Márcia</string>
+    <key>CFBundleShortVersionString</key>
+    <string>0.1.0</string>
+    <key>CFBundleVersion</key>
+    <string>1</string>
+
+    <!-- Background audio mode: lets a clip finish playing (Scenario A, AVAudioPlayer)
+         even if the screen locks mid-tap during a match. -->
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>audio</string>
+    </array>
+    <key>WKBackgroundModes</key>
+    <array>
+        <string>audio</string>
+    </array>
+
+    <!-- Recording happens on the phone, not the watch, so NSMicrophoneUsageDescription is
+         intentionally not declared here. -->
+    <key>NSBluetoothAlwaysUsageDescription</key>
+    <string>Vai Márcia usa Bluetooth para tocar áudios direto na sua caixa de som ou avisar seu celular.</string>
+
+    <key>WKApplication</key>
+    <true/>
+    <key>WKWatchKitApp</key>
+    <true/>
+    <key>UISupportedInterfaceOrientations</key>
+    <array>
+        <string>UIInterfaceOrientationPortrait</string>
+    </array>
+</dict>
+</plist>

@@ -1,0 +1,11 @@
+[
+  { "slug": "motivacao", "name": "Motivação", "order": 0, "icon": "flame", "color": "#FF6B00" },
+  { "slug": "energia", "name": "Energia", "order": 1, "icon": "bolt", "color": "#FFD400" },
+  { "slug": "incentivo", "name": "Incentivo", "order": 2, "icon": "thumbs-up", "color": "#2ECC71" },
+  { "slug": "comemoracao", "name": "Comemoração", "order": 3, "icon": "trophy", "color": "#F1C40F" },
+  { "slug": "recuperacao", "name": "Recuperação", "order": 4, "icon": "heart-pulse", "color": "#E74C3C" },
+  { "slug": "concentracao", "name": "Concentração", "order": 5, "icon": "target", "color": "#3498DB" },
+  { "slug": "humor", "name": "Humor", "order": 6, "icon": "laugh", "color": "#9B59B6" },
+  { "slug": "treinador", "name": "Treinador", "order": 7, "icon": "whistle", "color": "#1ABC9C" },
+  { "slug": "parceiro", "name": "Parceiro", "order": 8, "icon": "handshake", "color": "#E67E22" }
+]

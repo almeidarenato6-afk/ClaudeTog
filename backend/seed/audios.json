@@ -1,0 +1,152 @@
+[
+  {
+    "categorySlug": "motivacao",
+    "title": "Vai Márcia!",
+    "phrase": "Vai, Márcia! Bora pra cima!",
+    "fileName": "vai-marcia.m4a",
+    "durationMs": 1800,
+    "order": 0,
+    "tags": ["classico", "motivacao"],
+    "isFeatured": true
+  },
+  {
+    "categorySlug": "motivacao",
+    "title": "Acredita!",
+    "phrase": "Acredita, time! A gente consegue!",
+    "fileName": "acredita.m4a",
+    "durationMs": 2100,
+    "order": 1,
+    "tags": ["motivacao"],
+    "isFeatured": true
+  },
+  {
+    "categorySlug": "energia",
+    "title": "Bora!",
+    "phrase": "Bora, bora, bora! Não para agora!",
+    "fileName": "bora.m4a",
+    "durationMs": 1600,
+    "order": 0,
+    "tags": ["energia", "ritmo"],
+    "isFeatured": true
+  },
+  {
+    "categorySlug": "energia",
+    "title": "Agora é nossa!",
+    "phrase": "Agora é nossa! Vamos com tudo!",
+    "fileName": "agora-e-nossa.m4a",
+    "durationMs": 1900,
+    "order": 1,
+    "tags": ["energia", "virada"],
+    "isFeatured": false
+  },
+  {
+    "categorySlug": "recuperacao",
+    "title": "Levanta a cabeça!",
+    "phrase": "Levanta a cabeça! Próximo ponto é nosso!",
+    "fileName": "levanta-a-cabeca.m4a",
+    "durationMs": 2300,
+    "order": 0,
+    "tags": ["recuperacao", "apoio"],
+    "isFeatured": true
+  },
+  {
+    "categorySlug": "recuperacao",
+    "title": "Ainda dá!",
+    "phrase": "Ainda dá tempo! Vamos buscar!",
+    "fileName": "ainda-da.m4a",
+    "durationMs": 1700,
+    "order": 1,
+    "tags": ["recuperacao"],
+    "isFeatured": false
+  },
+  {
+    "categorySlug": "incentivo",
+    "title": "Vamos buscar!",
+    "phrase": "Vamos buscar esse ponto, confia!",
+    "fileName": "vamos-buscar.m4a",
+    "durationMs": 1900,
+    "order": 0,
+    "tags": ["incentivo"],
+    "isFeatured": false
+  },
+  {
+    "categorySlug": "incentivo",
+    "title": "Isso aí!",
+    "phrase": "Isso aí! Continua assim!",
+    "fileName": "isso-ai.m4a",
+    "durationMs": 1500,
+    "order": 1,
+    "tags": ["incentivo"],
+    "isFeatured": false
+  },
+  {
+    "categorySlug": "comemoracao",
+    "title": "Mandou bem!",
+    "phrase": "Mandou muito bem! Ponto nosso!",
+    "fileName": "mandou-bem.m4a",
+    "durationMs": 1800,
+    "order": 0,
+    "tags": ["comemoracao"],
+    "isFeatured": true
+  },
+  {
+    "categorySlug": "comemoracao",
+    "title": "Que ponto!",
+    "phrase": "Que pontaço! Sensacional!",
+    "fileName": "que-ponto.m4a",
+    "durationMs": 1700,
+    "order": 1,
+    "tags": ["comemoracao"],
+    "isFeatured": false
+  },
+  {
+    "categorySlug": "concentracao",
+    "title": "Foco total!",
+    "phrase": "Foco total, respira e joga!",
+    "fileName": "foco-total.m4a",
+    "durationMs": 2000,
+    "order": 0,
+    "tags": ["concentracao"],
+    "isFeatured": false
+  },
+  {
+    "categorySlug": "concentracao",
+    "title": "Olho na bola!",
+    "phrase": "Olho na bola! Concentração até o fim!",
+    "fileName": "olho-na-bola.m4a",
+    "durationMs": 2200,
+    "order": 1,
+    "tags": ["concentracao"],
+    "isFeatured": false
+  },
+  {
+    "categorySlug": "humor",
+    "title": "Rebate essa!",
+    "phrase": "Rebate essa, se for capaz, hein!",
+    "fileName": "rebate-essa.m4a",
+    "durationMs": 2100,
+    "order": 0,
+    "tags": ["humor", "provocacao"],
+    "isFeatured": false
+  },
+  {
+    "categorySlug": "treinador",
+    "title": "Isso, exatamente isso!",
+    "phrase": "Isso, exatamente isso! Repete a jogada!",
+    "fileName": "exatamente-isso.m4a",
+    "durationMs": 2400,
+    "order": 0,
+    "tags": ["treinador", "tatica"],
+    "isFeatured": false
+  },
+  {
+    "categorySlug": "parceiro",
+    "title": "Confio em você!",
+    "phrase": "Confio em você, parceiro! Vai que é nossa!",
+    "fileName": "confio-em-voce.m4a",
+    "durationMs": 2300,
+    "order": 0,
+    "tags": ["parceiro", "dupla"],
+    "isFeatured": true
+  }
+]

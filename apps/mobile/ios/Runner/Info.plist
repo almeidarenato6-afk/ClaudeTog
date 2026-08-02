@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>pt_BR</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>br.com.togplay.vaimarcia</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>Vai Márcia</string>
+	<key>CFBundleDisplayName</key>
+	<string>Vai Márcia</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+
+	<!-- Bluetooth: needed to enumerate/route to the paired A2DP speaker
+	     and (future) advertise to the watch. See
+	     ios/Runner/BluetoothTransportPlugin.swift TODOs. -->
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>O Vai Márcia usa Bluetooth para tocar os áudios na sua caixa de som.</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>O Vai Márcia usa Bluetooth para tocar os áudios na sua caixa de som.</string>
+
+	<key>NSMicrophoneUsageDescription</key>
+	<string>O Vai Márcia usa o microfone para gravar seus próprios áudios motivacionais.</string>
+
+	<!-- Background audio: keeps the AVAudioSession / Bluetooth route
+	     active while backgrounded, and lets WatchConnectivity deliver
+	     `playAudio` commands from the watch (Cenário B) even when the
+	     app isn't foregrounded — ARCHITECTURE.md §4. -->
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>remote-notification</string>
+	</array>
+
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>vaimarcia</string>
+			</array>
+		</dict>
+	</array>
+
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+</dict>
+</plist>

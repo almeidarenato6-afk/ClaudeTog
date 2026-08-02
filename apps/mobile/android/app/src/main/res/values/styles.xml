@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Minimal placeholder styles so AndroidManifest.xml's theme
+         references resolve. `flutter create .` regenerates the full
+         drawable/style set (including dark-mode launch background) — see
+         android/README.md. -->
+    <style name="LaunchTheme" parent="@android:style/Theme.Black.NoTitleBar">
+        <item name="android:windowBackground">@drawable/launch_background</item>
+    </style>
+    <style name="NormalTheme" parent="@android:style/Theme.Black.NoTitleBar" />
+</resources>
