@@ -23,6 +23,8 @@ claudetog/
 ├── admin/              # Painel administrativo web (React + TypeScript)
 ├── docs/                # Arquitetura, roadmap, backlog, banco de dados, APIs, publicação
 ├── store-assets/        # Metadados, ícones, política de privacidade, termos de uso
+├── tools/
+│   └── racket-image-agent/  # Agente de coleta/organização de fotos de raquetes (Google Drive/Sheets)
 └── .github/workflows/   # CI/CD
 ```
 
