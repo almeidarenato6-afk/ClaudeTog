@@ -1,0 +1,23 @@
+{
+  "_comment": "Dominio oficial do fabricante por marca, usado como fonte 3 (apos prospin e Merak Beach Tennis). Todos os valores comecam como 'null' (placeholder) - preencha somente com a URL oficial confirmada da marca. Nao inventamos dominios aqui. Marcas com valor null sao puladas (log informativo, nao e erro).",
+
+  "NOX": null,
+  "Heroe's": null,
+  "Drop Shot": null,
+  "AMA": null,
+  "Adidas": null,
+  "Bullpadel": null,
+  "Head": null,
+  "Wilson": null,
+  "Babolat": null,
+  "Shark": null,
+  "Mormaii": null,
+  "Quicksand": null,
+  "Black Crown": null,
+  "LOK": null,
+  "Vision": null,
+  "Joma": null,
+  "Kona": null,
+  "TotalFun": null,
+  "Sexy Brand": null
+}

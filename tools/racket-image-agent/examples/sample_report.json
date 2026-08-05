@@ -1,0 +1,136 @@
+{
+  "execution_id": "52f12fd2-1ee4-4ba5-8474-98fc6e5b0e21",
+  "started_at": "2026-08-05T11:03:36.818753+00:00",
+  "finished_at": "2026-08-05T11:03:38.589676+00:00",
+  "dry_run": false,
+  "sheet_sources": [],
+  "products": [
+    {
+      "official_name": "NOX AT10 Genius 2024",
+      "status": "CONCLUIDO",
+      "folder_id": "folder10",
+      "folder_created": true,
+      "images_saved": [
+        "1 - NOX AT10 Genius 2024.jpg",
+        "2 - NOX AT10 Genius 2024.jpg",
+        "3 - NOX AT10 Genius 2024.jpg",
+        "4 - NOX AT10 Genius 2024.jpg",
+        "5 - NOX AT10 Genius 2024.jpg"
+      ],
+      "source_urls": [
+        "https://www.prospin.com.br/nox-at10-genius"
+      ],
+      "pendencies": [],
+      "errors": [],
+      "resolutions": {
+        "1 - NOX AT10 Genius 2024.jpg": "1600x1600",
+        "2 - NOX AT10 Genius 2024.jpg": "1600x1600",
+        "3 - NOX AT10 Genius 2024.jpg": "1600x1600",
+        "4 - NOX AT10 Genius 2024.jpg": "1600x1600",
+        "5 - NOX AT10 Genius 2024.jpg": "1600x1600"
+      },
+      "hashes": {
+        "1 - NOX AT10 Genius 2024.jpg": {
+          "sha256": "6fb9cba68c215c41242611d689d07520b723747aea985e0703df99fbc5a2acef",
+          "phash": "ef260874e92745aa"
+        },
+        "2 - NOX AT10 Genius 2024.jpg": {
+          "sha256": "a503fca3a264181379bfd74e25912421bc58883856fac692ec2ee54e65d6f59b",
+          "phash": "39eb2af2a5b99653"
+        },
+        "3 - NOX AT10 Genius 2024.jpg": {
+          "sha256": "d73276e17d34435227d6f112ac0e38d591bafb398340f14a7631b1e2e3de840d",
+          "phash": "e61de79936659fe1"
+        },
+        "4 - NOX AT10 Genius 2024.jpg": {
+          "sha256": "abd064d50352cc8e503892187f7d1e76b6a11bf59fbe054c30e172a7257a7499",
+          "phash": "2fac7e10e0b53bb6"
+        },
+        "5 - NOX AT10 Genius 2024.jpg": {
+          "sha256": "d139abd015d580bc2a2e8cfb0f8da3eae6c5b14c2b9b5630f225e60f9ee14b04",
+          "phash": "47448cef36878cdb"
+        }
+      }
+    },
+    {
+      "official_name": "Bullpadel Vertex 04 2024",
+      "status": "PARCIAL",
+      "folder_id": "folder1",
+      "folder_created": false,
+      "images_saved": [
+        "2 - Bullpadel Vertex 04 2024.jpg"
+      ],
+      "source_urls": [
+        "https://www.prospin.com.br/bullpadel-vertex-04"
+      ],
+      "pendencies": [
+        "Nenhuma imagem de bag/estojo confirmada disponivel para a Foto 5.",
+        "Foto1 (capa) nao encontrada com confianca suficiente.",
+        "Foto3 (detalhe) nao encontrada com confianca suficiente.",
+        "Foto4 (complementar) nao encontrada com confianca suficiente."
+      ],
+      "errors": [],
+      "resolutions": {
+        "2 - Bullpadel Vertex 04 2024.jpg": "1600x1600"
+      },
+      "hashes": {
+        "2 - Bullpadel Vertex 04 2024.jpg": {
+          "sha256": "3a79041631fb958e1c3e81c19bc79c10f302257b36942e6964ccb57928659296",
+          "phash": "35e3bc83ae3effc5"
+        }
+      }
+    },
+    {
+      "official_name": "Head Speed Pro 2024",
+      "status": "REVISAO",
+      "folder_id": null,
+      "folder_created": false,
+      "images_saved": [],
+      "source_urls": [
+        "https://exemplo-generico.com/pagina-generica"
+      ],
+      "pendencies": [
+        "REVISAO: confianca 0.05 abaixo do limiar para https://exemplo-generico.com/foto-generica.jpg",
+        "Nenhuma imagem de bag/estojo confirmada disponivel para a Foto 5.",
+        "Foto1 (capa) nao encontrada com confianca suficiente.",
+        "Foto2 (verso/angulo) nao encontrada com confianca suficiente.",
+        "Foto3 (detalhe) nao encontrada com confianca suficiente.",
+        "Foto4 (complementar) nao encontrada com confianca suficiente."
+      ],
+      "errors": [],
+      "resolutions": {},
+      "hashes": {}
+    },
+    {
+      "official_name": "Wilson Team 2.0",
+      "status": "NAO_ENCONTRADO",
+      "folder_id": null,
+      "folder_created": false,
+      "images_saved": [],
+      "source_urls": [],
+      "pendencies": [
+        "Nenhuma imagem de bag/estojo confirmada disponivel para a Foto 5.",
+        "Foto1 (capa) nao encontrada com confianca suficiente.",
+        "Foto2 (verso/angulo) nao encontrada com confianca suficiente.",
+        "Foto3 (detalhe) nao encontrada com confianca suficiente.",
+        "Foto4 (complementar) nao encontrada com confianca suficiente."
+      ],
+      "errors": [],
+      "resolutions": {},
+      "hashes": {}
+    },
+    {
+      "official_name": "Adidas Metalbone 2024",
+      "status": "IGNORADO",
+      "folder_id": "folder4",
+      "folder_created": false,
+      "images_saved": [],
+      "source_urls": [],
+      "pendencies": [],
+      "errors": [],
+      "resolutions": {},
+      "hashes": {}
+    }
+  ],
+  "errors": []
+}
