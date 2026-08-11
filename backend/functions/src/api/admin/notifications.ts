@@ -20,9 +20,9 @@ const sendNotificationSchema = z.object({
 });
 
 /**
- * Broadcasts a push notification (new audio, promotion, new category) via FCM.
- * Every device subscribes to `config.fcmDefaultTopic` on registration, so
- * `{type: "topic", topic: config.fcmDefaultTopic}` is the "everyone" case.
+ * Transmite uma notificação push (novo áudio, promoção, nova categoria) via FCM.
+ * Todo dispositivo se inscreve em `config.fcmDefaultTopic` no registro, então
+ * `{type: "topic", topic: config.fcmDefaultTopic}` é o caso "todo mundo".
  */
 export const sendNotification = onCall({ region: REGION }, async (request) => {
   const uid = requireAdmin(request);
@@ -49,6 +49,6 @@ export const sendNotification = onCall({ region: REGION }, async (request) => {
   return record;
 });
 
-// Re-exported so callers/tests can reference the default broadcast topic name
-// without importing config directly.
+// Reexportado para que chamadores/testes possam referenciar o nome do tópico
+// de transmissão padrão sem importar config diretamente.
 export const DEFAULT_BROADCAST_TOPIC = config.fcmDefaultTopic;

@@ -1,23 +1,26 @@
 import 'package:vai_marcia/core/error/result.dart';
 import 'package:vai_marcia/features/watch_companion/domain/entities/watch_command.dart';
 
-/// Abstraction over the phone <-> watch companion channel.
+/// Abstração sobre o canal companion telefone <-> smartwatch.
 ///
-/// Native counterparts (NOT implementable purely in Dart):
-/// - Android: Wear OS Data Layer API (`MessageClient`/`CapabilityClient`) —
-///   see android/app/src/main/kotlin TODO stub.
-/// - iOS: `WatchConnectivity` (`WCSession`) — see ios/Runner TODO stub.
+/// Contrapartes nativas (NÃO implementáveis apenas em Dart):
+/// - Android: Data Layer API do Wear OS
+///   (`MessageClient`/`CapabilityClient`) — veja o stub TODO em
+///   android/app/src/main/kotlin.
+/// - iOS: `WatchConnectivity` (`WCSession`) — veja o stub TODO em
+///   ios/Runner.
 ///
-/// Per ARCHITECTURE.md §4, the underlying session must be kept persistently
-/// alive (never reconnected per command) — that lifecycle lives entirely
-/// on the native side; this Dart interface only exposes the resulting
-/// command stream and a send method.
+/// Conforme ARCHITECTURE.md §4, a sessão subjacente precisa ser mantida
+/// viva de forma persistente (nunca reconectada por comando) — esse
+/// ciclo de vida fica inteiramente do lado nativo; esta interface Dart
+/// apenas expõe o stream de comandos resultante e um método de envio.
 abstract interface class WatchCompanionChannel {
   Future<Result<bool>> isWatchPaired();
 
   Future<Result<bool>> isCompanionAppInstalled();
 
-  /// Commands arriving from the watch — primarily `playAudio` in Cenário B.
+  /// Comandos vindos do smartwatch — principalmente `playAudio` no
+  /// Cenário B.
   Stream<WatchCommand> watchIncomingCommands();
 
   Future<Result<void>> sendCommand(WatchCommand command);

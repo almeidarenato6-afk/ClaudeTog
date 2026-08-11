@@ -13,11 +13,13 @@ private enum MessageType {
     static let catalogSync = "catalog_sync"
 }
 
-/// Wraps `WCSession` — the companion channel used both for Scenario B command relay and for
-/// first-run pairing / catalog sync metadata in Scenario A.
+/// Envolve o `WCSession` — o canal companion usado tanto para o relay de comandos do
+/// Cenário B quanto para o pareamento de primeira execução / metadados de sincronização de
+/// catálogo no Cenário A.
 ///
-/// The session is activated once at app launch and kept alive for the process lifetime
-/// (docs/ARCHITECTURE.md §4 — persistent companion channel avoids per-tap handshake cost).
+/// A sessão é ativada uma única vez na inicialização do app e mantida viva durante todo o
+/// ciclo de vida do processo (docs/ARCHITECTURE.md §4 — o canal companion persistente evita
+/// o custo de handshake a cada toque).
 final class WatchConnectivityManager: NSObject {
     static let shared = WatchConnectivityManager()
 
@@ -31,12 +33,13 @@ final class WatchConnectivityManager: NSObject {
 
     var isReachable: Bool { session?.isReachable ?? false }
 
-    /// Scenario B critical path: sends only the audioId (a few bytes), never the audio
-    /// itself — the phone already has the file cached locally.
+    /// Caminho crítico do Cenário B: envia apenas o audioId (poucos bytes), nunca o áudio
+    /// em si — o celular já tem o arquivo em cache localmente.
     ///
-    /// Uses `sendMessage` (requires reachability) for the low-latency happy path, falling
-    /// back to `transferUserInfo` (queued, delivered when the phone reconnects) so a tap
-    /// taken while the phone is briefly unreachable is not silently dropped.
+    /// Usa `sendMessage` (requer alcançabilidade) para o caminho feliz de baixa latência,
+    /// recorrendo a `transferUserInfo` (enfileirado, entregue quando o celular reconectar)
+    /// para que um toque feito enquanto o celular está momentaneamente inalcançável não seja
+    /// descartado silenciosamente.
     func sendPlayCommand(audioId: String, completion: @escaping (Bool) -> Void) {
         guard let session, session.activationState == .activated else {
             completion(false)
@@ -48,7 +51,7 @@ final class WatchConnectivityManager: NSObject {
         if session.isReachable {
             session.sendMessage(payload, replyHandler: { _ in completion(true) }, errorHandler: { _ in
                 session.transferUserInfo(payload)
-                completion(true) // queued for delivery; not a hard failure from the UI's perspective
+                completion(true) // enfileirado para entrega; não é uma falha definitiva do ponto de vista da UI
             })
         } else {
             session.transferUserInfo(payload)
@@ -56,7 +59,7 @@ final class WatchConnectivityManager: NSObject {
         }
     }
 
-    /// docs/DEVICE_DETECTION.md step 2 — GET_CAPABILITIES probe, response expected < 200ms.
+    /// docs/DEVICE_DETECTION.md passo 2 — sondagem GET_CAPABILITIES, resposta esperada < 200ms.
     func requestPhoneCapabilities(completion: @escaping (DeviceCapabilityProfile?) -> Void) {
         guard let session, session.isReachable else {
             completion(nil)
@@ -80,7 +83,7 @@ final class WatchConnectivityManager: NSObject {
 
 extension WatchConnectivityManager: WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
-        // No-op: reachability/activation state is read on-demand via `isReachable`.
+        // Sem operação: o estado de alcançabilidade/ativação é lido sob demanda via `isReachable`.
     }
 
     func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {

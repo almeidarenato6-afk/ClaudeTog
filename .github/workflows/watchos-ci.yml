@@ -16,11 +16,11 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Install XcodeGen
+      - name: Instalar XcodeGen
         run: brew install xcodegen
-      - name: Generate Xcode project
+      - name: Gerar projeto Xcode
         run: xcodegen generate
-      - name: Build Watch App (no codesign)
+      - name: Compilar Watch App (sem assinatura de código)
         run: |
           xcodebuild -project "VaiMarciaWatch.xcodeproj" \
             -scheme "VaiMarciaWatch Watch App" \

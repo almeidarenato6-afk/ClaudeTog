@@ -14,7 +14,7 @@ class VaiMarciaApp extends Application.AppBase {
     function onStop(state as Dictionary?) as Void {
     }
 
-    // Returns the initial view for the app — the "Modo Jogo" big-button-equivalent grid.
+    // Retorna a view inicial do app — a grade equivalente a botões grandes do "Modo Jogo".
     function getInitialView() as [Views] or [Views, InputDelegates] {
         var view = new GameModeView();
         var delegate = new GameModeDelegate(view);

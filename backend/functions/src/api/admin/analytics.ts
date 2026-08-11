@@ -10,7 +10,7 @@ const listAnalyticsSummarySchema = z.object({
   days: z.number().int().min(1).max(90).default(7),
 });
 
-/** Read-only for `viewer` too — dashboards shouldn't require write access. */
+/** Também somente leitura para `viewer` — dashboards não deveriam exigir acesso de escrita. */
 export const listAnalyticsSummary = onCall({ region: REGION }, async (request) => {
   requireRole(request, ["admin", "content_manager", "viewer"]);
 

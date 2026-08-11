@@ -1,10 +1,10 @@
 import AVFoundation
 import Foundation
 
-/// Scenario A: plays a locally cached clip directly through `AVAudioPlayer`, routed by the
-/// OS to whatever Bluetooth Classic / LE Audio output is currently connected to the watch.
-/// A single long-lived `AVAudioSession` category is configured once (docs/ARCHITECTURE.md
-/// §4 — avoids per-tap session negotiation cost).
+/// Cenário A: reproduz um clipe em cache localmente direto pelo `AVAudioPlayer`, roteado pelo
+/// SO para qualquer saída Bluetooth Classic / LE Audio atualmente conectada ao relógio.
+/// Uma única categoria de longa duração do `AVAudioSession` é configurada uma vez
+/// (docs/ARCHITECTURE.md §4 — evita o custo de negociação de sessão a cada toque).
 final class DirectPlaybackEngine: PlaybackEngine {
     private var player: AVAudioPlayer?
     private let session = AVAudioSession.sharedInstance()
@@ -32,8 +32,8 @@ final class DirectPlaybackEngine: PlaybackEngine {
             }
 
             do {
-                // Interrupts whatever is currently playing — one motivational clip at a
-                // time, never queued, to keep taps feeling instantaneous.
+                // Interrompe o que estiver tocando no momento — um clipe motivacional por
+                // vez, nunca enfileirado, para manter a sensação de resposta instantânea aos toques.
                 player?.stop()
                 let newPlayer = try AVAudioPlayer(contentsOf: fileURL)
                 newPlayer.prepareToPlay()

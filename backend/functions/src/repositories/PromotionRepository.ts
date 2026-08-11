@@ -19,8 +19,8 @@ export class PromotionRepository {
       .where("startAt", "<=", now)
       .orderBy("startAt", "desc")
       .get();
-    // endAt filtered in-memory to avoid a second inequality field (Firestore
-    // only allows range filters on one field per query).
+    // endAt filtrado em memória para evitar um segundo campo de desigualdade
+    // (o Firestore só permite filtros de intervalo em um campo por consulta).
     return snap.docs
       .map((d) => d.data() as Promotion)
       .filter((p) => p.endAt.toMillis() >= now.toMillis());

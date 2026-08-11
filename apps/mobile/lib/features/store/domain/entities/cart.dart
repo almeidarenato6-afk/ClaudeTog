@@ -13,8 +13,9 @@ class CartItem extends Equatable {
   List<Object?> get props => <Object?>[product, quantity];
 }
 
-/// Modeled, not implemented — see [Product] doc. No checkout flow exists
-/// today; `store` only deep-links to the external Loja TogPlay site.
+/// Modelado, mas não implementado — veja a documentação de [Product].
+/// Nenhum fluxo de checkout existe hoje; `store` apenas faz deep-link
+/// para o site externo da Loja TogPlay.
 class Cart extends Equatable {
   const Cart({this.items = const <CartItem>[]});
 

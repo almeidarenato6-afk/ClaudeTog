@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Placeholder TogPlay brand colors — coral/orange + navy (see presentation/theme/Theme.kt) -->
+    <!-- Cores provisórias da marca TogPlay — coral/laranja + azul-marinho (ver presentation/theme/Theme.kt) -->
     <color name="ic_launcher_background">#17213A</color>
     <color name="togplay_coral">#FF6B4A</color>
     <color name="togplay_navy">#17213A</color>

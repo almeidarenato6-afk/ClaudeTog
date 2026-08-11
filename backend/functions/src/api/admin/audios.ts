@@ -71,7 +71,7 @@ export const updateAudio = onCall({ region: REGION }, async (request) => {
 
   await audioRepository.update(audioId, patch);
 
-  // Keep denormalized category counts correct when an audio moves categories.
+  // Mantém as contagens desnormalizadas de categoria corretas quando um áudio muda de categoria.
   if (patch.categoryId && patch.categoryId !== existing.categoryId) {
     await categoryRepository.incrementAudioCount(existing.categoryId, -1);
     await categoryRepository.incrementAudioCount(patch.categoryId, 1);
@@ -82,7 +82,7 @@ export const updateAudio = onCall({ region: REGION }, async (request) => {
 
 const deleteAudioSchema = z.object({ audioId: z.string().min(1) });
 
-/** Soft-delete only — catalog audio is never hard-deleted (see AudioClip.isActive). */
+/** Apenas soft-delete — áudio do catálogo nunca é excluído de forma definitiva (veja AudioClip.isActive). */
 export const deleteAudio = onCall({ region: REGION }, async (request) => {
   requireContentManager(request);
 

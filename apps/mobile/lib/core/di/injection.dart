@@ -12,20 +12,21 @@ import 'injection.config.dart';
 
 final GetIt getIt = GetIt.instance;
 
-/// `@InjectableInit` generates [_configureDependencies] in
-/// `injection.config.dart` (via `build_runner`) by scanning every
-/// `@injectable`/`@lazySingleton`/`@LazySingleton(as: ...)` annotation in
-/// the project — see individual datasource/repository files.
+/// `@InjectableInit` gera [_configureDependencies] em
+/// `injection.config.dart` (via `build_runner`) escaneando cada anotação
+/// `@injectable`/`@lazySingleton`/`@LazySingleton(as: ...)` do projeto —
+/// veja os arquivos individuais de datasource/repository.
 @InjectableInit(
   initializerName: r'$initGetIt',
   preferRelativeImports: true,
   asExtension: false,
 )
 Future<void> configureDependencies() async {
-  // Third-party singletons that `injectable` can't construct on its own
-  // (they need Firebase.initializeApp() to have already run, or take no
-  // meaningful constructor args) are registered by hand, before the
-  // generated `$initGetIt(getIt)` wires everything that depends on them.
+  // Singletons de terceiros que o `injectable` não consegue construir
+  // sozinho (precisam que Firebase.initializeApp() já tenha rodado, ou não
+  // recebem argumentos de construtor relevantes) são registrados
+  // manualmente, antes que o `$initGetIt(getIt)` gerado conecte tudo que
+  // depende deles.
   getIt
     ..registerLazySingleton<FirebaseFirestore>(() => FirebaseFirestore.instance)
     ..registerLazySingleton<FirebaseAuth>(() => FirebaseAuth.instance)

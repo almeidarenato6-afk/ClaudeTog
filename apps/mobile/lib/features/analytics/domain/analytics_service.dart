@@ -1,6 +1,6 @@
-/// Abstract analytics contract. Domain-safe (no Firebase import) so use
-/// cases/controllers across features can log events without depending on
-/// `firebase_analytics` directly.
+/// Contrato abstrato de analytics. Seguro para o domínio (sem import do
+/// Firebase) para que use cases/controllers de diversas features possam
+/// registrar eventos sem depender diretamente de `firebase_analytics`.
 abstract interface class AnalyticsService {
   Future<void> logAudioPlayed({required String clipId, required String strategy});
 
@@ -10,9 +10,10 @@ abstract interface class AnalyticsService {
 
   Future<void> logSessionEnd({required Duration sessionDuration});
 
-  /// Captures device context useful for support/analytics: watch model
-  /// (when applicable), phone model, paired speaker brand (when known),
-  /// and which [PlaybackStrategy] is active — see docs/DEVICE_DETECTION.md.
+  /// Captura o contexto do dispositivo útil para suporte/analytics: modelo
+  /// do relógio (quando aplicável), modelo do celular, marca da caixa de
+  /// som pareada (quando conhecida), e qual [PlaybackStrategy] está ativa
+  /// — veja docs/DEVICE_DETECTION.md.
   Future<void> logDeviceContext({
     String? watchModel,
     required String phoneModel,

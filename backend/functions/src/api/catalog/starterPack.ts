@@ -7,14 +7,14 @@ const audioRepository = new AudioRepository();
 const categoryRepository = new CategoryRepository();
 
 /**
- * Returns the minimal "starter pack" (all active categories + featured audios)
- * for first-run 100% offline usage, per ARCHITECTURE.md §7. Public — no auth
- * required, since a brand-new install may still be on anonymous auth or none
- * at all during onboarding.
+ * Retorna o "starter pack" mínimo (todas as categorias ativas + áudios em
+ * destaque) para uso 100% offline no primeiro uso, conforme ARCHITECTURE.md §7.
+ * Público — não exige autenticação, já que uma instalação recém-feita pode
+ * ainda estar em auth anônima ou sem nenhuma durante o onboarding.
  *
- * This is a convenience aggregation only: nothing here is unreachable by
- * direct Firestore reads (categories/audios are public-read), it just saves
- * the client a fan-out of queries on cold start.
+ * Esta é apenas uma agregação de conveniência: nada aqui é inacessível via
+ * leituras diretas no Firestore (categories/audios têm leitura pública), isso
+ * só evita que o cliente precise disparar várias queries no cold start.
  */
 export const getStarterPack = onCall({ region: REGION }, async () => {
   const [categories, featuredAudios] = await Promise.all([

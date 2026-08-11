@@ -16,13 +16,14 @@ private const val PATH_GET_CAPABILITIES = "/vaimarcia/get_capabilities"
 private const val PATH_CATALOG_SYNC = "/vaimarcia/catalog"
 
 /**
- * Wraps the Wearable Data Layer API (MessageClient/DataClient/CapabilityClient) — the
- * companion channel used both for Scenario B command relay and for first-run pairing /
- * catalog sync metadata in Scenario A.
+ * Envolve a Wearable Data Layer API (MessageClient/DataClient/CapabilityClient) — o canal
+ * companion usado tanto para o relay de comandos do Cenário B quanto para o pareamento de
+ * primeira execução / metadados de sincronização de catálogo no Cenário A.
  *
- * The underlying `MessageClient` connection to Google Play services is kept alive by the
- * OS for the app's lifetime; we deliberately do not tear it down between plays (see
- * docs/ARCHITECTURE.md §4 — persistent companion channel avoids per-tap handshake cost).
+ * A conexão subjacente do `MessageClient` com os serviços do Google Play é mantida viva pelo
+ * SO durante todo o ciclo de vida do app; deliberadamente não a encerramos entre reproduções
+ * (veja docs/ARCHITECTURE.md §4 — o canal companion persistente evita o custo de handshake a
+ * cada toque).
  */
 @Singleton
 class WearCompanionClient @Inject constructor(
@@ -32,7 +33,7 @@ class WearCompanionClient @Inject constructor(
     private val dataClient: DataClient = Wearable.getDataClient(context)
     private val capabilityClient: CapabilityClient = Wearable.getCapabilityClient(context)
 
-    /** Resolves the connected phone node advertising the companion app capability. */
+    /** Resolve o node do celular conectado que anuncia a capacidade do app companion. */
     private suspend fun findPhoneNodeId(): String? {
         val info = capabilityClient
             .getCapability(CAPABILITY_PHONE_APP, CapabilityClient.FILTER_REACHABLE)
@@ -41,8 +42,8 @@ class WearCompanionClient @Inject constructor(
     }
 
     /**
-     * Scenario B critical path: sends only the audioId (a few bytes), never the audio
-     * itself — the phone already has the file cached locally (docs/ARCHITECTURE.md §4).
+     * Caminho crítico do Cenário B: envia apenas o audioId (poucos bytes), nunca o áudio
+     * em si — o celular já tem o arquivo em cache localmente (docs/ARCHITECTURE.md §4).
      */
     suspend fun sendPlayCommand(audioId: String): Boolean {
         val nodeId = findPhoneNodeId() ?: return false
@@ -50,14 +51,14 @@ class WearCompanionClient @Inject constructor(
         return true
     }
 
-    /** GET_CAPABILITIES probe (docs/DEVICE_DETECTION.md step 2) — round trip expected < 200ms. */
+    /** Sondagem GET_CAPABILITIES (docs/DEVICE_DETECTION.md passo 2) — round trip esperado < 200ms. */
     suspend fun requestPhoneCapabilities(): ByteArray? {
         val nodeId = findPhoneNodeId() ?: return null
         val response = messageClient.sendRequest(nodeId, PATH_GET_CAPABILITIES, ByteArray(0)).await()
         return response
     }
 
-    /** Pulls the latest catalog-sync DataItem written by the phone (favorites, new clips, etc). */
+    /** Busca o DataItem de sincronização de catálogo mais recente gravado pelo celular (favoritos, novos clipes, etc). */
     suspend fun fetchLatestCatalogSync(): DataClient.DataItem? {
         val items = dataClient.dataItems.await()
         return items.firstOrNull { it.uri.path == PATH_CATALOG_SYNC }.also { items.release() }

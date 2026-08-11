@@ -6,11 +6,12 @@ import 'package:vai_marcia/features/device_pairing/domain/entities/audio_codec.d
 import 'package:vai_marcia/features/device_pairing/domain/entities/device_capability_profile.dart';
 import 'package:vai_marcia/features/device_pairing/domain/entities/paired_speaker.dart';
 
-/// Talks to the platform side (Android/iOS) via the same method channel the
-/// [watch_companion] feature scaffolds, plus [device_info_plus] for local
-/// phone metadata. The native implementations of `GET_CAPABILITIES` /
-/// `LIST_PAIRED_SPEAKERS` are documented TODOs — see
-/// android/app/src/main/kotlin and ios/Runner for scaffolding.
+/// Conversa com o lado da plataforma (Android/iOS) através do mesmo
+/// method channel que a feature [watch_companion] tem como scaffold, além
+/// de [device_info_plus] para metadados locais do celular. As
+/// implementações nativas de `GET_CAPABILITIES` / `LIST_PAIRED_SPEAKERS`
+/// são TODOs documentados — veja android/app/src/main/kotlin e ios/Runner
+/// para o scaffold.
 abstract interface class DeviceCapabilityProbeDataSource {
   Future<DeviceCapabilityProfile?> probePairedWatch();
   Future<List<PairedSpeaker>> listPairedSpeakers();
@@ -29,12 +30,13 @@ class DeviceCapabilityProbeDataSourceImpl implements DeviceCapabilityProbeDataSo
 
   @override
   Future<DeviceCapabilityProfile?> probePairedWatch() async {
-    // TODO(platform-channel): native side must implement `getCapabilities`
-    // per docs/DEVICE_DETECTION.md step 2 (Wear OS: CapabilityClient +
-    // BluetoothA2dp proxy; watchOS: WCSession + AVAudioSession route
-    // introspection forwarded from the watch app). Until implemented this
-    // throws a MissingPluginException, which we treat as "no watch paired"
-    // rather than crash the app — safe default is PHONE_ONLY.
+    // TODO(platform-channel): o lado nativo deve implementar
+    // `getCapabilities` conforme o passo 2 de docs/DEVICE_DETECTION.md
+    // (Wear OS: CapabilityClient + proxy BluetoothA2dp; watchOS: WCSession
+    // + introspecção de rota AVAudioSession repassada pelo app do
+    // relógio). Até que seja implementado, isso lança um
+    // MissingPluginException, que tratamos como "nenhum relógio pareado"
+    // em vez de derrubar o app — o padrão seguro é PHONE_ONLY.
     try {
       final Map<Object?, Object?>? raw = await _channel.invokeMapMethod<Object?, Object?>(
         'getCapabilities',
@@ -63,10 +65,11 @@ class DeviceCapabilityProbeDataSourceImpl implements DeviceCapabilityProbeDataSo
 
   @override
   Future<List<PairedSpeaker>> listPairedSpeakers() async {
-    // TODO(platform-channel): native side must implement `listPairedSpeakers`
-    // — Android: BluetoothAdapter.getBondedDevices() filtered by
-    // BluetoothClass.Device.AUDIO_VIDEO_*; iOS: AVAudioSession.currentRoute
-    // outputs (+ MFi/AVRCP metadata where available for brand).
+    // TODO(platform-channel): o lado nativo deve implementar
+    // `listPairedSpeakers` — Android: BluetoothAdapter.getBondedDevices()
+    // filtrado por BluetoothClass.Device.AUDIO_VIDEO_*; iOS:
+    // AVAudioSession.currentRoute outputs (+ metadados MFi/AVRCP quando
+    // disponíveis para a marca).
     try {
       final List<Object?>? raw = await _bluetoothChannel.invokeListMethod<Object?>('listPairedSpeakers');
       if (raw == null) {
@@ -95,8 +98,9 @@ class DeviceCapabilityProbeDataSourceImpl implements DeviceCapabilityProbeDataSo
     try {
       await _bluetoothChannel.invokeMethod<void>('openBluetoothSettings');
     } on MissingPluginException {
-      // Scaffold not wired on this platform yet — no-op is an acceptable
-      // fallback since the wizard also surfaces manual instructions.
+      // Scaffold ainda não conectado nesta plataforma — no-op é um
+      // fallback aceitável já que o assistente também mostra instruções
+      // manuais.
     }
   }
 

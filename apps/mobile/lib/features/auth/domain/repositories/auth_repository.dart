@@ -16,8 +16,8 @@ abstract interface class AuthRepository {
 
   Future<Result<AppUser>> continueAnonymously();
 
-  /// Upgrades an anonymous account to a permanent one, preserving uid
-  /// (and therefore favorites/recordings) — ARCHITECTURE.md §6.
+  /// Faz upgrade de uma conta anônima para uma permanente, preservando o
+  /// uid (e, portanto, favoritos/gravações) — ARCHITECTURE.md §6.
   Future<Result<AppUser>> linkAnonymousToEmail({required String email, required String password});
 
   Future<Result<void>> signOut();

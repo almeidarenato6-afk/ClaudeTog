@@ -27,9 +27,10 @@ class PlaybackState extends Equatable {
   List<Object?> get props => <Object?>[currentlyPlayingClipId, lastFailure];
 }
 
-/// Bridges the UI tap event to [PlayAudioUseCase], resolving the current
-/// [PlaybackStrategy] first (already-computed, never probed synchronously
-/// here — see device_pairing feature) and logging the analytics event.
+/// Conecta o evento de toque da UI ao [PlayAudioUseCase], resolvendo
+/// primeiro a [PlaybackStrategy] atual (já calculada, nunca sondada de
+/// forma síncrona aqui — veja a feature device_pairing) e registrando o
+/// evento de analytics.
 class PlaybackController extends Notifier<PlaybackState> {
   late final PlayAudioUseCase _playAudioUseCase = getIt<PlayAudioUseCase>();
   late final AnalyticsService _analytics = getIt<AnalyticsService>();

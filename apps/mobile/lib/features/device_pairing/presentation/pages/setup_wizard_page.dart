@@ -8,10 +8,11 @@ import 'package:vai_marcia/features/device_pairing/domain/entities/playback_stra
 import 'package:vai_marcia/features/device_pairing/domain/usecases/run_capability_probe_usecase.dart';
 import 'package:vai_marcia/features/device_pairing/presentation/providers/device_pairing_providers.dart';
 
-/// First-run "Vamos configurar seu equipamento" wizard, per
-/// docs/DEVICE_DETECTION.md. Every step is detection-driven — the only
-/// user action is "open Bluetooth settings" or "install the watch app"
-/// when detection can't complete on its own.
+/// Assistente de primeira execução "Vamos configurar seu equipamento",
+/// conforme docs/DEVICE_DETECTION.md. Cada etapa é orientada por
+/// detecção — a única ação do usuário é "abrir as configurações de
+/// Bluetooth" ou "instalar o app do smartwatch" quando a detecção não
+/// consegue se completar sozinha.
 class SetupWizardPage extends ConsumerStatefulWidget {
   const SetupWizardPage({super.key});
 

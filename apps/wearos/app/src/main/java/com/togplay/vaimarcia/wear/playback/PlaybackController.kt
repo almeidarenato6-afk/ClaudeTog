@@ -8,9 +8,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * Single entry point the presentation layer calls on button tap. Holds the
- * already-resolved strategy (set at boot / pairing-change, see PlaybackStrategyResolver)
- * and routes to the matching engine — no per-tap strategy computation.
+ * Único ponto de entrada que a camada de apresentação chama ao tocar em um botão. Guarda a
+ * estratégia já resolvida (definida na inicialização / mudança de pareamento, veja
+ * PlaybackStrategyResolver) e roteia para o engine correspondente — sem cálculo de estratégia
+ * a cada toque.
  */
 @Singleton
 class PlaybackController @Inject constructor(

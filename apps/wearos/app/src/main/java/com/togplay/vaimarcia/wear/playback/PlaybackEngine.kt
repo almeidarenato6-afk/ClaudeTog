@@ -1,7 +1,8 @@
 package com.togplay.vaimarcia.wear.playback
 
-/** Common contract implemented by both DIRECT and RELAY engines so the UI layer never
- *  branches on strategy — it just asks the resolver-selected engine to play. */
+/** Contrato comum implementado tanto pelo engine DIRECT quanto pelo RELAY, para que a
+ *  camada de UI nunca precise ramificar com base na estratégia — ela apenas pede ao engine
+ *  selecionado pelo resolver para reproduzir. */
 interface PlaybackEngine {
     suspend fun play(audioId: String): PlaybackResult
 }

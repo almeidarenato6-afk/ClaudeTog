@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.wear.compose.material.Colors
 import androidx.wear.compose.material.MaterialTheme
 
-// Placeholder TogPlay brand colors — coral/orange + navy. Replace with final brand kit
-// values once design delivers the official palette.
+// Cores provisórias da marca TogPlay — coral/laranja + navy. Substituir pelos valores finais
+// do brand kit assim que o design entregar a paleta oficial.
 val TogPlayCoral = androidx.compose.ui.graphics.Color(0xFFFF6B4A)
 val TogPlayNavy = androidx.compose.ui.graphics.Color(0xFF17213A)
 val TogPlaySurface = androidx.compose.ui.graphics.Color(0xFF1F2B4A)

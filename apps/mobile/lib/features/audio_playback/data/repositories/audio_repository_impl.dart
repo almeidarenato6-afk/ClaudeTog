@@ -25,8 +25,9 @@ class AudioRepositoryImpl implements AudioRepository {
 
   @override
   Stream<List<AudioClip>> watchClipsByCategory(String categoryId) {
-    // Offline-first (ARCHITECTURE.md §2): local cache emits immediately;
-    // remote sync below refreshes it in the background without blocking UI.
+    // Offline-first (ARCHITECTURE.md §2): o cache local emite
+    // imediatamente; a sincronização remota abaixo o atualiza em segundo
+    // plano sem bloquear a UI.
     unawaited(_syncCategoryFromRemote(categoryId));
     return _local
         .watchClipsByCategory(categoryId)
@@ -55,8 +56,9 @@ class AudioRepositoryImpl implements AudioRepository {
         }
       }
     } on Object {
-      // Best-effort background sync; offline-first means a failed sync must
-      // never surface as an error to the UI — cached data stays valid.
+      // Sincronização em segundo plano de melhor esforço; offline-first
+      // significa que uma sincronização falha nunca deve aparecer como
+      // erro na UI — os dados em cache continuam válidos.
     }
   }
 

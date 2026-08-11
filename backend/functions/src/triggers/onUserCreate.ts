@@ -1,7 +1,8 @@
-// firebase-functions v2 does not yet expose a non-blocking `onCreate` auth
-// trigger (only the blocking `beforeUserCreated`/`beforeUserSignedIn` identity
-// triggers under v2/identity). Mixing the v1 auth trigger into an otherwise
-// v2 codebase is the documented approach until Google ships a v2 equivalent.
+// O firebase-functions v2 ainda não expõe um trigger de auth `onCreate` não
+// bloqueante (apenas os triggers de identidade bloqueantes `beforeUserCreated`/
+// `beforeUserSignedIn` em v2/identity). Misturar o trigger de auth v1 em um
+// codebase por outro lado v2 é a abordagem documentada até o Google lançar um
+// equivalente v2.
 import * as functionsV1 from "firebase-functions/v1";
 import { Timestamp } from "firebase-admin/firestore";
 import { UserRepository } from "../repositories/UserRepository";
@@ -17,7 +18,7 @@ function resolveAuthProvider(providerData: { providerId: string }[]): AuthProvid
   return "anonymous";
 }
 
-/** Creates the `users/{uid}` profile doc as soon as a Firebase Auth user exists. */
+/** Cria o doc de perfil `users/{uid}` assim que um usuário do Firebase Auth existe. */
 export const onUserCreate = functionsV1.auth.user().onCreate(async (user) => {
   const now = Timestamp.now();
   const profile: UserProfile = {

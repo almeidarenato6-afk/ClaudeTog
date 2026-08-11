@@ -12,10 +12,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * Scenario A: plays a locally cached clip directly through Media3/ExoPlayer, routed by the
- * OS to whatever Bluetooth Classic A2DP / LE Audio output is currently connected to the
- * watch. A single long-lived ExoPlayer instance is reused across taps (docs/ARCHITECTURE.md
- * §4 — pre-loaded buffers eliminate disk I/O and player-init cost from the critical path).
+ * Cenário A: reproduz um clipe em cache localmente direto pelo Media3/ExoPlayer, roteado pelo
+ * SO para qualquer saída Bluetooth Classic A2DP / LE Audio atualmente conectada ao relógio.
+ * Uma única instância de longa duração do ExoPlayer é reutilizada entre os toques
+ * (docs/ARCHITECTURE.md §4 — buffers pré-carregados eliminam I/O de disco e o custo de
+ * inicialização do player do caminho crítico).
  */
 @Singleton
 class DirectPlaybackEngine @Inject constructor(
@@ -45,8 +46,8 @@ class DirectPlaybackEngine @Inject constructor(
             ?: cacheStore.fileFor(audioId).takeIf { it.exists() }
             ?: return PlaybackResult.Failed("not_cached_locally")
 
-        // Interrupts whatever is currently playing — one motivational clip at a time,
-        // never queued, to keep taps feeling instantaneous.
+        // Interrompe o que estiver tocando no momento — um clipe motivacional por vez,
+        // nunca enfileirado, para manter a sensação de resposta instantânea aos toques.
         player.stop()
         player.setMediaItem(MediaItem.fromUri(file.toURI().toString()))
         player.prepare()

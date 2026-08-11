@@ -2,17 +2,17 @@ import { Timestamp } from "firebase-admin/firestore";
 
 /**
  * Firestore: `categories/{categoryId}`
- * Public-read, admin/content_manager-write (see firestore.rules).
+ * Leitura pública, escrita restrita a admin/content_manager (veja firestore.rules).
  */
 export interface Category {
   id: string;
-  name: string; // display name, e.g. "Motivação"
-  slug: string; // stable machine-readable key, e.g. "motivacao"
-  order: number; // ascending display order in category rail
-  icon: string; // icon asset key resolved client-side (not a URL)
-  color: string; // hex color, e.g. "#FF6B00", used for category chip/theme
-  isActive: boolean; // soft delete — inactive categories hidden from clients
-  audioCount: number; // denormalized count of active audios, kept in sync by triggers
+  name: string; // nome de exibição, ex.: "Motivação"
+  slug: string; // chave estável legível por máquina, ex.: "motivacao"
+  order: number; // ordem de exibição ascendente na trilha de categorias
+  icon: string; // chave do asset de ícone resolvida no cliente (não é uma URL)
+  color: string; // cor em hex, ex.: "#FF6B00", usada no chip/tema da categoria
+  isActive: boolean; // soft delete — categorias inativas ficam ocultas dos clientes
+  audioCount: number; // contagem desnormalizada de áudios ativos, mantida em sincronia pelos triggers
   createdAt: Timestamp;
   updatedAt: Timestamp;
 }

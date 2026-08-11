@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- Bluetooth: Android 12+ (API 31+) runtime-permission model.
-         BLUETOOTH_CONNECT/SCAN/ADVERTISE required to enumerate paired A2DP
-         speakers and (future) advertise the companion service to the
-         watch. `usesPermissionFlags="neverForLocation"` avoids the
-         location-permission bundling Android otherwise forces on BLE
-         scans, since this app never needs device location. -->
+    <!-- Bluetooth: modelo de permissão em tempo de execução do Android 12+
+         (API 31+). BLUETOOTH_CONNECT/SCAN/ADVERTISE são necessárias para
+         enumerar caixas de som A2DP pareadas e (futuramente) anunciar o
+         serviço companion para o smartwatch. `usesPermissionFlags="neverForLocation"`
+         evita o agrupamento com permissão de localização que o Android
+         normalmente força em scans BLE, já que este app nunca precisa da
+         localização do dispositivo. -->
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission
         android:name="android.permission.BLUETOOTH_SCAN"
         android:usesPermissionFlags="neverForLocation" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
 
-    <!-- Legacy Bluetooth permissions for API < 31 devices. -->
+    <!-- Permissões legadas de Bluetooth para dispositivos com API < 31. -->
     <uses-permission
         android:name="android.permission.BLUETOOTH"
         android:maxSdkVersion="30" />
@@ -26,10 +27,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <!-- Keeps the A2DP route + Wear OS Data Layer session alive while the
-         app is backgrounded, per ARCHITECTURE.md §4 ("connection kept
-         warm"). Declared as `mediaPlayback` type — actual foreground
-         service start/stop is a native TODO, see
+    <!-- Mantém a rota A2DP + a sessão do Data Layer do Wear OS ativas
+         enquanto o app está em segundo plano, conforme ARCHITECTURE.md §4
+         ("conexão mantida aquecida"). Declarada como tipo `mediaPlayback`
+         — o start/stop real do foreground service é um TODO nativo, veja
          android/app/src/main/kotlin/.../PlaybackForegroundService.kt. -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
@@ -60,8 +61,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <!-- Deep link support for lojatogplay.com.br (store) and any
-                 future vaimarcia:// scheme links from notifications. -->
+            <!-- Suporte a deep link para lojatogplay.com.br (loja) e
+                 futuros links com esquema vaimarcia:// vindos de
+                 notificações. -->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -76,8 +78,9 @@
             android:name="flutterEmbedding"
             android:value="2" />
 
-        <!-- TODO(platform-channel): register PlaybackForegroundService here
-             once BluetoothTransportPlugin.kt implements the "keep A2DP
-             route warm" behavior described in ARCHITECTURE.md §4. -->
+        <!-- TODO(platform-channel): registrar o PlaybackForegroundService
+             aqui assim que BluetoothTransportPlugin.kt implementar o
+             comportamento "manter a rota A2DP aquecida" descrito em
+             ARCHITECTURE.md §4. -->
     </application>
 </manifest>

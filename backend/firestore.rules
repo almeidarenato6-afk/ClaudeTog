@@ -1,11 +1,12 @@
 rules_version = '2';
 
-// Vai Márcia (TogPlay) — Firestore security rules.
+// Vai Márcia (TogPlay) — regras de segurança do Firestore.
 //
-// Roles are carried exclusively as Firebase Auth custom claims (`role`), never mirrored
-// into the `users/{uid}` document — mirroring it would let an authenticated user grant
-// themselves admin by writing their own profile doc. Custom claims can only be set by
-// Cloud Functions using the Admin SDK (see functions/src/api/admin/auth.ts).
+// Os papéis são transportados exclusivamente como custom claims do Firebase Auth (`role`),
+// nunca espelhados no documento `users/{uid}` — espelhar isso permitiria que um usuário
+// autenticado se tornasse admin apenas escrevendo no próprio documento de perfil. Custom
+// claims só podem ser definidas por Cloud Functions usando o Admin SDK (veja
+// functions/src/api/admin/auth.ts).
 service cloud.firestore {
   match /databases/{database}/documents {
 
@@ -30,7 +31,7 @@ service cloud.firestore {
     }
 
     // ---------------------------------------------------------------------
-    // Catalog — public read, admin/content_manager write.
+    // Catálogo — leitura pública, escrita restrita a admin/content_manager.
     // ---------------------------------------------------------------------
 
     match /categories/{categoryId} {
@@ -44,39 +45,40 @@ service cloud.firestore {
     }
 
     // ---------------------------------------------------------------------
-    // Users — every user owns exactly their own subtree.
+    // Usuários — cada usuário é dono exatamente da própria subárvore.
     // ---------------------------------------------------------------------
 
     match /users/{uid} {
-      // Profile doc never carries `role`; clients cannot write that field into
-      // Firestore because it simply isn't part of this schema (see UserProfile type).
+      // O documento de perfil nunca carrega `role`; os clientes não conseguem escrever
+      // esse campo no Firestore porque ele simplesmente não faz parte deste schema
+      // (veja o tipo UserProfile).
       allow read, update: if isOwner(uid);
-      // Creation is normally done server-side by the onUserCreate auth trigger;
-      // this fallback lets the client create its own doc if the trigger hasn't
-      // landed yet (e.g. first read races the trigger).
+      // A criação normalmente é feita no servidor pelo trigger de auth onUserCreate;
+      // este fallback permite que o cliente crie o próprio documento caso o trigger
+      // ainda não tenha rodado (ex.: a primeira leitura chega antes do trigger).
       allow create: if isOwner(uid);
       allow delete: if false;
 
       match /favorites/{audioId} {
-        // Direct client writes (see api/client/favorites.ts for the design rationale).
+        // Escritas diretas do cliente (veja api/client/favorites.ts para o motivo do design).
         allow read, write: if isOwner(uid);
       }
 
       match /devices/{deviceId} {
-        // Written only via the registerDevice callable (Admin SDK bypasses rules)
-        // so device/analytics fields are always server-validated.
+        // Escrito apenas via o callable registerDevice (o Admin SDK ignora as regras)
+        // para que os campos de device/analytics sejam sempre validados no servidor.
         allow read: if isOwner(uid);
         allow write: if false;
       }
 
       match /recordings/{recordingId} {
-        // Private by default — never exposed to any other user or the public catalog.
+        // Privado por padrão — nunca exposto a outro usuário ou ao catálogo público.
         allow read, write: if isOwner(uid);
       }
     }
 
     // ---------------------------------------------------------------------
-    // Analytics — write-only from Cloud Functions, never directly from clients.
+    // Analytics — somente escrita a partir de Cloud Functions, nunca direto dos clientes.
     // ---------------------------------------------------------------------
 
     match /analytics_events/{eventId} {
@@ -84,13 +86,13 @@ service cloud.firestore {
     }
 
     match /analytics_daily/{date} {
-      // Aggregates power the admin dashboard; regular app users never read this.
+      // Os agregados alimentam o dashboard admin; usuários comuns do app nunca leem isso.
       allow read: if hasRole(['admin', 'content_manager', 'viewer']);
       allow write: if false;
     }
 
     // ---------------------------------------------------------------------
-    // Promotions — public read (store banners), admin-only write.
+    // Promotions — leitura pública (banners da loja), escrita restrita a admin.
     // ---------------------------------------------------------------------
 
     match /promotions/{promotionId} {
@@ -99,7 +101,7 @@ service cloud.firestore {
     }
 
     // ---------------------------------------------------------------------
-    // Notification send log — admin panel history only.
+    // Log de envio de notificações — apenas histórico do painel admin.
     // ---------------------------------------------------------------------
 
     match /notifications_log/{notificationId} {

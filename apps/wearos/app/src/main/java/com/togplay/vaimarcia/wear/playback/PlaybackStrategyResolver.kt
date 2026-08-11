@@ -16,9 +16,9 @@ import javax.inject.Singleton
 import kotlin.coroutines.resume
 
 /**
- * Implements the decision algorithm from docs/DEVICE_DETECTION.md §"Algoritmo" step 3.
- * Resolved once per boot / pairing-change event and cached — never on the tap-to-sound path
- * (see docs/ARCHITECTURE.md §4).
+ * Implementa o algoritmo de decisão de docs/DEVICE_DETECTION.md §"Algoritmo" passo 3.
+ * Resolvido uma vez por evento de inicialização / mudança de pareamento e mantido em cache —
+ * nunca no caminho de toque-até-som (veja docs/ARCHITECTURE.md §4).
  */
 @Singleton
 class PlaybackStrategyResolver @Inject constructor(
@@ -39,10 +39,10 @@ class PlaybackStrategyResolver @Inject constructor(
     }
 
     /**
-     * docs/DEVICE_DETECTION.md step 2 — Wear OS probe: `BluetoothAdapter.getProfileProxy(A2DP)`
-     * plus verification that a device is connected directly to *this* watch (not relayed
-     * through the phone), and `PackageManager.hasSystemFeature(FEATURE_AUDIO_OUTPUT)` for
-     * arbitrary local-audio playback capability.
+     * docs/DEVICE_DETECTION.md passo 2 — sondagem Wear OS: `BluetoothAdapter.getProfileProxy(A2DP)`
+     * mais verificação de que um dispositivo está conectado diretamente a *este* relógio (não
+     * via relay pelo celular), e `PackageManager.hasSystemFeature(FEATURE_AUDIO_OUTPUT)` para
+     * capacidade de reprodução de áudio local arbitrário.
      */
     private suspend fun probeLocalCapabilities(): DeviceCapabilityProfile {
         val adapter = BluetoothAdapter.getDefaultAdapter()
@@ -54,7 +54,7 @@ class PlaybackStrategyResolver @Inject constructor(
             model = android.os.Build.MODEL,
             osVersion = android.os.Build.VERSION.RELEASE,
             hasBluetoothClassicAudio = hasA2dpConnectedDevice,
-            hasBleAudioSupport = false, // LE Audio detection needs BluetoothLeAudioCodecConfig, API 33+; TODO
+            hasBleAudioSupport = false, // Detecção de LE Audio precisa de BluetoothLeAudioCodecConfig, API 33+; TODO
             supportedCodecs = setOf(AudioCodec.SBC, AudioCodec.AAC),
             canPlayArbitraryLocalAudio = canPlayLocalAudio,
             hasPersistentCompanionChannel = companionClient.isPhoneReachable(),

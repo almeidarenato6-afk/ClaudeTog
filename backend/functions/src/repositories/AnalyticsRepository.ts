@@ -13,7 +13,7 @@ export class AnalyticsRepository {
   private eventsCol = db.collection(EVENTS_COLLECTION);
   private dailyCol = db.collection(DAILY_COLLECTION);
 
-  /** Batched ingestion — writes are cheap Firestore adds, fan-out aggregation happens nightly. */
+  /** Ingestão em lote — as escritas são adds baratos no Firestore, a agregação fan-out acontece à noite. */
   async recordEvents(uid: string | null, events: AnalyticsEventInput[]): Promise<void> {
     const batch = db.batch();
     const receivedAt = Timestamp.now();
@@ -25,7 +25,7 @@ export class AnalyticsRepository {
     await batch.commit();
   }
 
-  /** Fetch all events with `clientTimestamp` in `[start, end)`, for the scheduled rollup. */
+  /** Busca todos os eventos com `clientTimestamp` em `[start, end)`, para o rollup agendado. */
   async listEventsInRange(start: Timestamp, end: Timestamp): Promise<AnalyticsEvent[]> {
     const snap = await this.eventsCol
       .where("clientTimestamp", ">=", start)

@@ -1,7 +1,7 @@
-# XcodeGen spec — run `xcodegen generate` in this directory to produce
-# VaiMarciaWatch.xcodeproj. A hand-authored .xcodeproj (a binary-plist-adjacent, extremely
-# fragile pbxproj format) cannot be reliably produced outside of Xcode itself, so this
-# declarative spec is the pragmatic source of truth instead. See README.md.
+# Especificação do XcodeGen — rode `xcodegen generate` neste diretório para produzir
+# o VaiMarciaWatch.xcodeproj. Um .xcodeproj escrito à mão (um formato pbxproj próximo de
+# plist binário, extremamente frágil) não pode ser produzido de forma confiável fora do
+# próprio Xcode, então esta especificação declarativa é a fonte de verdade pragmática. Veja o README.md.
 name: VaiMarciaWatch
 options:
   bundleIdPrefix: com.togplay.vaimarcia

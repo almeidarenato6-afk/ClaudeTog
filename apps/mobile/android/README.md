@@ -1,48 +1,50 @@
-# android/ — hand-authored subset
+# android/ — subconjunto escrito manualmente
 
-This directory intentionally does **not** contain a full Flutter Android
-project (no Gradle wrapper jar/scripts, no generated `local.properties`,
-no `launch_background.xml` drawable, no `ic_launcher` mipmaps). Those are
-100% boilerplate that Flutter regenerates deterministically.
+Este diretório propositalmente **não** contém um projeto Android Flutter
+completo (sem gradlew wrapper jar/scripts, sem `local.properties` gerado,
+sem drawable `launch_background.xml`, sem mipmaps `ic_launcher`). Isso é
+100% boilerplate que o Flutter regenera de forma determinística.
 
-## What's here and real
+## O que existe aqui e é real
 
-- `app/src/main/AndroidManifest.xml` — permissions (Bluetooth, notifications,
-  microphone, foreground service) and the deep-link intent filter for
+- `app/src/main/AndroidManifest.xml` — permissões (Bluetooth, notificações,
+  microfone, foreground service) e o intent filter de deep link para
   `lojatogplay.com.br`.
-- `app/build.gradle`, `build.gradle` — dependency versions, `applicationId`,
-  min/target/compile SDK.
-- `app/src/main/kotlin/br/com/togplay/vaimarcia/MainActivity.kt` — registers
-  the two platform-channel plugins below.
+- `app/build.gradle`, `build.gradle` — versões de dependências,
+  `applicationId`, SDK mínimo/alvo/de compilação.
+- `app/src/main/kotlin/br/com/togplay/vaimarcia/MainActivity.kt` — registra
+  os dois plugins de platform-channel abaixo.
 - `app/src/main/kotlin/br/com/togplay/vaimarcia/BluetoothTransportPlugin.kt`
-  and `WatchCompanionPlugin.kt` — **scaffolds**. Channel names and method
-  names match the Dart side exactly (see
+  e `WatchCompanionPlugin.kt` — **scaffolds**. Os nomes de canal e de
+  método batem exatamente com o lado Dart (veja
   `lib/features/bluetooth/data/datasources/bluetooth_platform_datasource.dart`
-  and `lib/features/watch_companion/data/datasources/watch_companion_platform_datasource.dart`),
-  but nearly every method body is a `result.notImplemented()` with a TODO
-  describing the real Android API to call (`BluetoothA2dp` proxy,
-  Wear OS `MessageClient`/`CapabilityClient`). `openBluetoothSettings` is
-  the one fully working method (just an `Intent`).
+  e `lib/features/watch_companion/data/datasources/watch_companion_platform_datasource.dart`),
+  mas quase todo corpo de método é um `result.notImplemented()` com um
+  TODO descrevendo a API real do Android a ser chamada (proxy
+  `BluetoothA2dp`, Wear OS `MessageClient`/`CapabilityClient`).
+  `openBluetoothSettings` é o único método totalmente funcional (apenas
+  um `Intent`).
 
-## To get a buildable project
+## Para obter um projeto compilável
 
 ```bash
 cd apps/mobile
 flutter create --platforms=android --org br.com.togplay .
 ```
 
-Run this **before** your first `flutter run`/`flutter build apk` — it
-fills in `gradlew`, `gradle-wrapper.properties`, `local.properties`,
-launcher icons, and `launch_background.xml` without touching the files
-listed above (Flutter only creates missing files, never overwrites
-hand-authored ones — diff after running just in case).
+Execute isso **antes** do primeiro `flutter run`/`flutter build apk` —
+ele preenche `gradlew`, `gradle-wrapper.properties`, `local.properties`,
+ícones de launcher e `launch_background.xml` sem tocar nos arquivos
+listados acima (o Flutter só cria arquivos ausentes, nunca sobrescreve
+os escritos manualmente — faça um diff depois de rodar, só por
+precaução).
 
-Then:
+Depois:
 
 ```bash
 dart pub global activate flutterfire_cli
-flutterfire configure   # generates google-services.json + lib/firebase_options.dart
+flutterfire configure   # gera google-services.json + lib/firebase_options.dart
 ```
 
-Uncomment `apply plugin: 'com.google.gms.google-services'` in
-`app/build.gradle` once `google-services.json` exists.
+Descomente `apply plugin: 'com.google.gms.google-services'` em
+`app/build.gradle` assim que `google-services.json` existir.

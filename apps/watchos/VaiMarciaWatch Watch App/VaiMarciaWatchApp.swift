@@ -4,8 +4,8 @@ import SwiftUI
 struct VaiMarciaWatchApp: App {
     @AppStorage("setupComplete") private var setupComplete = false
 
-    // Force WatchConnectivity session activation at launch (docs/ARCHITECTURE.md §4 —
-    // persistent companion channel, not reconnected per tap).
+    // Força a ativação da sessão WatchConnectivity na inicialização (docs/ARCHITECTURE.md §4 —
+    // canal companion persistente, não reconectado a cada toque).
     private let connectivity = WatchConnectivityManager.shared
 
     var body: some Scene {

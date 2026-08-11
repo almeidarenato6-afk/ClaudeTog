@@ -1,7 +1,7 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 
-/** Route guard: redirects to /login unless a valid staff role claim is present. */
+/** Guarda de rota: redireciona para /login a menos que haja um claim de papel de staff válido. */
 export function RequireStaff({ children }: { children: React.ReactNode }) {
   const { status } = useAuth();
   const location = useLocation();

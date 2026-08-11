@@ -6,10 +6,11 @@ import 'package:vai_marcia/core/error/result.dart';
 import 'package:vai_marcia/features/store/domain/entities/promotion.dart';
 import 'package:vai_marcia/features/store/domain/repositories/store_repository.dart';
 
-/// The only implementation today (ARCHITECTURE.md §9): opens
-/// https://www.lojatogplay.com.br in an external browser/webview via
-/// `url_launcher`. A future `EcommerceApiStoreRepository` would implement
-/// the same [StoreRepository] interface backed by a real product API.
+/// A única implementação hoje (ARCHITECTURE.md §9): abre
+/// https://www.lojatogplay.com.br em um navegador/webview externo via
+/// `url_launcher`. Uma futura `EcommerceApiStoreRepository` implementaria
+/// a mesma interface [StoreRepository] apoiada em uma API de produtos
+/// real.
 @LazySingleton(as: StoreRepository)
 class ExternalLinkStoreRepository implements StoreRepository {
   @override
@@ -28,8 +29,9 @@ class ExternalLinkStoreRepository implements StoreRepository {
 
   @override
   Stream<List<Promotion>> watchActivePromotions() {
-    // No promotions backend wired to the external-link implementation —
-    // future EcommerceApiStoreRepository would stream from Firestore here.
+    // Nenhum backend de promoções conectado à implementação de link
+    // externo — uma futura EcommerceApiStoreRepository faria o stream a
+    // partir do Firestore aqui.
     return const Stream<List<Promotion>>.empty();
   }
 }

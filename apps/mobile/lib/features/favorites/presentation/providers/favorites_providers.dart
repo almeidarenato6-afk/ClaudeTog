@@ -17,8 +17,8 @@ final StreamProviderFamily<bool, String> isFavoriteStreamProvider = StreamProvid
   (Ref ref, String clipId) => ref.watch(favoritesRepositoryProvider).watchIsFavorite(clipId),
 );
 
-/// Convenience sync accessor for widgets that only need "is this favorite
-/// right now" without handling loading/error branches inline.
+/// Acesso síncrono de conveniência para widgets que só precisam saber
+/// "isso é favorito agora" sem tratar os ramos de loading/erro inline.
 final ProviderFamily<bool, String> isFavoriteProvider = Provider.family<bool, String>(
   (Ref ref, String clipId) => ref.watch(isFavoriteStreamProvider(clipId)).valueOrNull ?? false,
 );

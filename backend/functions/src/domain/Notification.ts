@@ -2,14 +2,14 @@ import { Timestamp } from "firebase-admin/firestore";
 
 export type NotificationTarget =
   | { type: "topic"; topic: string }
-  | { type: "segment"; segment: string } // resolved server-side to a set of tokens
+  | { type: "segment"; segment: string } // resolvido no servidor para um conjunto de tokens
   | { type: "uid"; uid: string };
 
 /**
  * Firestore: `notifications_log/{notificationId}`
- * Written only by the `sendNotification` admin callable after dispatch to
- * FCM; readable by admin/content_manager/viewer roles for the panel's send
- * history. Not the message payload itself — FCM doesn't persist that.
+ * Escrito apenas pelo callable admin `sendNotification` após o envio ao
+ * FCM; legível pelos papéis admin/content_manager/viewer para o histórico de
+ * envios do painel. Não é o payload da mensagem em si — o FCM não persiste isso.
  */
 export interface NotificationRecord {
   id: string;
@@ -17,8 +17,8 @@ export interface NotificationRecord {
   body: string;
   imageUrl?: string;
   target: NotificationTarget;
-  data?: Record<string, string>; // arbitrary client-handled deep-link payload
-  sentBy: string; // admin uid
+  data?: Record<string, string>; // payload de deep-link arbitrário tratado pelo cliente
+  sentBy: string; // uid do admin
   sentAt: Timestamp;
   successCount: number;
   failureCount: number;

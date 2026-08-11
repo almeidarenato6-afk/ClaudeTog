@@ -7,16 +7,16 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
 /**
- * Native counterpart of `DeviceCapabilityProbeDataSource` (watch
- * discovery) and `WatchCompanionPlatformDataSource`
+ * Contraparte nativa de `DeviceCapabilityProbeDataSource` (descoberta do
+ * relógio) e `WatchCompanionPlatformDataSource`
  * (lib/features/watch_companion/data/datasources/watch_companion_platform_datasource.dart).
  *
- * STATUS: SCAFFOLD ONLY. Real implementation needs the Wear OS
- * `com.google.android.gms:play-services-wearable` dependency (already
- * declared in app/build.gradle) and, per docs/DEVICE_DETECTION.md §2,
- * cooperation from the Wear OS companion app (a *separate* app — see
- * apps/wearos/ in this monorepo) which must respond to a
- * `GET_CAPABILITIES` message on its own MessageClient listener.
+ * STATUS: APENAS SCAFFOLD. A implementação real precisa da dependência
+ * Wear OS `com.google.android.gms:play-services-wearable` (já declarada
+ * em app/build.gradle) e, conforme docs/DEVICE_DETECTION.md §2, da
+ * cooperação do app companion Wear OS (um app *separado* — veja
+ * apps/wearos/ neste monorepo), que deve responder a uma mensagem
+ * `GET_CAPABILITIES` no seu próprio listener de MessageClient.
  */
 class WatchCompanionPlugin(private val context: Context) {
     private lateinit var methodChannel: MethodChannel
@@ -35,17 +35,17 @@ class WatchCompanionPlugin(private val context: Context) {
         )
         eventChannel.setStreamHandler(object : EventChannel.StreamHandler {
             override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
-                // TODO: register a Wearable.getMessageClient(context)
-                // OnMessageReceivedListener here, keeping it alive for the
-                // app's lifetime (ARCHITECTURE.md §4 — "persistent
-                // companion channel, never reconnected per command").
-                // Forward incoming `playAudio` messages as
-                // {"type": "playAudio", "audioId": "<id>"} maps matching
-                // WatchCommand.fromMap on the Dart side.
+                // TODO: registrar aqui um OnMessageReceivedListener de
+                // Wearable.getMessageClient(context), mantendo-o vivo pelo
+                // tempo de vida do app (ARCHITECTURE.md §4 — "canal
+                // companion persistente, nunca reconectado a cada comando").
+                // Repassar as mensagens `playAudio` recebidas como mapas
+                // {"type": "playAudio", "audioId": "<id>"} correspondendo a
+                // WatchCommand.fromMap no lado Dart.
             }
 
             override fun onCancel(arguments: Any?) {
-                // TODO: remove the OnMessageReceivedListener registered above.
+                // TODO: remover o OnMessageReceivedListener registrado acima.
             }
         })
     }
@@ -54,31 +54,32 @@ class WatchCompanionPlugin(private val context: Context) {
         when (call.method) {
             "isWatchPaired" -> {
                 // TODO: Wearable.getNodeClient(context).connectedNodes,
-                // filter by capability advertised by the Wear OS companion
-                // app (Wearable.getCapabilityClient()).
+                // filtrando pela capability anunciada pelo app companion
+                // Wear OS (Wearable.getCapabilityClient()).
                 result.notImplemented()
             }
 
             "isCompanionAppInstalled" -> {
-                // TODO: CapabilityClient.getCapability(...) — the Wear OS
-                // companion app advertises a capability string (e.g.
-                // "vai_marcia_watch_app") that this checks for.
+                // TODO: CapabilityClient.getCapability(...) — o app
+                // companion Wear OS anuncia uma string de capability (ex.
+                // "vai_marcia_watch_app") que isso verifica.
                 result.notImplemented()
             }
 
             "getCapabilities" -> {
-                // TODO: send a GET_CAPABILITIES message via
-                // Wearable.getMessageClient(context).sendMessage(...) to
-                // the connected node and await its DeviceCapabilityProfile
-                // response (see docs/DEVICE_DETECTION.md §2), returning it
-                // as the map shape DeviceCapabilityProbeDataSource expects.
+                // TODO: enviar uma mensagem GET_CAPABILITIES via
+                // Wearable.getMessageClient(context).sendMessage(...) para
+                // o nó conectado e aguardar sua resposta DeviceCapabilityProfile
+                // (veja docs/DEVICE_DETECTION.md §2), retornando-a no formato
+                // de mapa que DeviceCapabilityProbeDataSource espera.
                 result.notImplemented()
             }
 
             "sendCommand" -> {
                 // TODO: Wearable.getMessageClient(context).sendMessage()
-                // with the (small!) payload from call.arguments — must stay
-                // a few bytes per ARCHITECTURE.md §4 ("audioId only").
+                // com o payload (pequeno!) vindo de call.arguments — deve
+                // permanecer com poucos bytes conforme ARCHITECTURE.md §4
+                // ("apenas audioId").
                 result.notImplemented()
             }
 

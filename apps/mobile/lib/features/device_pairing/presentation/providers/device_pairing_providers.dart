@@ -12,9 +12,10 @@ final Provider<RunCapabilityProbeUseCase> runCapabilityProbeUseCaseProvider = Pr
   (Ref ref) => getIt<RunCapabilityProbeUseCase>(),
 );
 
-/// The already-decided strategy, loaded once at boot and re-run whenever
-/// [refreshCapabilityProbeProvider] is invoked (Bluetooth pair/unpair, new
-/// watch paired) — never recomputed on the tap-to-play path.
+/// A estratégia já decidida, carregada uma vez na inicialização e
+/// reexecutada sempre que [refreshCapabilityProbeProvider] é invocado
+/// (pareamento/despareamento de Bluetooth, novo smartwatch pareado) —
+/// nunca recalculada no caminho de tap-to-play.
 final FutureProvider<PlaybackStrategy> playbackStrategyProvider = FutureProvider<PlaybackStrategy>(
   (Ref ref) async {
     final DevicePairingRepository repo = ref.watch(devicePairingRepositoryProvider);
@@ -35,8 +36,9 @@ final NotifierProvider<CapabilityProbeController, AsyncValue<CapabilityProbeOutc
   CapabilityProbeController.new,
 );
 
-/// Drives the "Vamos configurar seu equipamento" wizard: runs the probe on
-/// demand and republishes [playbackStrategyProvider] once it completes.
+/// Controla o assistente "Vamos configurar seu equipamento": executa a
+/// sondagem sob demanda e republica [playbackStrategyProvider] assim que
+/// ela termina.
 class CapabilityProbeController extends Notifier<AsyncValue<CapabilityProbeOutcome?>> {
   @override
   AsyncValue<CapabilityProbeOutcome?> build() => const AsyncValue<CapabilityProbeOutcome?>.data(null);

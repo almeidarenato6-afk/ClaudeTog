@@ -1,16 +1,20 @@
-/// Cross-cutting numeric/string constants. Values that encode a product
-/// requirement (like [maxTapToAudioLatencyMs]) are kept as named constants,
-/// not magic numbers, so their provenance (ARCHITECTURE.md §4) is traceable.
+/// Constantes numéricas/de string transversais. Valores que codificam um
+/// requisito de produto (como [maxTapToAudioLatencyMs]) são mantidos como
+/// constantes nomeadas, não números mágicos, para que sua origem
+/// (ARCHITECTURE.md §4) seja rastreável.
 abstract final class AppConstants {
-  /// Product-level latency budget: tap-to-audible-sound, per ARCHITECTURE.md §4.
+  /// Orçamento de latência a nível de produto: toque até som audível,
+  /// conforme ARCHITECTURE.md §4.
   static const Duration maxTapToAudioLatency = Duration(milliseconds: 150);
 
-  /// Number of pooled [just_audio] players kept warm per active category so
-  /// rapid re-taps of different clips never wait on a player being freed.
+  /// Número de players [just_audio] mantidos aquecidos no pool por
+  /// categoria ativa, para que toques rápidos e repetidos em clipes
+  /// diferentes nunca esperem um player ser liberado.
   static const int audioPlayerPoolSize = 4;
 
-  /// Starter offline bundle size — audios embedded in the app binary so the
-  /// app is usable with zero network on first launch.
+  /// Tamanho do pacote offline inicial — áudios embutidos no binário do
+  /// app para que ele seja utilizável sem rede nenhuma na primeira
+  /// abertura.
   static const int starterBundleClipCount = 12;
 
   static const String firestoreCollectionAudios = 'audios';
@@ -30,8 +34,9 @@ abstract final class AppConstants {
   static const String prefsKeyOnboardingComplete = 'onboarding_complete';
   static const String prefsKeyDeviceId = 'device_id';
 
-  /// Method-channel names shared between Dart and native (Android/iOS)
-  /// implementations — see features/bluetooth and features/watch_companion.
+  /// Nomes de method-channel compartilhados entre as implementações Dart e
+  /// nativas (Android/iOS) — veja features/bluetooth e
+  /// features/watch_companion.
   static const String methodChannelBluetoothTransport = 'br.com.togplay.vaimarcia/bluetooth_transport';
   static const String methodChannelWatchCompanion = 'br.com.togplay.vaimarcia/watch_companion';
   static const String eventChannelWatchCompanionEvents = 'br.com.togplay.vaimarcia/watch_companion_events';

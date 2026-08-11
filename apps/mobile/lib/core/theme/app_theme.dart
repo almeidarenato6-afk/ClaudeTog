@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vai_marcia/core/theme/app_colors.dart';
 
-/// Material 3 theming built from the placeholder TogPlay palette
-/// (see [AppColors] for provenance/replacement notes).
+/// Tema Material 3 construído a partir da paleta placeholder da TogPlay
+/// (veja [AppColors] para notas de origem/substituição).
 abstract final class AppTheme {
   static ThemeData get light => _build(Brightness.light);
   static ThemeData get dark => _build(Brightness.dark);

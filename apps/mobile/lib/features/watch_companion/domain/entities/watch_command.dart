@@ -2,9 +2,10 @@ import 'package:equatable/equatable.dart';
 
 enum WatchCommandType { playAudio, getCapabilities, ping }
 
-/// Payload sent watch -> phone (Cenário B) or phone -> watch. Deliberately
-/// minimal — per ARCHITECTURE.md §4, only an `audioId` crosses the wire,
-/// never audio bytes.
+/// Payload enviado do smartwatch para o telefone (Cenário B) ou do
+/// telefone para o smartwatch. Propositalmente minimalista — conforme
+/// ARCHITECTURE.md §4, apenas um `audioId` trafega pelo canal, nunca os
+/// bytes do áudio.
 class WatchCommand extends Equatable {
   const WatchCommand({required this.type, this.audioId});
 

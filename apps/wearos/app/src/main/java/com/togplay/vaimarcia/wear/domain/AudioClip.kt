@@ -1,9 +1,9 @@
 package com.togplay.vaimarcia.wear.domain
 
 /**
- * Mirrors the mobile app's `AudioClip` domain entity conceptually (see
- * apps/mobile/lib/features/audio_playback/domain). Kept dependency-free so it can be
- * unit-tested without Android framework classes.
+ * Espelha conceitualmente a entidade de domínio `AudioClip` do app mobile (veja
+ * apps/mobile/lib/features/audio_playback/domain). Mantida livre de dependências para que
+ * possa ser testada unitariamente sem classes do framework Android.
  */
 data class AudioClip(
     val id: String,

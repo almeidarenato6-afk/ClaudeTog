@@ -2,30 +2,31 @@ import { Timestamp } from "firebase-admin/firestore";
 
 /**
  * Firestore: `audios/{audioId}`
- * Public-read, admin/content_manager-write (see firestore.rules).
+ * Leitura pública, escrita restrita a admin/content_manager (veja firestore.rules).
  *
- * This is the actual product content surface — the app reads this collection
- * (filtered by categoryId + isActive) directly/via listener, so shape changes
- * here are effectively an API contract with every client (mobile, watch apps).
+ * Esta é a superfície real de conteúdo do produto — o app lê esta coleção
+ * (filtrada por categoryId + isActive) diretamente/via listener, então mudanças
+ * de formato aqui são efetivamente um contrato de API com todos os clientes
+ * (apps mobile e watch).
  */
 export interface AudioClip {
   id: string;
   categoryId: string;
-  title: string; // short label shown on the soundboard button, e.g. "Vai Márcia!"
-  phrase: string; // full spoken phrase / transcript, e.g. "Vai, Márcia! Bora pra cima!"
-  audioUrl: string; // public, long-lived Cloud Storage download URL
-  storagePath: string; // canonical Storage object path, e.g. catalog/audios/{id}/master.m4a
+  title: string; // rótulo curto mostrado no botão do soundboard, ex.: "Vai Márcia!"
+  phrase: string; // frase falada completa / transcrição, ex.: "Vai, Márcia! Bora pra cima!"
+  audioUrl: string; // URL de download do Cloud Storage, pública e de longa duração
+  storagePath: string; // caminho canônico do objeto no Storage, ex.: catalog/audios/{id}/master.m4a
   durationMs: number;
-  order: number; // display order within its category
-  isActive: boolean; // soft delete — never hard-delete catalog content
-  isFeatured: boolean; // surfaced in "starter pack" / home highlights
-  tags: string[]; // free-form search/filter tags, e.g. ["treino", "virada"]
-  locale: string; // BCP-47, e.g. "pt-BR" — all launch content is pt-BR
-  playCount: number; // denormalized, only ever incremented server-side (analytics rollup)
-  favoriteCount: number; // denormalized, kept in sync by onFavoriteWrite trigger
+  order: number; // ordem de exibição dentro da categoria
+  isActive: boolean; // soft delete — nunca fazer hard delete de conteúdo do catálogo
+  isFeatured: boolean; // exibido no "starter pack" / destaques da home
+  tags: string[]; // tags de busca/filtro livres, ex.: ["treino", "virada"]
+  locale: string; // BCP-47, ex.: "pt-BR" — todo o conteúdo de lançamento é pt-BR
+  playCount: number; // desnormalizado, só é incrementado no servidor (rollup de analytics)
+  favoriteCount: number; // desnormalizado, mantido em sincronia pelo trigger onFavoriteWrite
   createdAt: Timestamp;
   updatedAt: Timestamp;
-  createdBy: string; // uid of the admin/content_manager who created it
+  createdBy: string; // uid do admin/content_manager que o criou
 }
 
 export type AudioClipCreateInput = Pick<

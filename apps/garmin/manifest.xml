@@ -8,15 +8,17 @@
         launcherIcon="@Drawables.LauncherIcon"
         minSdkVersion="4.2.0">
 
-        <!-- Communications: the RELAY command channel to the phone (Communications.transmit).
-             Garmin devices mostly cannot play arbitrary third-party audio (see README.md and
-             garmin_capability_table.json), so this app operates in RELAY mode by default. -->
+        <!-- Communications: o canal de comando RELAY para o celular (Communications.transmit).
+             Os dispositivos Garmin, na maioria, não conseguem reproduzir áudio arbitrário de
+             terceiros (veja README.md e garmin_capability_table.json), então este app opera em
+             modo RELAY por padrão. -->
         <iq:permissions>
             <iq:uses-permission id="Communications" />
         </iq:permissions>
 
-        <!-- Realistic subset of Connect IQ-capable devices with Bluetooth + companion app
-             support. Expand via garmin_capability_table.json when adding a device. -->
+        <!-- Subconjunto realista de dispositivos compatíveis com Connect IQ que possuem suporte
+             a Bluetooth + app companion. Expanda via garmin_capability_table.json ao adicionar
+             um dispositivo. -->
         <iq:products>
             <iq:product id="fenix7" />
             <iq:product id="fenix7s" />

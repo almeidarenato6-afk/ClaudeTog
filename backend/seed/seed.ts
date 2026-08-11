@@ -1,19 +1,21 @@
 /**
- * Populates Firestore with starter categories and audio clips.
+ * Popula o Firestore com categorias e clipes de áudio iniciais.
  *
- * Usage:
+ * Uso:
  *   GOOGLE_APPLICATION_CREDENTIALS=./service-account.json \
- *   STORAGE_BUCKET=<your-project-id>.appspot.com \
+ *   STORAGE_BUCKET=<seu-project-id>.appspot.com \
  *   npx ts-node seed.ts
  *
- * Safe to re-run: categories/audios use deterministic doc IDs (their slug /
- * file basename), so subsequent runs update rather than duplicate.
+ * Seguro para reexecutar: categories/audios usam IDs de documento
+ * determinísticos (seu slug / basename do arquivo), então execuções
+ * subsequentes atualizam em vez de duplicar.
  *
- * NOTE: this only writes Firestore documents. It does NOT upload actual
- * audio files to Cloud Storage — `audioUrl`/`storagePath` below point at
- * where each file should live (`catalog/audios/{audioId}/master.m4a`).
- * Upload the real .m4a masters via the admin panel or `gsutil cp` before
- * shipping; until then `audioUrl` will 404.
+ * NOTA: isso apenas grava documentos no Firestore. NÃO faz upload dos
+ * arquivos de áudio reais para o Cloud Storage — `audioUrl`/`storagePath`
+ * abaixo apontam para onde cada arquivo deveria estar
+ * (`catalog/audios/{audioId}/master.m4a`). Faça o upload dos masters .m4a
+ * reais via painel admin ou `gsutil cp` antes de publicar; até lá,
+ * `audioUrl` retornará 404.
  */
 import * as admin from "firebase-admin";
 import categoriesSeed from "./categories.json";
@@ -60,7 +62,7 @@ async function seedCategories(): Promise<Record<string, string>> {
         icon: category.icon,
         color: category.color,
         isActive: true,
-        audioCount: 0, // corrected below once audios are written
+        audioCount: 0, // corrigido abaixo assim que os áudios forem gravados
         createdAt: now,
         updatedAt: now,
       },

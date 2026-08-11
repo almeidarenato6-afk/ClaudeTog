@@ -3,9 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:injectable/injectable.dart';
 import 'package:vai_marcia/core/constants/app_constants.dart';
 
-/// Mirrors favorites to Firestore so they survive reinstalls / sync across
-/// the user's devices. Local (Drift) stays authoritative for reads on the
-/// UI-critical path; this is best-effort background sync.
+/// Espelha os favoritos no Firestore para que sobrevivam a reinstalações
+/// / sincronizem entre os dispositivos do usuário. O armazenamento local
+/// (Drift) continua sendo a fonte de verdade para leituras no caminho
+/// crítico da UI; isso é sincronização em segundo plano de melhor
+/// esforço.
 abstract interface class FavoritesRemoteDataSource {
   Future<void> setFavorite(String clipId, bool isFavorite);
 }

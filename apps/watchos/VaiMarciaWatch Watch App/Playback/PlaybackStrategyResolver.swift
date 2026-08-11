@@ -2,9 +2,9 @@ import AVFoundation
 import Foundation
 import WatchKit
 
-/// Implements the decision algorithm from docs/DEVICE_DETECTION.md §"Algoritmo" step 3.
-/// Resolved once per launch / pairing-change event and cached — never on the tap-to-sound
-/// path (see docs/ARCHITECTURE.md §4).
+/// Implementa o algoritmo de decisão de docs/DEVICE_DETECTION.md §"Algoritmo" passo 3.
+/// Resolvido uma vez por evento de inicialização / mudança de pareamento e mantido em cache —
+/// nunca no caminho de toque-até-som (veja docs/ARCHITECTURE.md §4).
 final class PlaybackStrategyResolver {
     private let connectivity: WatchConnectivityManager
 
@@ -26,9 +26,9 @@ final class PlaybackStrategyResolver {
         return .phoneOnly
     }
 
-    /// docs/DEVICE_DETECTION.md step 2 — watchOS probe: `AVAudioSession.currentRoute` plus
-    /// checking for a directly-paired Bluetooth output; watchOS ≥ 9 on Apple Watch
-    /// Ultra/Series 8+ with direct Bluetooth audio reports `hasBluetoothClassicAudio = true`.
+    /// docs/DEVICE_DETECTION.md passo 2 — sondagem watchOS: `AVAudioSession.currentRoute`
+    /// mais verificação de uma saída Bluetooth diretamente pareada; watchOS ≥ 9 em Apple
+    /// Watch Ultra/Series 8+ com áudio Bluetooth direto reporta `hasBluetoothClassicAudio = true`.
     private func probeLocalCapabilities() -> DeviceCapabilityProfile {
         let session = AVAudioSession.sharedInstance()
         let hasDirectBluetoothRoute = session.currentRoute.outputs.contains { output in
@@ -40,18 +40,19 @@ final class PlaybackStrategyResolver {
             model: WKInterfaceDevice.current().model,
             osVersion: WKInterfaceDevice.current().systemVersion,
             hasBluetoothClassicAudio: hasDirectBluetoothRoute && supportsDirectHardware,
-            hasBleAudioSupport: false, // LC3/LE Audio detection needs device-specific data not yet in the compatibility table
+            hasBleAudioSupport: false, // Detecção de LC3/LE Audio precisa de dados específicos do dispositivo ainda não presentes na tabela de compatibilidade
             supportedCodecs: [.aac, .sbc],
-            canPlayArbitraryLocalAudio: true, // AVAudioPlayer plays arbitrary local files on all watchOS versions we target
+            canPlayArbitraryLocalAudio: true, // AVAudioPlayer reproduz arquivos locais arbitrários em todas as versões de watchOS que suportamos
             hasPersistentCompanionChannel: connectivity.isReachable,
             estimatedLatencyMs: supportsDirectHardware ? 70 : 130,
         )
     }
 
-    /// Static allow-list per docs/DEVICE_DETECTION.md compatibility table: watchOS does not
-    /// expose a runtime API to ask "does this hardware have a Bluetooth Classic audio radio",
-    /// so identifying Ultra/Series 8+ vs SE/≤7 relies on matching against known model
-    /// identifiers, refreshed as Apple ships new watch generations.
+    /// Lista de permissão estática conforme a tabela de compatibilidade de
+    /// docs/DEVICE_DETECTION.md: o watchOS não expõe uma API em tempo de execução para
+    /// perguntar "este hardware tem rádio de áudio Bluetooth Classic", então identificar
+    /// Ultra/Series 8+ vs SE/≤7 depende de comparar com identificadores de modelo conhecidos,
+    /// atualizados conforme a Apple lança novas gerações de relógio.
     private func watchSupportsDirectBluetoothAudio() -> Bool {
         let identifier = watchModelIdentifier()
         return DirectAudioCapableModels.identifiers.contains(identifier)
@@ -69,9 +70,10 @@ final class PlaybackStrategyResolver {
     }
 }
 
-/// Watch5,x = Series 8, Watch6,x = Ultra/Series 9-class families in Apple's identifier
-/// scheme; kept as a small static table rather than an SDK capability query per
-/// docs/DEVICE_DETECTION.md (the OS doesn't expose "has direct Bluetooth audio radio").
+/// Watch5,x = Series 8, Watch6,x = famílias da classe Ultra/Series 9 no esquema de
+/// identificadores da Apple; mantido como uma pequena tabela estática em vez de uma consulta
+/// de capacidade via SDK, conforme docs/DEVICE_DETECTION.md (o SO não expõe "tem rádio de
+/// áudio Bluetooth direto").
 private enum DirectAudioCapableModels {
     static let identifiers: Set<String> = [
         "Watch6,1", "Watch6,2", "Watch6,3", "Watch6,4", // Series 8

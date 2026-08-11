@@ -1,15 +1,15 @@
 import Foundation
 
-/// See docs/DEVICE_DETECTION.md — decided once per pairing change and persisted, never
-/// recomputed synchronously in the tap-to-sound critical path.
+/// Veja docs/DEVICE_DETECTION.md — decidido uma vez a cada mudança de pareamento e
+/// persistido, nunca recalculado de forma síncrona no caminho crítico de toque-até-som.
 enum PlaybackStrategy: String, Codable {
-    /// Cenário A: watch plays locally cached audio straight to a paired Bluetooth speaker.
+    /// Cenário A: o relógio reproduz áudio em cache localmente direto para uma caixa Bluetooth pareada.
     case direct
 
-    /// Cenário B: watch sends a lightweight command to the phone, which plays the audio.
+    /// Cenário B: o relógio envia um comando leve para o celular, que reproduz o áudio.
     case relay
 
-    /// No usable output at all from the watch alone; UI should route the user to the phone.
+    /// Nenhuma saída utilizável a partir do relógio sozinho; a UI deve direcionar o usuário ao celular.
     case phoneOnly
 }
 
@@ -17,8 +17,9 @@ enum AudioCodec: String, Codable {
     case sbc, aac, aptx, aptxHd, lc3
 }
 
-/// Mirrors `DeviceCapabilityProfile` from docs/DEVICE_DETECTION.md. Populated on-device
-/// using AVAudioSession introspection (see Data/Companion) — pure data holder here.
+/// Espelha `DeviceCapabilityProfile` de docs/DEVICE_DETECTION.md. Preenchido no dispositivo
+/// usando introspecção via AVAudioSession (veja Data/Companion) — aqui é apenas um contêiner
+/// de dados.
 struct DeviceCapabilityProfile: Codable {
     let manufacturer: String
     let model: String

@@ -5,8 +5,9 @@ import 'package:vai_marcia/core/extensions/context_extensions.dart';
 import 'package:vai_marcia/core/theme/app_colors.dart';
 import 'package:vai_marcia/features/store/presentation/providers/store_providers.dart';
 
-/// Persistent-but-unobtrusive: a slim single-line banner, never a modal or
-/// interstitial, so it never sits between a user and the big buttons.
+/// Persistente, mas discreto: um banner fino de uma única linha, nunca
+/// um modal ou interstitial, para que nunca fique entre o usuário e os
+/// botões grandes.
 class StoreBanner extends ConsumerWidget {
   const StoreBanner({super.key});
 

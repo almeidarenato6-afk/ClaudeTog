@@ -1,7 +1,8 @@
-/// Centralized pt-BR copy. The product's primary (and, for now, only)
-/// market is Brazil, so full `intl`/ARB i18n scaffolding is deliberately
-/// skipped in favor of a flat constants file — trivial to migrate to
-/// `flutter_localizations` ARB files later if/when other locales ship.
+/// Textos centralizados em pt-BR. O mercado principal (e, por enquanto,
+/// único) do produto é o Brasil, então o scaffolding completo de i18n com
+/// `intl`/ARB é deliberadamente evitado em favor de um arquivo de
+/// constantes simples — trivial de migrar para arquivos ARB do
+/// `flutter_localizations` mais tarde, se/quando outros idiomas forem lançados.
 abstract final class AppStrings {
   static const String appName = 'Vai Márcia';
   static const String appTagline = 'Sua energia, um toque de distância.';

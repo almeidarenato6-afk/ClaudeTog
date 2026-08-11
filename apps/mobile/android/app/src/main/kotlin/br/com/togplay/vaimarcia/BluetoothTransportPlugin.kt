@@ -9,15 +9,16 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 
 /**
- * Native counterpart of `BluetoothPlatformDataSource`
+ * Contraparte nativa de `BluetoothPlatformDataSource`
  * (lib/features/bluetooth/data/datasources/bluetooth_platform_datasource.dart)
- * and `DeviceCapabilityProbeDataSource`
+ * e `DeviceCapabilityProbeDataSource`
  * (lib/features/device_pairing/data/datasources/device_capability_probe_datasource.dart).
  *
- * STATUS: SCAFFOLD ONLY. Method names/channel wiring match the Dart side;
- * every method below is a documented TODO, not a working implementation.
- * `openBluetoothSettings` is the one method implemented for real since it
- * needs no Bluetooth Classic API access, just an Intent.
+ * STATUS: APENAS SCAFFOLD. Nomes de método/conexão de canal batem com o
+ * lado Dart; cada método abaixo é um TODO documentado, não uma
+ * implementação funcional. `openBluetoothSettings` é o único método
+ * implementado de verdade, já que não precisa de acesso à API Bluetooth
+ * Classic, apenas um Intent.
  */
 class BluetoothTransportPlugin(private val context: Context) {
     private lateinit var methodChannel: MethodChannel
@@ -36,14 +37,14 @@ class BluetoothTransportPlugin(private val context: Context) {
         )
         eventChannel.setStreamHandler(object : EventChannel.StreamHandler {
             override fun onListen(arguments: Any?, events: EventChannel.EventSink) {
-                // TODO: register a BroadcastReceiver for
-                // BluetoothA2dp.ACTION_CONNECTION_STATE_CHANGED and forward
-                // "connected"/"connecting"/"disconnected"/"error" strings
-                // matching BluetoothConnectionState.name on the Dart side.
+                // TODO: registrar um BroadcastReceiver para
+                // BluetoothA2dp.ACTION_CONNECTION_STATE_CHANGED e repassar
+                // as strings "connected"/"connecting"/"disconnected"/"error"
+                // correspondendo a BluetoothConnectionState.name no lado Dart.
             }
 
             override fun onCancel(arguments: Any?) {
-                // TODO: unregister the BroadcastReceiver registered above.
+                // TODO: cancelar o registro do BroadcastReceiver registrado acima.
             }
         })
     }
@@ -51,23 +52,23 @@ class BluetoothTransportPlugin(private val context: Context) {
     private fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when (call.method) {
             "listPairedAudioDevices", "listPairedSpeakers" -> {
-                // TODO: BluetoothAdapter.getBondedDevices() filtered by
-                // BluetoothClass.Device.AUDIO_VIDEO_* (per
-                // docs/DEVICE_DETECTION.md §4), map to
+                // TODO: BluetoothAdapter.getBondedDevices() filtrado por
+                // BluetoothClass.Device.AUDIO_VIDEO_* (conforme
+                // docs/DEVICE_DETECTION.md §4), mapeando para
                 // [{"id":..., "name":..., "isA2dpActive":..., "brand":...}].
-                // Requires BLUETOOTH_CONNECT (already declared in
-                // AndroidManifest.xml) granted at runtime.
+                // Requer BLUETOOTH_CONNECT (já declarado no
+                // AndroidManifest.xml) concedido em tempo de execução.
                 result.notImplemented()
             }
 
             "keepRouteWarm" -> {
-                // TODO: obtain a BluetoothA2dp proxy via
+                // TODO: obter um proxy BluetoothA2dp via
                 // BluetoothAdapter.getProfileProxy(context, listener, A2DP)
-                // and avoid ever calling closeProfileProxy() between plays
-                // — this is the "connection kept warm" tactic in
-                // ARCHITECTURE.md §4. Likely needs to run inside a
-                // foreground service (see AndroidManifest.xml TODO) so
-                // Android doesn't tear down the proxy when backgrounded.
+                // e evitar chamar closeProfileProxy() entre reproduções
+                // — essa é a tática de "conexão mantida quente" descrita em
+                // ARCHITECTURE.md §4. Provavelmente precisa rodar dentro de
+                // um foreground service (veja o TODO em AndroidManifest.xml)
+                // para que o Android não derrube o proxy em segundo plano.
                 result.notImplemented()
             }
 

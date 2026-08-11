@@ -34,8 +34,9 @@ class RecordingRemoteDataSourceImpl implements RecordingRemoteDataSource {
     final String clipId = _firestore.collection(AppConstants.firestoreCollectionAudios).doc().id;
     final Reference ref = _storage.ref('${AppConstants.storageBucketRecordingsPath}/$ownerId/$clipId.m4a');
 
-    // Recordings default to private (owner-only Storage/Firestore rules —
-    // see ARCHITECTURE.md §10) unlike catalog audio, which is public-read.
+    // Gravações são privadas por padrão (regras de Storage/Firestore
+    // apenas para o dono — veja ARCHITECTURE.md §10), diferente do áudio
+    // do catálogo, que é de leitura pública.
     await ref.putFile(
       File(localFilePath),
       SettableMetadata(customMetadata: <String, String>{'ownerUserId': ownerId}),

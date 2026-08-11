@@ -64,8 +64,8 @@ export async function listAudios(
   const snap = await getDocs(query(collection(db, COLLECTION), ...constraints));
   let items = snap.docs.map((d) => fromDoc(d.id, d.data() as AudioDoc));
 
-  // Client-side text filter — Firestore has no native full-text search and
-  // this list is expected to stay in the low thousands, not millions.
+  // Filtro de texto no client — o Firestore não tem busca full-text nativa
+  // e essa lista deve se manter na casa dos milhares, não milhões.
   if (filters.search?.trim()) {
     const needle = filters.search.trim().toLowerCase();
     items = items.filter(
@@ -79,9 +79,10 @@ export async function listAudios(
 }
 
 /**
- * Uploads the raw audio file to Cloud Storage under `audios/uploads/` and
- * returns the storage path Cloud Functions will use to validate/transcode
- * and register the Firestore doc (see createAudio callable below).
+ * Faz upload do arquivo de áudio bruto para o Cloud Storage em
+ * `audios/uploads/` e retorna o storage path que as Cloud Functions vão
+ * usar para validar/transcodificar e registrar o doc no Firestore (ver o
+ * callable createAudio abaixo).
  */
 export function uploadAudioFile(
   file: File,

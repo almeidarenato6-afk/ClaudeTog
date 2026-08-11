@@ -1,36 +1,40 @@
-# ios/ — hand-authored subset
+# ios/ — subconjunto escrito manualmente
 
-Like `android/`, this is not a full Flutter iOS project — no `.xcodeproj`,
-no `Podfile.lock`, no `Assets.xcassets`, no `Base.lproj` storyboards. Those
-are boilerplate Xcode/Flutter generate deterministically.
+Assim como `android/`, este não é um projeto iOS Flutter completo — sem
+`.xcodeproj`, sem `Podfile.lock`, sem `Assets.xcassets`, sem storyboards
+`Base.lproj`. Isso é boilerplate que Xcode/Flutter geram de forma
+determinística.
 
-## What's here and real
+## O que existe aqui e é real
 
 - `Runner/Info.plist` — Bluetooth (`NSBluetoothAlwaysUsageDescription`,
-  `NSBluetoothPeripheralUsageDescription`), microphone
-  (`NSMicrophoneUsageDescription`), background audio mode, and the
-  `vaimarcia://` URL scheme.
-- `Runner/AppDelegate.swift` — registers the two platform-channel plugins
-  below alongside Flutter's `GeneratedPluginRegistrant`.
+  `NSBluetoothPeripheralUsageDescription`), microfone
+  (`NSMicrophoneUsageDescription`), modo de áudio em segundo plano, e o
+  esquema de URL `vaimarcia://`.
+- `Runner/AppDelegate.swift` — registra os dois plugins de
+  platform-channel abaixo junto com o `GeneratedPluginRegistrant` do
+  Flutter.
 - `Runner/BluetoothTransportPlugin.swift`, `WatchCompanionPlugin.swift` —
-  **scaffolds**. Channel/method names match the Dart side exactly (see
-  `lib/features/bluetooth/...` and `lib/features/watch_companion/...`),
-  but the bodies are `FlutterMethodNotImplemented` TODOs describing the
-  real `AVAudioSession` / `WatchConnectivity` (`WCSession`) calls needed.
-  `openBluetoothSettings` opens the app's Settings entry (iOS has no
-  public deep link straight into Settings > Bluetooth for third-party
-  apps).
+  **scaffolds**. Os nomes de canal/método batem exatamente com o lado
+  Dart (veja `lib/features/bluetooth/...` e
+  `lib/features/watch_companion/...`), mas os corpos são TODOs com
+  `FlutterMethodNotImplemented` descrevendo as chamadas reais de
+  `AVAudioSession` / `WatchConnectivity` (`WCSession`) necessárias.
+  `openBluetoothSettings` abre a entrada do app nos Ajustes (o iOS não
+  tem um deep link público direto para Ajustes > Bluetooth para apps de
+  terceiros).
 
-## Known iOS platform limitation (documented, not a bug)
+## Limitação conhecida da plataforma iOS (documentada, não é um bug)
 
-Unlike Android's `BluetoothAdapter.getBondedDevices()`, iOS has **no**
-public API to list all paired Bluetooth Classic devices — only the
-currently active `AVAudioSession` output route. `listPairedAudioDevices`
-will realistically return at most one device. This is called out again in
-the Swift TODO and should be surfaced to product/design as a platform
-constraint, not "fixed" with a private API (App Store rejection risk).
+Diferente do `BluetoothAdapter.getBondedDevices()` do Android, o iOS
+**não** tem API pública para listar todos os dispositivos Bluetooth
+Classic pareados — apenas a rota de saída ativa no momento do
+`AVAudioSession`. `listPairedAudioDevices` realisticamente retornará no
+máximo um dispositivo. Isso é apontado novamente no TODO do Swift e deve
+ser levado ao produto/design como uma restrição de plataforma, e não
+"corrigido" com uma API privada (risco de rejeição na App Store).
 
-## To get a buildable project
+## Para obter um projeto compilável
 
 ```bash
 cd apps/mobile
@@ -38,9 +42,9 @@ flutter create --platforms=ios --org br.com.togplay .
 cd ios && pod install
 ```
 
-Then:
+Depois:
 
 ```bash
 dart pub global activate flutterfire_cli
-flutterfire configure   # generates ios/Runner/GoogleService-Info.plist + lib/firebase_options.dart
+flutterfire configure   # gera ios/Runner/GoogleService-Info.plist + lib/firebase_options.dart
 ```

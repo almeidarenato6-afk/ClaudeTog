@@ -47,9 +47,10 @@ export async function listCategories(): Promise<Category[]> {
   return snap.docs.map((d) => fromDoc(d.id, d.data() as CategoryDoc));
 }
 
-// Mutations go through Cloud Functions callables rather than direct
-// Firestore writes so backend-side validation (RBAC, slug uniqueness,
-// client cache invalidation) stays authoritative in one place.
+// Mutações passam por callables das Cloud Functions em vez de escrita
+// direta no Firestore, para que a validação do lado do backend (RBAC,
+// unicidade de slug, invalidação de cache do client) fique centralizada
+// em um único lugar.
 export async function createCategory(
   input: CreateCategoryInput,
 ): Promise<{ id: string }> {

@@ -5,15 +5,16 @@ import 'package:injectable/injectable.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:vai_marcia/core/constants/app_constants.dart';
 
-/// Pool of pre-warmed [AudioPlayer] instances.
+/// Pool de instâncias [AudioPlayer] pré-aquecidas.
 ///
-/// Why pool instead of one shared player: creating/disposing an
-/// [AudioPlayer] (and the platform-side ExoPlayer/AVPlayer it wraps) has
-/// non-trivial setup cost, and reusing a single player forces every tap to
-/// wait for the previous clip's teardown. A small round-robin pool lets a
-/// rapid double-tap on two different buttons start both clips with
-/// overlapping playback instead of queueing, keeping tap-to-audible under
-/// the 150ms budget (ARCHITECTURE.md §4).
+/// Por que usar pool em vez de um player compartilhado único: criar/
+/// descartar um [AudioPlayer] (e o ExoPlayer/AVPlayer do lado da
+/// plataforma que ele encapsula) tem um custo de setup não trivial, e
+/// reutilizar um único player força cada toque a esperar o desmonte do
+/// clipe anterior. Um pequeno pool round-robin permite que um duplo toque
+/// rápido em dois botões diferentes inicie ambos os clipes com reprodução
+/// sobreposta em vez de enfileirar, mantendo o toque-até-audível dentro
+/// do orçamento de 150ms (ARCHITECTURE.md §4).
 @lazySingleton
 class AudioPlayerPool {
   AudioPlayerPool() : _players = List<AudioPlayer>.generate(
@@ -25,9 +26,9 @@ class AudioPlayerPool {
   int _nextIndex = 0;
   bool _sessionConfigured = false;
 
-  /// Keeps the OS audio route ("playback" category / AudioFocus) claimed
-  /// once, up front, instead of negotiating it per tap — negotiation is
-  /// the single largest source of avoidable latency on Android.
+  /// Mantém a rota de áudio do SO (categoria "playback" / AudioFocus)
+  /// reservada uma vez, de antemão, em vez de negociá-la a cada toque — a
+  /// negociação é a maior fonte isolada de latência evitável no Android.
   Future<void> ensureAudioSessionConfigured() async {
     if (_sessionConfigured) {
       return;
@@ -38,8 +39,9 @@ class AudioPlayerPool {
     _sessionConfigured = true;
   }
 
-  /// Loads [filePath] into a player ahead of time (category preload) so
-  /// [acquireAndPlay] only has to call `play()`, not `setFilePath()`.
+  /// Carrega [filePath] em um player antecipadamente (preload de
+  /// categoria) para que [acquireAndPlay] só precise chamar `play()`, não
+  /// `setFilePath()`.
   Future<AudioPlayer> preload(String cacheKey, String filePath) async {
     await ensureAudioSessionConfigured();
     final AudioPlayer player = _players[_nextIndex];

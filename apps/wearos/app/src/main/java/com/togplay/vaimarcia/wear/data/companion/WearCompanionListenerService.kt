@@ -9,10 +9,11 @@ import javax.inject.Inject
 private const val PATH_CATALOG_SYNC = "/vaimarcia/catalog"
 
 /**
- * Background receiver for phone-pushed catalog syncs. Runs independent of the foreground
- * activity so newly-added or updated audio (and favorite toggles made on the phone) land in
- * the local cache before the user next opens Modo Jogo — keeping the tap-to-sound path free
- * of network/sync latency.
+ * Receptor em segundo plano para sincronizações de catálogo enviadas pelo celular. Executa
+ * independentemente da activity em primeiro plano para que áudios novos ou atualizados (e
+ * alternâncias de favoritos feitas no celular) cheguem ao cache local antes da próxima vez que
+ * o usuário abrir o Modo Jogo — mantendo o caminho de toque-até-som livre de latência de
+ * rede/sincronização.
  */
 @AndroidEntryPoint
 class WearCompanionListenerService : WearableListenerService() {
@@ -21,8 +22,8 @@ class WearCompanionListenerService : WearableListenerService() {
     lateinit var catalogSyncHandler: CatalogSyncHandler
 
     override fun onMessageReceived(messageEvent: MessageEvent) {
-        // Phone -> watch messages are limited to catalog/control notifications; playback
-        // commands only ever flow watch -> phone (see WearCompanionClient.sendPlayCommand).
+        // Mensagens celular -> relógio se limitam a notificações de catálogo/controle;
+        // comandos de reprodução fluem apenas relógio -> celular (veja WearCompanionClient.sendPlayCommand).
     }
 
     override fun onDataChanged(dataEvents: DataEventBuffer) {

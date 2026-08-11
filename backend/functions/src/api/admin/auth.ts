@@ -11,9 +11,10 @@ const setUserRoleSchema = z.object({
 });
 
 /**
- * Grants an admin-panel role via custom claim. Only an existing `admin` may
- * call this — bootstrapping the very first admin has to be done out-of-band
- * (Firebase console or `firebase auth:import`/Admin SDK script), see README.
+ * Concede um papel de painel admin via custom claim. Somente um `admin` já
+ * existente pode chamar isso — o bootstrap do primeiríssimo admin precisa ser
+ * feito fora desse fluxo (console do Firebase ou script `firebase auth:import`/
+ * Admin SDK), veja o README.
  */
 export const setUserRole = onCall({ region: REGION }, async (request) => {
   requireAdmin(request);

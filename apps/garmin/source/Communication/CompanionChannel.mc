@@ -2,12 +2,12 @@ import Toybox.Communications;
 import Toybox.Lang;
 import Toybox.System;
 
-// Wraps Toybox.Communications.transmit()/registerForPhoneAppMessages for the RELAY command
-// channel to the phone. Garmin is RELAY-only by default (see ../../README.md and
-// resources/garmin_capability_table.json) — the Connect IQ Mobile SDK's transmit channel to
-// the paired phone app is kept "listening" for the app's lifetime via
-// registerForPhoneAppMessages, mirroring the persistent-channel latency guidance in
-// docs/ARCHITECTURE.md §4 (avoids renegotiating the phone-app bridge per tap).
+// Envolve Toybox.Communications.transmit()/registerForPhoneAppMessages para o canal de
+// comando RELAY até o celular. A Garmin é RELAY-only por padrão (veja ../../README.md e
+// resources/garmin_capability_table.json) — o canal de transmissão do Connect IQ Mobile SDK
+// até o app companion pareado é mantido "escutando" durante todo o ciclo de vida do app via
+// registerForPhoneAppMessages, seguindo a orientação de latência do canal persistente em
+// docs/ARCHITECTURE.md §4 (evita renegociar a ponte app-celular a cada toque).
 class CompanionChannel {
 
     private var _onAck as (Method(success as Boolean) as Void)?;
@@ -16,8 +16,8 @@ class CompanionChannel {
         Communications.registerForPhoneAppMessages(method(:onPhoneMessage));
     }
 
-    // Sends only the audioId (a few bytes) — the phone already has the audio cached
-    // locally and plays it immediately to the paired Bluetooth speaker.
+    // Envia apenas o audioId (alguns bytes) — o celular já tem o áudio em cache
+    // localmente e o reproduz imediatamente na caixa Bluetooth pareada.
     function sendPlayCommand(audioId as String, onAck as (Method(success as Boolean) as Void)?) as Void {
         _onAck = onAck;
         var payload = {
@@ -33,10 +33,10 @@ class CompanionChannel {
         }
     }
 
-    // Phone -> watch messages are limited to acks/catalog notifications today; playback
-    // commands only ever flow watch -> phone.
+    // Mensagens celular -> relógio hoje se limitam a confirmações/notificações de catálogo;
+    // comandos de reprodução só fluem no sentido relógio -> celular.
     function onPhoneMessage(message as Communications.PhoneAppMessage) as Void {
-        System.println("CompanionChannel: received phone message");
+        System.println("CompanionChannel: mensagem do celular recebida");
     }
 }
 

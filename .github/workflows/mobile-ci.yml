@@ -34,8 +34,9 @@ jobs:
       - run: flutter pub get
       - run: flutter build appbundle --release
         env:
-          # Real signing config must be provided via repository secrets before
-          # this step produces a store-ready artifact; see docs/PUBLISHING_CHECKLIST.md
+          # A configuração real de assinatura precisa vir de secrets do
+          # repositório antes que este passo gere um artefato pronto para
+          # loja; ver docs/PUBLISHING_CHECKLIST.md
           SKIP_SIGNING: "true"
 
   build-ios:

@@ -17,9 +17,9 @@ class CategoryRepositoryImpl implements CategoryRepository {
     return _remote.watchCategories().map(
           (List<AudioCategoryModel> models) {
             final List<AudioCategory> entities = models.map((AudioCategoryModel m) => m.toEntity()).toList();
-            // Offline-first fallback: if remote hasn't delivered anything
-            // yet (first launch, no network), show the seeded default
-            // categories instead of an empty grid.
+            // Fallback offline-first: se o remoto ainda não entregou nada
+            // (primeira abertura, sem rede), mostrar as categorias padrão
+            // pré-carregadas em vez de uma grade vazia.
             return entities.isEmpty ? DefaultCategories.seed : entities;
           },
         );

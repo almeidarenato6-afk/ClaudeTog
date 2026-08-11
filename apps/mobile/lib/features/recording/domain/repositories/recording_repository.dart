@@ -5,9 +5,9 @@ abstract interface class RecordingRepository {
 
   Future<Result<String>> stopRecording();
 
-  /// Runs the recorded file through [AudioProcessingPipeline] (today just
-  /// [PassthroughStage]), then uploads it and creates the corresponding
-  /// `AudioClip` in the "Personalizados" category.
+  /// Passa o arquivo gravado pelo [AudioProcessingPipeline] (hoje apenas
+  /// [PassthroughStage]), depois faz o upload e cria o `AudioClip`
+  /// correspondente na categoria "Personalizados".
   Future<Result<String>> saveRecording({
     required String filePath,
     required String title,

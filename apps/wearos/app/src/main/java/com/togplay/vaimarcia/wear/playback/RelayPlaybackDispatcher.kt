@@ -5,9 +5,9 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * Scenario B: dispatches the play command to the phone over the persistent Data Layer
- * connection. The phone already has the audio cached and plays it to the paired Bluetooth
- * speaker — from the user's perspective this is indistinguishable from Scenario A.
+ * Cenário B: envia o comando de reprodução para o celular pela conexão persistente do Data
+ * Layer. O celular já tem o áudio em cache e o reproduz na caixa Bluetooth pareada — da
+ * perspectiva do usuário, isso é indistinguível do Cenário A.
  */
 @Singleton
 class RelayPlaybackDispatcher @Inject constructor(

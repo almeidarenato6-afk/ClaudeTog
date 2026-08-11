@@ -2,11 +2,11 @@ import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
 import 'package:vai_marcia/core/constants/app_constants.dart';
 
-/// TODO(platform-channel): native implementations required —
-/// android/app/src/main/kotlin/.../WatchCompanionPlugin.kt (Wear OS Data
-/// Layer) and ios/Runner/WatchCompanionPlugin.swift (WatchConnectivity).
-/// Both are scaffolded with method names matching this class but throw
-/// `MissingPluginException` until implemented.
+/// TODO(platform-channel): implementações nativas necessárias —
+/// android/app/src/main/kotlin/.../WatchCompanionPlugin.kt (Data Layer do
+/// Wear OS) e ios/Runner/WatchCompanionPlugin.swift (WatchConnectivity).
+/// Ambas estão com scaffold com nomes de método correspondendo a esta
+/// classe, mas lançam `MissingPluginException` até serem implementadas.
 @lazySingleton
 class WatchCompanionPlatformDataSource {
   WatchCompanionPlatformDataSource()
@@ -42,7 +42,8 @@ class WatchCompanionPlatformDataSource {
     try {
       await _methodChannel.invokeMethod<void>('sendCommand', command);
     } on MissingPluginException {
-      // No-op until native side is implemented — see class doc.
+      // Sem efeito até que o lado nativo seja implementado — veja a
+      // documentação da classe.
     }
   }
 }

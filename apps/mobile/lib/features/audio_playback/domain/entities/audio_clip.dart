@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
 
-/// Where a clip's bytes currently live — drives whether [PlayAudioUseCase]
-/// can hit the < 150ms latency budget (only [downloaded]/[bundled] clips
-/// qualify; [remoteOnly] must be downloaded first).
+/// Onde os bytes de um clipe estão atualmente — determina se
+/// [PlayAudioUseCase] consegue atingir o orçamento de latência < 150ms
+/// (apenas clipes [downloaded]/[bundled] se qualificam; [remoteOnly]
+/// precisa ser baixado primeiro).
 enum AudioClipAvailability { bundled, downloaded, remoteOnly }
 
 class AudioClip extends Equatable {

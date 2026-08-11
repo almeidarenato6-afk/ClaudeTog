@@ -7,9 +7,9 @@ import 'package:path_provider/path_provider.dart';
 import 'package:vai_marcia/features/audio_playback/data/datasources/audio_local_database.dart';
 import 'package:vai_marcia/features/audio_playback/data/models/audio_clip_model.dart';
 
-/// Wraps [AudioLocalDatabase] (metadata) + filesystem (actual audio bytes).
-/// Kept behind an interface so [AudioRepositoryImpl] never touches Drift or
-/// dart:io directly.
+/// Encapsula [AudioLocalDatabase] (metadados) + sistema de arquivos (bytes
+/// de áudio reais). Mantido atrás de uma interface para que
+/// [AudioRepositoryImpl] nunca toque em Drift ou dart:io diretamente.
 abstract interface class AudioLocalDataSource {
   Stream<List<AudioClipModel>> watchClipsByCategory(String categoryId);
   Future<AudioClipModel?> getCachedClip(String clipId);

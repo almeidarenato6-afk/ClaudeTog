@@ -3,10 +3,11 @@ import { REGION } from "../config/env";
 import { AudioClip } from "../domain/AudioClip";
 
 /**
- * Safety net for defaults on audio docs, in case a document is ever created
- * by something other than the `createAudio` callable (e.g. a future bulk
- * import script, or a manual Firestore console edit by an admin). The
- * callable already sets these correctly, so this is idempotent/defensive.
+ * Rede de segurança para valores padrão em docs de áudio, caso um documento
+ * seja criado por algo além do callable `createAudio` (ex.: um futuro script
+ * de importação em massa, ou uma edição manual de um admin no console do
+ * Firestore). O callable já define esses valores corretamente, então isso é
+ * idempotente/defensivo.
  */
 export const onAudioCreate = onDocumentCreated(
   { region: REGION, document: "audios/{audioId}" },

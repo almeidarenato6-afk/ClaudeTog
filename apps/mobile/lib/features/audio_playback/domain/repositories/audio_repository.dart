@@ -7,15 +7,17 @@ abstract interface class AudioRepository {
 
   Future<Result<AudioClip>> getClipById(String clipId);
 
-  /// Downloads and pins every clip in [categoryId] into local cache +
-  /// warms an [AudioPlayer] pool entry for each, so the whole category is
-  /// instant-play the moment the user opens it (ARCHITECTURE.md §4).
+  /// Baixa e fixa todo clipe em [categoryId] no cache local + aquece uma
+  /// entrada de pool [AudioPlayer] para cada um, para que a categoria
+  /// inteira esteja pronta para reprodução instantânea assim que o
+  /// usuário a abrir (ARCHITECTURE.md §4).
   Future<Result<void>> preloadCategory(String categoryId);
 
-  /// Plays [clipId] with minimal latency. [strategy] tells the
-  /// implementation whether to also relay the command to a paired watch
-  /// (RELAY) or just play locally (DIRECT is watch-side only from the
-  /// phone's perspective; PHONE_ONLY is always local-only).
+  /// Reproduz [clipId] com latência mínima. [strategy] diz à
+  /// implementação se deve também retransmitir o comando a um relógio
+  /// pareado (RELAY) ou apenas reproduzir localmente (DIRECT é apenas do
+  /// lado do relógio na perspectiva do celular; PHONE_ONLY é sempre
+  /// somente local).
   Future<Result<void>> play(String clipId, {required PlaybackStrategy strategy});
 
   Future<Result<void>> stopAll();

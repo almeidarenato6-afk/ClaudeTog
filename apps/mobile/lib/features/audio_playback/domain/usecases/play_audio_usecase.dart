@@ -3,10 +3,11 @@ import 'package:vai_marcia/core/error/result.dart';
 import 'package:vai_marcia/features/audio_playback/domain/repositories/audio_repository.dart';
 import 'package:vai_marcia/features/device_pairing/domain/entities/playback_strategy.dart';
 
-/// The single most latency-sensitive call in the app: button tap -> this.
-/// Deliberately thin — all the actual latency work (pooled players, warm
-/// Bluetooth route, pre-cached files) lives in the repository/datasource so
-/// this use case adds zero overhead of its own on the critical path.
+/// A chamada mais sensível a latência de todo o app: toque no botão -> isto.
+/// Propositalmente enxuta — todo o trabalho real de latência (players em
+/// pool, rota Bluetooth quente, arquivos pré-cacheados) vive no
+/// repository/datasource, para que este use case não adicione overhead
+/// próprio ao caminho crítico.
 @injectable
 class PlayAudioUseCase {
   const PlayAudioUseCase(this._repository);

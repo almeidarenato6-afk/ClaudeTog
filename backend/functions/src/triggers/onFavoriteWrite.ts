@@ -5,9 +5,10 @@ import { AudioRepository } from "../repositories/AudioRepository";
 const audioRepository = new AudioRepository();
 
 /**
- * Keeps `AudioClip.favoriteCount` in sync with the client-writable
- * `users/{uid}/favorites/{audioId}` subcollection (see api/client/favorites.ts
- * for why favoriting itself is a direct client write rather than a callable).
+ * Mantém `AudioClip.favoriteCount` sincronizado com a subcoleção
+ * `users/{uid}/favorites/{audioId}`, gravável diretamente pelo cliente (veja
+ * api/client/favorites.ts para entender por que favoritar em si é uma
+ * escrita direta do cliente em vez de um callable).
  */
 export const onFavoriteWrite = onDocumentWritten(
   { region: REGION, document: "users/{uid}/favorites/{audioId}" },
@@ -16,7 +17,7 @@ export const onFavoriteWrite = onDocumentWritten(
     const existedBefore = event.data?.before.exists ?? false;
     const existsAfter = event.data?.after.exists ?? false;
 
-    if (existedBefore === existsAfter) return; // no-op writes shouldn't happen, but guard anyway
+    if (existedBefore === existsAfter) return; // escritas no-op não deveriam ocorrer, mas protegemos mesmo assim
 
     await audioRepository.incrementFavoriteCount(audioId, existsAfter ? 1 : -1);
   }

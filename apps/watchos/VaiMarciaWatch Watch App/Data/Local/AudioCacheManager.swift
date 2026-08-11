@@ -1,8 +1,9 @@
 import Foundation
 
-/// Manages cached audio files in the app's container `Documents/AudioCache` directory.
-/// watchOS app storage is small, so eviction of least-recently-played clips outside the
-/// starter pack is expected here (not implemented — see README TODO list).
+/// Gerencia os arquivos de áudio em cache no diretório `Documents/AudioCache` do container
+/// do app. O armazenamento de apps watchOS é pequeno, então é esperado que haja expurgo dos
+/// clipes reproduzidos há mais tempo fora do pacote inicial aqui (não implementado — veja a
+/// lista de TODOs do README).
 final class AudioCacheManager {
     static let shared = AudioCacheManager()
 

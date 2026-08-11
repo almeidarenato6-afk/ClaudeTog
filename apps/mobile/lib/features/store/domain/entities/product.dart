@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
 
-/// Modeled for a future `EcommerceApiStoreRepository` (ARCHITECTURE.md §9)
-/// — unused by today's [ExternalLinkStoreRepository], which only opens a
-/// web link. Kept here so the swap-in later touches zero UI code.
+/// Modelado para uma futura `EcommerceApiStoreRepository`
+/// (ARCHITECTURE.md §9) — não utilizado pela atual
+/// [ExternalLinkStoreRepository], que apenas abre um link web. Mantido
+/// aqui para que a futura substituição não toque em nenhum código de UI.
 class Product extends Equatable {
   const Product({
     required this.id,

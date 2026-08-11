@@ -6,10 +6,10 @@ import 'package:vai_marcia/features/audio_playback/domain/entities/audio_clip.da
 import 'package:vai_marcia/features/audio_playback/presentation/providers/audio_providers.dart';
 import 'package:vai_marcia/features/favorites/presentation/providers/favorites_providers.dart';
 
-/// The core interaction surface of the app: a grid of large tap targets,
-/// one per clip in the active category. Each tap goes straight to
-/// [PlaybackController.playClip] — no intermediate confirmation screen,
-/// since every extra frame here eats into the 150ms budget.
+/// A superfície de interação central do app: uma grade de grandes áreas
+/// de toque, uma por clipe na categoria ativa. Cada toque vai direto para
+/// [PlaybackController.playClip] — sem tela de confirmação intermediária,
+/// já que cada frame extra aqui consome o orçamento de 150ms.
 class BigButtonGrid extends ConsumerWidget {
   const BigButtonGrid({required this.categoryId, super.key});
 

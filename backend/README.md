@@ -1,10 +1,10 @@
 # Vai Márcia — Backend (Firebase)
 
-Firestore + Cloud Storage + Cloud Functions (TypeScript) + Firebase Auth backend for the
-Vai Márcia (TogPlay) soundboard app. See [`../docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md)
-for full system context.
+Backend em Firestore + Cloud Storage + Cloud Functions (TypeScript) + Firebase Auth para o
+app de soundboard Vai Márcia (TogPlay). Veja [`../docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md)
+para o contexto completo do sistema.
 
-## Layout
+## Estrutura
 
 ```
 backend/
@@ -24,7 +24,7 @@ backend/
 └── seed/                            # one-off script to populate starter catalog data
 ```
 
-## Setup
+## Configuração
 
 ```bash
 npm install -g firebase-tools
@@ -38,14 +38,14 @@ npm install
 npm run build
 ```
 
-## Local development
+## Desenvolvimento local
 
 ```bash
 cd backend
 firebase emulators:start --only functions,firestore,storage,auth
 ```
 
-The emulator UI runs at `http://localhost:4000`.
+A UI do emulador roda em `http://localhost:4000`.
 
 ## Deploy
 
@@ -54,35 +54,36 @@ cd backend
 firebase deploy --only firestore:rules,firestore:indexes,storage:rules,functions
 ```
 
-Hosting (for the admin panel build output) deploys separately once `admin/` has a build
-step producing `admin/dist`:
+O Hosting (para o build do painel admin) tem deploy separado assim que `admin/` tiver um
+passo de build gerando `admin/dist`:
 
 ```bash
 firebase deploy --only hosting
 ```
 
-## Admin roles (custom claims)
+## Papéis de admin (custom claims)
 
-Roles (`admin`, `content_manager`, `viewer`) live **only** as Firebase Auth custom claims —
-never mirrored into a Firestore document a client could write to. There is no
-Firestore-console way to see "who is an admin"; check custom claims via the Firebase console
-(Authentication → user → "Custom claims" is not shown there — use the Admin SDK/CLI) or:
+Os papéis (`admin`, `content_manager`, `viewer`) existem **apenas** como custom claims do
+Firebase Auth — nunca espelhados em um documento Firestore que um cliente pudesse escrever.
+Não há forma pelo console do Firestore de ver "quem é admin"; verifique as custom claims pelo
+console do Firebase (Authentication → usuário → "Custom claims" não aparece ali — use o
+Admin SDK/CLI) ou:
 
 ```js
-// one-off script, run with GOOGLE_APPLICATION_CREDENTIALS set to a service account key
+// script avulso, execute com GOOGLE_APPLICATION_CREDENTIALS apontando para uma chave de service account
 const admin = require("firebase-admin");
 admin.initializeApp();
 await admin.auth().setCustomUserClaims("<uid-of-first-admin>", { role: "admin" });
 ```
 
-Every subsequent admin/content_manager/viewer grant can go through the `setUserRole`
-callable (admin-role-only) once that first admin exists — see
+A partir do primeiro admin existente, toda concessão subsequente de admin/content_manager/viewer
+pode passar pelo callable `setUserRole` (restrito a admin) — veja
 `functions/src/api/admin/auth.ts`.
 
-Clients must force-refresh their ID token after a role change
-(`getIdToken(true)` / `getIdTokenResult(true)`) to pick up new claims.
+Os clientes precisam forçar o refresh do ID token após uma mudança de papel
+(`getIdToken(true)` / `getIdTokenResult(true)`) para receber as novas claims.
 
-## Seeding starter content
+## Populando conteúdo inicial (seed)
 
 ```bash
 cd backend/seed
@@ -92,59 +93,64 @@ STORAGE_BUCKET=<your-project-id>.appspot.com \
 npx ts-node seed.ts
 ```
 
-Writes 9 categories and 15 sample `AudioClip` docs (Portuguese motivational phrases —
-"Vai Márcia!", "Bora!", "Acredita!", etc.). This only creates Firestore documents; it does
-**not** upload actual `.m4a` audio files. Upload real masters to
-`catalog/audios/{audioId}/master.m4a` in Cloud Storage (via the admin panel once built, or
-`gsutil cp`) before the seeded `audioUrl`s will resolve.
+Grava 9 categorias e 15 documentos `AudioClip` de exemplo (frases motivacionais em português —
+"Vai Márcia!", "Bora!", "Acredita!", etc.). Isso cria apenas os documentos no Firestore; **não**
+faz upload dos arquivos de áudio `.m4a` de verdade. Faça upload dos masters reais para
+`catalog/audios/{audioId}/master.m4a` no Cloud Storage (pelo painel admin quando estiver
+pronto, ou via `gsutil cp`) antes que as `audioUrl`s populadas via seed consigam resolver.
 
-## Security model
+## Modelo de segurança
 
-- **Catalog** (`categories`, `audios`): public read, write requires the `admin` or
-  `content_manager` custom claim.
-- **Users** (`users/{uid}` and everything under it): owner-only. `favorites` is written
-  directly by the client (see `functions/src/api/client/favorites.ts` for why); `devices` is
-  written only via the `registerDevice` callable; `recordings` is private, owner read/write.
-- **Analytics** (`analytics_events`, `analytics_daily`): no direct client access at all —
-  ingestion is via the `recordAnalyticsEvent` callable, rollups are read-only for admin roles.
-- **Promotions**: public read, `admin`-only write.
-- Enforcement is in `firestore.rules`/`storage.rules` (the actual authority) *and* re-checked
-  in every admin callable via `requireRole`/`requireContentManager`/`requireAdmin` — never
-  trust a client-side check alone.
+- **Catálogo** (`categories`, `audios`): leitura pública, escrita exige a custom claim `admin`
+  ou `content_manager`.
+- **Usuários** (`users/{uid}` e tudo abaixo): apenas o dono. `favorites` é escrito diretamente
+  pelo cliente (veja `functions/src/api/client/favorites.ts` para entender o motivo);
+  `devices` só é escrito via o callable `registerDevice`; `recordings` é privado, leitura/escrita
+  apenas do dono.
+- **Analytics** (`analytics_events`, `analytics_daily`): nenhum acesso direto do cliente —
+  a ingestão é feita via o callable `recordAnalyticsEvent`, os rollups são somente leitura
+  para papéis de admin.
+- **Promotions**: leitura pública, escrita restrita a `admin`.
+- A aplicação das regras acontece em `firestore.rules`/`storage.rules` (a autoridade de fato)
+  *e* é reverificada em cada callable de admin via `requireRole`/`requireContentManager`/
+  `requireAdmin` — nunca confie apenas em uma checagem do lado do cliente.
 
-## What's implemented
+## O que já está implementado
 
-- Firestore/Storage security rules (owner-only user data, public-read/admin-write catalog,
-  function-only analytics).
-- Domain types for every collection (`functions/src/domain/`).
-- Repository layer for Firestore access (`functions/src/repositories/`).
-- Admin callables: `createAudio`, `updateAudio`, `deleteAudio` (soft delete), `createCategory`,
+- Regras de segurança do Firestore/Storage (dados do usuário apenas para o dono, catálogo com
+  leitura pública/escrita admin, analytics apenas via function).
+- Tipos de domínio para cada coleção (`functions/src/domain/`).
+- Camada de repositórios para acesso ao Firestore (`functions/src/repositories/`).
+- Callables de admin: `createAudio`, `updateAudio`, `deleteAudio` (soft delete), `createCategory`,
   `updateCategory`, `listAnalyticsSummary`, `sendNotification`, `createPromotion`,
   `setUserRole`.
-- Public callable: `getStarterPack` (categories + featured audios for first-run offline use).
-- Client callables: `registerDevice`, `recordAnalyticsEvent` (batched ingestion).
-- Triggers: `onAudioCreate` (defaults safety net), `onUserCreate` (profile bootstrap),
-  `onFavoriteWrite` (keeps `AudioClip.favoriteCount` in sync), `aggregateDailyAnalytics`
-  (scheduled daily rollup, also syncs `AudioClip.playCount`).
-- Seed script with 9 categories and 15 sample audio clips.
+- Callable público: `getStarterPack` (categorias + áudios em destaque para o primeiro uso
+  offline).
+- Callables de cliente: `registerDevice`, `recordAnalyticsEvent` (ingestão em lote).
+- Triggers: `onAudioCreate` (rede de segurança de valores padrão), `onUserCreate` (bootstrap
+  do perfil), `onFavoriteWrite` (mantém `AudioClip.favoriteCount` sincronizado),
+  `aggregateDailyAnalytics` (rollup diário agendado, também sincroniza `AudioClip.playCount`).
+- Script de seed com 9 categorias e 15 áudios de exemplo.
 
-## Explicit TODOs / not implemented
+## TODOs explícitos / não implementado
 
-- **`deleteCategory`**: categories are expected to be long-lived; deactivate via
-  `updateCategory({ isActive: false })` instead. Add a dedicated callable if the admin panel
-  needs an explicit "archive category" affordance beyond that.
-- **BigQuery export for analytics**: `analytics_events` is Firestore-only today. Per
-  ARCHITECTURE.md §11, high-volume analytics should stream through Pub/Sub into BigQuery
-  instead — noted in code (`analyticsEvents.ts`, `aggregateDailyAnalytics.ts`) but not built.
-- **AI audio processing pipeline**: `Recording.status` includes a `processing` state as an
-  extension point (mirrors the client's `AudioProcessingPipeline` stages in
-  ARCHITECTURE.md §8), but no server-side processing runs today — recordings stay
-  `uploaded`/`ready` only.
-- **E-commerce**: `Promotion` has a commented-out extension block
+- **`deleteCategory`**: as categorias são pensadas para serem de longa duração; desative via
+  `updateCategory({ isActive: false })` em vez disso. Adicione um callable dedicado se o painel
+  admin precisar de uma ação explícita de "arquivar categoria" além disso.
+- **Exportação para o BigQuery de analytics**: hoje `analytics_events` vive só no Firestore.
+  Conforme o ARCHITECTURE.md §11, analytics de alto volume deveriam fluir por Pub/Sub até o
+  BigQuery — isso está anotado no código (`analyticsEvents.ts`, `aggregateDailyAnalytics.ts`)
+  mas ainda não foi construído.
+- **Pipeline de processamento de áudio com IA**: `Recording.status` inclui um estado
+  `processing` como ponto de extensão (espelha os estágios do `AudioProcessingPipeline` do
+  cliente descritos no ARCHITECTURE.md §8), mas hoje nenhum processamento roda no servidor —
+  as gravações ficam apenas em `uploaded`/`ready`.
+- **E-commerce**: `Promotion` tem um bloco de extensão comentado
   (`couponCode`, `discountPercent`, `cashbackPercent`, `minPurchaseValue`,
-  `loyaltyPointsMultiplier`) for a future in-app store. Today promotions are just banners
-  linking out to https://www.lojatogplay.com.br.
-- **Remote Config**: feature flags / store banner params are managed directly in the Firebase
-  console today; no Cloud Function manages Remote Config parameters programmatically.
-- **`.firebaserc`**: still has a placeholder project alias — replace with the real project ID
-  via `firebase use --add`.
+  `loyaltyPointsMultiplier`) para uma futura loja dentro do app. Hoje as promoções são apenas
+  banners que levam para https://www.lojatogplay.com.br.
+- **Remote Config**: feature flags / parâmetros do banner da loja são gerenciados diretamente
+  pelo console do Firebase hoje; nenhuma Cloud Function gerencia parâmetros do Remote Config
+  programaticamente.
+- **`.firebaserc`**: ainda tem um alias de projeto placeholder — substitua pelo ID real do
+  projeto via `firebase use --add`.

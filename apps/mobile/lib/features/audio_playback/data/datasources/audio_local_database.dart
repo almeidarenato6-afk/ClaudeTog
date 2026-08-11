@@ -7,11 +7,12 @@ import 'package:path_provider/path_provider.dart';
 
 part 'audio_local_database.g.dart';
 
-/// Cached-audio table: the single source of truth for "is this clip
-/// instantly playable right now" (`localFilePath` non-null + file exists).
-/// Deliberately flat/denormalized (category id as a plain column, not a
-/// foreign key join) — reads on the tap-to-play path must be a single
-/// indexed lookup, never a join.
+/// Tabela de áudio em cache: a única fonte de verdade para "este clipe
+/// pode ser reproduzido instantaneamente agora" (`localFilePath` não nulo
+/// + arquivo existe). Propositalmente plana/desnormalizada (id da
+/// categoria como uma coluna simples, não um join de chave estrangeira) —
+/// leituras no caminho de toque-para-reproduzir devem ser uma única busca
+/// indexada, nunca um join.
 class CachedAudioClips extends Table {
   TextColumn get id => text()();
   TextColumn get title => text()();

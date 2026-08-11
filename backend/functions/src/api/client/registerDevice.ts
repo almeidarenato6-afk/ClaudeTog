@@ -18,12 +18,13 @@ const registerDeviceSchema = z.object({
 });
 
 /**
- * Writes the caller's `DeviceCapabilityProfile`. A callable rather than a
- * direct client write (Firestore rules deny direct writes to
- * `users/{uid}/devices/**`) so device/analytics-segmentation fields — watch
- * model, bluetooth speaker brand, playback strategy — are always populated
- * through one validated, schema-checked path instead of trusting arbitrary
- * client-shaped documents.
+ * Grava o `DeviceCapabilityProfile` de quem chamou. Uma callable em vez de
+ * uma escrita direta do cliente (as regras do Firestore negam escritas
+ * diretas em `users/{uid}/devices/**`) para que os campos de
+ * device/segmentação de analytics — modelo do watch, marca da caixa de som
+ * bluetooth, estratégia de reprodução — sejam sempre populados por um único
+ * caminho validado e conferido contra o schema, em vez de confiar em
+ * documentos com formato arbitrário vindos do cliente.
  */
 export const registerDevice = onCall({ region: REGION }, async (request) => {
   const uid = request.auth?.uid;

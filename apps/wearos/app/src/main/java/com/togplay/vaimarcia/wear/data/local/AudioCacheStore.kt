@@ -7,9 +7,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * Manages cached audio files on watch storage (a subdirectory of `filesDir`, not external
- * storage — watch apps commonly have no removable storage and app-private space is small,
- * so eviction of least-recently-played clips outside the starter pack is expected here).
+ * Gerencia os arquivos de áudio em cache no armazenamento do relógio (um subdiretório de
+ * `filesDir`, não armazenamento externo — apps de relógio geralmente não têm armazenamento
+ * removível e o espaço privado do app é pequeno, então é esperado que haja expurgo dos clipes
+ * reproduzidos há mais tempo fora do pacote inicial).
  */
 @Singleton
 class AudioCacheStore @Inject constructor(

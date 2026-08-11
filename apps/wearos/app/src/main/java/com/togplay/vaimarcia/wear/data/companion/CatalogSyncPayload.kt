@@ -3,7 +3,7 @@ package com.togplay.vaimarcia.wear.data.companion
 import com.togplay.vaimarcia.wear.domain.AudioClip
 import org.json.JSONArray
 
-/** Wire format for the DataLayer catalog-sync payload sent by the phone companion app. */
+/** Formato de transmissão do payload de sincronização de catálogo do DataLayer enviado pelo app companion do celular. */
 object CatalogSyncPayload {
     fun parse(bytes: ByteArray): List<AudioClip> {
         val json = JSONArray(String(bytes, Charsets.UTF_8))

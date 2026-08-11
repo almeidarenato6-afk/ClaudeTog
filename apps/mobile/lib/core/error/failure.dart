@@ -1,9 +1,10 @@
 import 'package:equatable/equatable.dart';
 
-/// Base type for all domain-level failures. The `domain` layer never throws
-/// raw exceptions across its boundary — `data` implementations catch
-/// platform/plugin exceptions and translate them into a [Failure] so the
-/// `presentation` layer never needs to know about Firebase, just_audio, etc.
+/// Tipo base para todas as falhas em nível de domínio. A camada `domain`
+/// nunca lança exceções brutas através de sua fronteira — as
+/// implementações de `data` capturam exceções de plataforma/plugin e as
+/// traduzem para um [Failure], para que a camada `presentation` nunca
+/// precise saber sobre Firebase, just_audio, etc.
 abstract class Failure extends Equatable {
   const Failure(this.message, {this.cause});
 

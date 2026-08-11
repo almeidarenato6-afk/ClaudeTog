@@ -1,19 +1,20 @@
 /**
- * Central place for environment-derived configuration. Cloud Functions v2 reads
- * runtime configuration from environment variables (set via `firebase functions:secrets:set`
- * for secrets, or `.env.<projectId>` files for plain config) rather than the deprecated
- * `functions.config()` API.
+ * Local central para configuração derivada do ambiente. Cloud Functions v2 lê a
+ * configuração de runtime a partir de variáveis de ambiente (definidas via
+ * `firebase functions:secrets:set` para segredos, ou arquivos `.env.<projectId>` para
+ * configuração simples) em vez da API depreciada `functions.config()`.
  */
 
 export const REGION = process.env.FUNCTIONS_REGION ?? "southamerica-east1";
 
 export const config = {
   region: REGION,
-  // Default FCM topic every device subscribes to on registration; used for
-  // "broadcast to everyone" admin notifications.
+  // Tópico FCM padrão ao qual todo dispositivo se inscreve no registro; usado para
+  // notificações admin do tipo "transmitir para todos".
   fcmDefaultTopic: "all_users",
-  // Soft ceilings enforced in callable handlers (defense in depth on top of
-  // Storage rules, since Storage rules alone can't cap batch Firestore writes).
+  // Tetos flexíveis aplicados nos handlers dos callables (defesa em profundidade além
+  // das Storage rules, já que as Storage rules sozinhas não conseguem limitar escritas
+  // em lote no Firestore).
   limits: {
     maxAnalyticsEventsPerBatch: 50,
     maxStarterPackAudios: 20,

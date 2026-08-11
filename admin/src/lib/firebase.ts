@@ -9,10 +9,11 @@ import { connectFirestoreEmulator, getFirestore } from "firebase/firestore";
 import { connectFunctionsEmulator, getFunctions } from "firebase/functions";
 import { connectStorageEmulator, getStorage } from "firebase/storage";
 
-// All values come from Vite env vars (see .env.example). Until the backend
-// team drops in the real Firebase project config, these resolve to the
-// literal string "TODO" and the app will fail Firebase Auth/Firestore calls
-// at runtime — the UI itself still builds and renders.
+// Todos os valores vêm de env vars do Vite (ver .env.example). Até o time
+// de backend disponibilizar a config real do projeto Firebase, esses
+// valores resolvem para a string literal "TODO" e o app vai falhar nas
+// chamadas de Firebase Auth/Firestore em runtime — a UI em si continua
+// buildando e renderizando normalmente.
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,

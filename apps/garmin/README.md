@@ -1,80 +1,86 @@
 # Vai Márcia — Garmin Connect IQ
 
-Monkey C companion app. See `docs/ARCHITECTURE.md` and `docs/DEVICE_DETECTION.md` at the
-repo root for the cross-platform design this app implements.
+App companion em Monkey C. Veja `docs/ARCHITECTURE.md` e `docs/DEVICE_DETECTION.md` na raiz do
+repositório para o design multiplataforma que este app implementa.
 
-## Why RELAY by default
+## Por que RELAY por padrão
 
-Garmin's Connect IQ SDK does not give third-party (Monkey C) apps an API to play arbitrary
-local audio files on virtually any current device — the on-device audio hardware (where it
-exists at all, e.g. fēnix 8's speaker) is reserved for system features (calls, voice
-assistant) and Garmin-first-party apps, not exposed to Connect IQ apps. Because of this, and
-because the SDK also has no runtime call to *ask* "can this device play arbitrary audio", this
-app:
+O SDK Connect IQ da Garmin não oferece a apps de terceiros (Monkey C) uma API para reproduzir
+arquivos de áudio locais arbitrários em praticamente nenhum dispositivo atual — o hardware de
+áudio do próprio relógio (onde existe, como no alto-falante do fēnix 8) é reservado para
+recursos do sistema (chamadas, assistente de voz) e apps proprietários da Garmin, não sendo
+exposto aos apps Connect IQ. Por isso, e também porque o SDK não possui uma chamada em tempo de
+execução para *perguntar* "este dispositivo consegue reproduzir áudio arbitrário", este app:
 
-1. Never attempts DIRECT (Scenario A) playback — there is no `DirectPlaybackEngine` in this
-   app, unlike the Wear OS and watchOS apps.
-2. Always operates in RELAY (Scenario B): `Communication/CompanionChannel.mc` wraps
-   `Toybox.Communications.transmit()` to send a lightweight `{type, audioId}` payload to the
-   paired phone's companion app via the Connect IQ Mobile SDK, and the phone (already caching
-   the audio locally) plays it to the paired Bluetooth speaker.
-3. Confirms this via a **static capability table**
-   (`resources/garmin_capability_table.json`), not runtime introspection, per
-   `docs/DEVICE_DETECTION.md` step 2's Garmin guidance — the SDK doesn't expose audio-output
-   introspection on most devices, so the table is the source of truth and is checked at
-   pairing/capability-probe time by the mobile app's device-detection algorithm (not by this
-   watch app itself, which only ever sends RELAY commands).
+1. Nunca tenta a reprodução DIRECT (Cenário A) — não existe um `DirectPlaybackEngine` neste
+   app, diferente dos apps Wear OS e watchOS.
+2. Sempre opera em RELAY (Cenário B): `Communication/CompanionChannel.mc` envolve
+   `Toybox.Communications.transmit()` para enviar um payload leve `{type, audioId}` ao app
+   companion no celular pareado via Connect IQ Mobile SDK, e o celular (que já mantém o áudio
+   em cache localmente) reproduz o som na caixa Bluetooth pareada.
+3. Confirma isso por meio de uma **tabela estática de capacidades**
+   (`resources/garmin_capability_table.json`), e não por introspecção em tempo de execução,
+   conforme a orientação da Garmin no passo 2 de `docs/DEVICE_DETECTION.md` — o SDK não expõe
+   introspecção de saída de áudio na maioria dos dispositivos, então a tabela é a fonte da
+   verdade e é consultada no momento de pareamento/verificação de capacidade pelo algoritmo de
+   detecção de dispositivo do app mobile (não por este próprio app do relógio, que sempre
+   envia apenas comandos RELAY).
 
-## Persistent channel rationale
+## Justificativa do canal persistente
 
-`CompanionChannel` calls `Communications.registerForPhoneAppMessages` once in `initialize()`
-and keeps the transmit channel "listening" for the app's lifetime, mirroring the latency
-guidance in `docs/ARCHITECTURE.md` §4 — re-registering per tap would reintroduce the
-phone-app-bridge negotiation cost the persistent-channel pattern exists to avoid.
+`CompanionChannel` chama `Communications.registerForPhoneAppMessages` uma única vez em
+`initialize()` e mantém o canal de transmissão "escutando" durante todo o ciclo de vida do app,
+seguindo a orientação de latência de `docs/ARCHITECTURE.md` §4 — re-registrar a cada toque
+reintroduziria o custo de negociação da ponte app-celular que o padrão de canal persistente
+existe justamente para evitar.
 
-## Structure
+## Estrutura
 
-- `manifest.xml` — Connect IQ app manifest: `Communications` permission, a realistic subset
-  of modern touchscreen + button Connect IQ devices (fēnix 7/8, Venu 2/3, Forerunner 955/965,
-  vivoactive 5, epix 2), pt-BR + en languages.
-- `monkey.jungle` — build config (source/resource paths).
-- `resources/strings/strings.xml` — pt-BR button/status labels.
-- `resources/drawables/` — no binary icon assets are fabricated here; see
-  `PLACEHOLDER.txt` for what design needs to supply and how to wire it once available.
-- `resources/garmin_capability_table.json` — the static per-model capability table described
-  above. Every entry currently has `canPlayArbitraryLocalAudio: false` and
-  `strategy: "RELAY"`; no device in the initial list is DIRECT-capable via Connect IQ today.
-- `source/VaiMarciaApp.mc` — `Application.AppBase` entry point.
-- `source/Domain/AudioClip.mc` — `AudioClip` and `Category` — plain Monkey C classes/consts,
-  no `Toybox.WatchUi`/`Toybox.Communications` imports (kept dependency-free like the other
-  platforms' domain layers).
-- `source/Communication/CompanionChannel.mc` — the RELAY command channel (see above).
-- `source/Views/GameModeView.mc` — `WatchUi.Menu2`-based "Modo Jogo" list (Garmin's UI model
-  is button/menu-based on many devices, not a free-form touch grid, so a menu is the
-  idiomatic glanceable one-action-per-press equivalent of the big-button grid on other
-  platforms) plus `PlaybackStatusView`, a brief status toast since RELAY has no local speaker
-  feedback to imply "it's playing" the way DIRECT does.
-- `source/Delegates/GameModeDelegate.mc` — `Menu2InputDelegate` wiring menu selection to
+- `manifest.xml` — manifesto do app Connect IQ: permissão `Communications`, um subconjunto
+  realista de dispositivos Connect IQ modernos com tela touch e botões (fēnix 7/8, Venu 2/3,
+  Forerunner 955/965, vivoactive 5, epix 2), idiomas pt-BR + en.
+- `monkey.jungle` — configuração de build (caminhos de source/resource).
+- `resources/strings/strings.xml` — rótulos de botão/status em pt-BR.
+- `resources/drawables/` — nenhum asset de ícone binário é fabricado aqui; veja
+  `PLACEHOLDER.txt` para o que o design precisa fornecer e como conectá-lo quando disponível.
+- `resources/garmin_capability_table.json` — a tabela estática de capacidades por modelo
+  descrita acima. Toda entrada atualmente tem `canPlayArbitraryLocalAudio: false` e
+  `strategy: "RELAY"`; nenhum dispositivo na lista inicial é compatível com DIRECT via Connect
+  IQ atualmente.
+- `source/VaiMarciaApp.mc` — ponto de entrada `Application.AppBase`.
+- `source/Domain/AudioClip.mc` — `AudioClip` e `Category` — classes/constantes Monkey C
+  simples, sem imports de `Toybox.WatchUi`/`Toybox.Communications` (mantido livre de
+  dependências, como as camadas de domínio das outras plataformas).
+- `source/Communication/CompanionChannel.mc` — o canal de comando RELAY (veja acima).
+- `source/Views/GameModeView.mc` — lista "Modo Jogo" baseada em `WatchUi.Menu2` (o modelo de UI
+  da Garmin é baseado em botões/menu em muitos dispositivos, não uma grade touch livre, então
+  um menu é o equivalente idiomático de uma-ação-por-toque à grade de botões grandes nas outras
+  plataformas) além de `PlaybackStatusView`, um breve toast de status já que o RELAY não tem
+  feedback de alto-falante local para indicar "está tocando" como o DIRECT tem.
+- `source/Delegates/GameModeDelegate.mc` — `Menu2InputDelegate` conectando a seleção de menu a
   `CompanionChannel.sendPlayCommand`.
 
-## Adding a new device
+## Adicionando um novo dispositivo
 
-1. Add the product id to `manifest.xml`'s `<iq:products>`.
-2. Add an entry to `resources/garmin_capability_table.json` with real values — default to
-   `canPlayArbitraryLocalAudio: false` / `strategy: "RELAY"` unless Garmin has shipped a
-   documented Connect IQ audio-output API for that model.
-3. If the device's screen shape/resolution needs distinct layout resources, add a
-   `<deviceId>.resourcePath` line in `monkey.jungle`.
+1. Adicione o product id em `<iq:products>` no `manifest.xml`.
+2. Adicione uma entrada em `resources/garmin_capability_table.json` com valores reais —
+   assuma `canPlayArbitraryLocalAudio: false` / `strategy: "RELAY"` por padrão, a menos que a
+   Garmin tenha lançado uma API Connect IQ de saída de áudio documentada para aquele modelo.
+3. Se o formato/resolução de tela do dispositivo precisar de recursos de layout distintos,
+   adicione uma linha `<deviceId>.resourcePath` em `monkey.jungle`.
 
-## What's implemented vs scaffold
+## O que está implementado vs. esqueleto
 
-Implemented: manifest, build config, strings, capability table, domain model, RELAY
-companion channel with transmit/ack handling, Menu2 UI + status feedback, selection delegate.
+Implementado: manifesto, configuração de build, strings, tabela de capacidades, modelo de
+domínio, canal companion RELAY com tratamento de transmissão/confirmação, UI Menu2 + feedback
+de status, delegate de seleção.
 
-Scaffold / TODO:
-- `GameModeDelegate.onSelect` sends a placeholder `categoryId + "_default"` audioId instead
-  of resolving a specific clip within the category — same seam as the Wear OS/watchOS apps.
-- No favorites-toggle UI (Favoritos category is listed like any other; toggling a favorite is
-  a phone-side action per the architecture).
-- No app icon PNGs (see `resources/drawables/PLACEHOLDER.txt`).
-- No unit tests (Connect IQ's test harness requires the SDK's simulator, unavailable here).
+Esqueleto / TODO:
+- `GameModeDelegate.onSelect` envia um audioId provisório `categoryId + "_default"` em vez de
+  resolver um clipe específico dentro da categoria — mesmo ponto de extensão dos apps Wear
+  OS/watchOS.
+- Sem UI de alternância de favoritos (a categoria Favoritos é listada como qualquer outra;
+  alternar um favorito é uma ação do lado do celular, conforme a arquitetura).
+- Sem PNGs de ícone do app (veja `resources/drawables/PLACEHOLDER.txt`).
+- Sem testes unitários (o test harness do Connect IQ exige o simulador do SDK, indisponível
+  aqui).

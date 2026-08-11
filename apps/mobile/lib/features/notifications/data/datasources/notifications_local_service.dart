@@ -1,9 +1,9 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:injectable/injectable.dart';
 
-/// Wraps [flutter_local_notifications] for foreground FCM message display
-/// — background/terminated notifications are handled by the OS directly
-/// from the FCM payload.
+/// Envolve o [flutter_local_notifications] para exibição de mensagens
+/// FCM em primeiro plano — notificações em segundo plano/com app
+/// encerrado são tratadas diretamente pelo SO a partir do payload FCM.
 @lazySingleton
 class NotificationsLocalService {
   final FlutterLocalNotificationsPlugin _plugin = FlutterLocalNotificationsPlugin();

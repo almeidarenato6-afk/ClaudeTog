@@ -4,15 +4,16 @@ import Foundation
 import WatchConnectivity
 #endif
 
-/// Native counterpart of `WatchCompanionPlatformDataSource`
+/// Contraparte nativa de `WatchCompanionPlatformDataSource`
 /// (lib/features/watch_companion/data/datasources/watch_companion_platform_datasource.dart).
 ///
-/// STATUS: SCAFFOLD ONLY. Real implementation needs a `WCSessionDelegate`
-/// conformance, kept alive for the app's process lifetime per
-/// ARCHITECTURE.md §4 ("persistent companion channel, never reconnected
-/// per command"). The watchOS-side companion app (apps/watchos/ in this
-/// monorepo) must implement the matching `WCSessionDelegate` and respond
-/// to a `getCapabilities` message per docs/DEVICE_DETECTION.md §2.
+/// STATUS: APENAS SCAFFOLD. A implementação real precisa de uma
+/// conformidade `WCSessionDelegate`, mantida viva pelo tempo de vida do
+/// processo do app conforme ARCHITECTURE.md §4 ("canal companion
+/// persistente, nunca reconectado a cada comando"). O app companion do
+/// lado watchOS (apps/watchos/ neste monorepo) deve implementar o
+/// `WCSessionDelegate` correspondente e responder a uma mensagem
+/// `getCapabilities` conforme docs/DEVICE_DETECTION.md §2.
 final class WatchCompanionPlugin: NSObject {
   private let messenger: FlutterBinaryMessenger
   private var methodChannel: FlutterMethodChannel?
@@ -35,10 +36,11 @@ final class WatchCompanionPlugin: NSObject {
       name: "br.com.togplay.vaimarcia/watch_companion_events",
       binaryMessenger: messenger
     )
-    // TODO: implement FlutterStreamHandler backed by a WCSessionDelegate's
-    // `session(_:didReceiveMessage:)`, forwarding `playAudio` messages as
-    // ["type": "playAudio", "audioId": "<id>"] dictionaries matching
-    // WatchCommand.fromMap on the Dart side.
+    // TODO: implementar FlutterStreamHandler apoiado no
+    // `session(_:didReceiveMessage:)` de um WCSessionDelegate, repassando
+    // as mensagens `playAudio` como dicionários
+    // ["type": "playAudio", "audioId": "<id>"] correspondendo a
+    // WatchCommand.fromMap no lado Dart.
   }
 
   private func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
@@ -51,8 +53,9 @@ final class WatchCompanionPlugin: NSObject {
 
     switch call.method {
     case "isWatchPaired":
-      // TODO: WCSession.default.isPaired (requires
-      // WCSession.default.activate() to have been called once at launch).
+      // TODO: WCSession.default.isPaired (requer que
+      // WCSession.default.activate() já tenha sido chamado uma vez ao
+      // iniciar o app).
       result(FlutterMethodNotImplemented)
 
     case "isCompanionAppInstalled":
@@ -61,10 +64,10 @@ final class WatchCompanionPlugin: NSObject {
 
     case "getCapabilities":
       // TODO: WCSession.default.sendMessage(["type": "getCapabilities"],
-      // replyHandler:) to the watch app, mapping its
-      // DeviceCapabilityProfile reply to the shape
-      // DeviceCapabilityProbeDataSource expects. Fall back to
-      // `transferUserInfo` if `WCSession.default.isReachable == false`
+      // replyHandler:) para o app do relógio, mapeando sua resposta
+      // DeviceCapabilityProfile para o formato que
+      // DeviceCapabilityProbeDataSource espera. Recorrer a
+      // `transferUserInfo` se `WCSession.default.isReachable == false`
       // (ARCHITECTURE.md §3).
       result(FlutterMethodNotImplemented)
 

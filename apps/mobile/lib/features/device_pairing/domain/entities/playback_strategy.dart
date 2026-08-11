@@ -1,14 +1,16 @@
-/// See docs/DEVICE_DETECTION.md — decided once per pairing change, never
-/// recomputed synchronously on the tap-to-play critical path.
+/// Veja docs/DEVICE_DETECTION.md — decidida uma vez por mudança de
+/// pareamento, nunca recalculada de forma síncrona no caminho crítico de
+/// toque-para-reproduzir.
 enum PlaybackStrategy {
-  /// Cenário A: watch plays locally straight to the Bluetooth speaker.
+  /// Cenário A: o relógio reproduz localmente direto na caixa de som
+  /// Bluetooth.
   direct,
 
-  /// Cenário B: watch sends a lightweight audioId to the phone, which
-  /// plays the already-cached clip to the Bluetooth speaker.
+  /// Cenário B: o relógio envia um audioId leve para o celular, que
+  /// reproduz o clipe já em cache na caixa de som Bluetooth.
   relay,
 
-  /// No compatible watch paired; phone triggers everything.
+  /// Nenhum relógio compatível pareado; o celular dispara tudo.
   phoneOnly,
 }
 

@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
-// Placeholder brand palette pending TogPlay's official brand guide.
-// coral/orange = primary action color, navy = deep accent/dark surfaces.
+// Paleta de marca placeholder até a definição do guia de marca oficial da TogPlay.
+// coral/laranja = cor primária de ação, navy = acento profundo/superfícies escuras.
 export default {
   content: ["./index.html", "./src/**/*.{ts,tsx}"],
   theme: {

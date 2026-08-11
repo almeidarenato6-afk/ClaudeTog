@@ -5,8 +5,9 @@ import 'package:vai_marcia/core/constants/app_constants.dart';
 import 'package:vai_marcia/features/audio_playback/data/models/audio_clip_model.dart';
 
 abstract interface class AudioRemoteDataSource {
-  /// Real-time listener on `audios` filtered by category — content updates
-  /// (new clips, edits) land without an app release (ARCHITECTURE.md §7).
+  /// Listener em tempo real sobre `audios` filtrado por categoria —
+  /// atualizações de conteúdo (novos clipes, edições) chegam sem
+  /// necessidade de release do app (ARCHITECTURE.md §7).
   Stream<List<AudioClipModel>> watchClipsByCategory(String categoryId);
 
   Future<AudioClipModel> getClipById(String clipId);

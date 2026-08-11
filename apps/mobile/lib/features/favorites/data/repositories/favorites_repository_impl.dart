@@ -34,9 +34,10 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
       final bool current = await _local.isFavorite(clipId);
       final bool next = !current;
       await _local.setFavorite(clipId, next);
-      // Local (Drift) is authoritative for the toggle's success — remote
-      // mirroring is best-effort and must never fail the user-visible
-      // action just because the device is offline.
+      // O armazenamento local (Drift) é a fonte de verdade para o
+      // sucesso do toggle — o espelhamento remoto é de melhor esforço e
+      // nunca deve falhar a ação visível ao usuário só porque o
+      // dispositivo está offline.
       unawaited(_remote.setFavorite(clipId, next).catchError((_) {}));
       return Result<bool>.ok(next);
     } on Object catch (e) {

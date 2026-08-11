@@ -1,28 +1,31 @@
-/// Extension seam for future AI-assisted audio processing
-/// (ARCHITECTURE.md §8 / docs/DEVICE_DETECTION.md are silent on this by
-/// design — this is purely a `recording` feature concern).
+/// Ponto de extensão para futuro processamento de áudio assistido por IA
+/// (ARCHITECTURE.md §8 / docs/DEVICE_DETECTION.md são silenciosos sobre
+/// isso por design — isso é uma preocupação puramente da feature
+/// `recording`).
 ///
-/// TODAY only [PassthroughStage] is wired in: a recorded clip goes
-/// straight from mic to storage, unmodified. The interface exists now so
-/// that when AI processing ships, it plugs in as additional [stages]
-/// without touching [RecordAudioUseCase], the recording UI, or the
-/// storage/upload code path at all.
+/// HOJE apenas [PassthroughStage] está conectado: um clipe gravado vai
+/// direto do microfone para o armazenamento, sem modificação. A
+/// interface já existe para que, quando o processamento por IA for
+/// lançado, ele se conecte como [stages] adicionais sem tocar em
+/// [RecordAudioUseCase], na UI de gravação, ou no caminho de código de
+/// armazenamento/upload.
 ///
-/// Documented (not implemented) future stages:
-/// - [NoiseReductionStage]: suppress wind/crowd noise from courtside
-///   recordings.
-/// - [VoiceEnhancementStage]: normalize loudness/EQ for consistent
-///   playback volume across user-recorded clips.
-/// - [PhraseSegmentationStage]: auto-trim silence and split a single
-///   recording into multiple short clips.
-/// - [AutoCategorizationStage]: suggest a category (Motivação, Humor,
-///   etc.) from the transcribed/analyzed content.
+/// Estágios futuros documentados (não implementados):
+/// - [NoiseReductionStage]: suprime ruído de vento/multidão em gravações
+///   feitas à beira da quadra.
+/// - [VoiceEnhancementStage]: normaliza volume/EQ para um volume de
+///   reprodução consistente entre os clipes gravados pelo usuário.
+/// - [PhraseSegmentationStage]: corta silêncio automaticamente e divide
+///   uma única gravação em múltiplos clipes curtos.
+/// - [AutoCategorizationStage]: sugere uma categoria (Motivação, Humor,
+///   etc.) a partir do conteúdo transcrito/analisado.
 abstract interface class AudioProcessingStage {
   String get name;
 
-  /// Takes the path to a raw (or previous-stage-processed) audio file and
-  /// returns the path to its output — implementations may return the same
-  /// path unchanged (as [PassthroughStage] does).
+  /// Recebe o caminho de um arquivo de áudio bruto (ou já processado por
+  /// um estágio anterior) e retorna o caminho de sua saída —
+  /// implementações podem retornar o mesmo caminho sem alteração (como
+  /// [PassthroughStage] faz).
   Future<String> process(String inputFilePath);
 }
 
@@ -40,7 +43,7 @@ class AudioProcessingPipeline {
   }
 }
 
-/// The only stage wired in today: audio passes through unmodified.
+/// O único estágio conectado hoje: o áudio passa sem modificação.
 class PassthroughStage implements AudioProcessingStage {
   const PassthroughStage();
 
@@ -51,14 +54,18 @@ class PassthroughStage implements AudioProcessingStage {
   Future<String> process(String inputFilePath) async => inputFilePath;
 }
 
-/// NOT IMPLEMENTED — documented extension point only. See class doc above.
+/// NÃO IMPLEMENTADO — apenas um ponto de extensão documentado. Veja a
+/// documentação da classe acima.
 abstract interface class NoiseReductionStage implements AudioProcessingStage {}
 
-/// NOT IMPLEMENTED — documented extension point only. See class doc above.
+/// NÃO IMPLEMENTADO — apenas um ponto de extensão documentado. Veja a
+/// documentação da classe acima.
 abstract interface class VoiceEnhancementStage implements AudioProcessingStage {}
 
-/// NOT IMPLEMENTED — documented extension point only. See class doc above.
+/// NÃO IMPLEMENTADO — apenas um ponto de extensão documentado. Veja a
+/// documentação da classe acima.
 abstract interface class PhraseSegmentationStage implements AudioProcessingStage {}
 
-/// NOT IMPLEMENTED — documented extension point only. See class doc above.
+/// NÃO IMPLEMENTADO — apenas um ponto de extensão documentado. Veja a
+/// documentação da classe acima.
 abstract interface class AutoCategorizationStage implements AudioProcessingStage {}

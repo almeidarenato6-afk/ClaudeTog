@@ -12,7 +12,7 @@ export interface AuthedStaff {
   claims: StaffClaims;
 }
 
-/** Cloud Functions are expected to set this custom claim on staff accounts. */
+/** Espera-se que as Cloud Functions definam esse custom claim nas contas de staff. */
 const ROLE_CLAIM_KEY = "role";
 
 function parseRole(raw: unknown): StaffRole | null {
@@ -31,9 +31,10 @@ export async function signOut() {
 }
 
 /**
- * Subscribes to auth + custom-claim changes. Fires `null` when signed out,
- * or when signed in but missing a valid `role` claim (i.e. not staff) —
- * callers should treat that as "unauthorized", not "loading".
+ * Assina mudanças de autenticação + custom claim. Dispara `null` quando
+ * deslogado, ou quando logado mas sem um claim `role` válido (ou seja, não
+ * é staff) — quem chamar deve tratar isso como "não autorizado", não como
+ * "carregando".
  */
 export function subscribeAuthedStaff(
   callback: (staff: AuthedStaff | null) => void,

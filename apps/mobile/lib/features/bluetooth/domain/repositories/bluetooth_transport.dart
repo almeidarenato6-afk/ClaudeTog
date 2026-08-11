@@ -1,25 +1,26 @@
 import 'package:vai_marcia/core/error/result.dart';
 import 'package:vai_marcia/features/bluetooth/domain/entities/bluetooth_connection_state.dart';
 
-/// Abstraction over the platform's Bluetooth Classic A2DP stack.
+/// Abstração sobre a pilha Bluetooth Classic A2DP da plataforma.
 ///
-/// Full native control (keeping the A2DP route "hot" between plays per
-/// ARCHITECTURE.md §4, reading connected-device metadata) is NOT
-/// implementable purely in Dart — Flutter has no first-party A2DP plugin
-/// with the level of control this product needs (persistent route,
-/// device brand introspection). This interface is the contract the
-/// `data` layer implementation talks to; the concrete implementation
-/// forwards to platform channel `AppConstants.methodChannelBluetoothTransport`,
-/// whose native (Kotlin/Swift) side is scaffolded with TODOs — see
-/// android/app/src/main/kotlin and ios/Runner.
+/// O controle nativo completo (manter a rota A2DP "quente" entre
+/// reproduções conforme ARCHITECTURE.md §4, ler metadados de
+/// dispositivos conectados) NÃO é implementável puramente em Dart — o
+/// Flutter não tem um plugin A2DP first-party com o nível de controle que
+/// este produto precisa (rota persistente, introspecção de marca do
+/// dispositivo). Esta interface é o contrato com o qual a implementação
+/// da camada `data` conversa; a implementação concreta repassa para o
+/// platform channel `AppConstants.methodChannelBluetoothTransport`, cujo
+/// lado nativo (Kotlin/Swift) está com o scaffold pronto e TODOs — veja
+/// android/app/src/main/kotlin e ios/Runner.
 abstract interface class BluetoothTransport {
   Future<Result<List<BluetoothDeviceInfo>>> listPairedAudioDevices();
 
   Stream<BluetoothConnectionState> watchConnectionState();
 
-  /// Ensures the A2DP route to [deviceId] is active and stays active
-  /// (never torn down between plays) — the "warm connection" latency
-  /// tactic from ARCHITECTURE.md §4.
+  /// Garante que a rota A2DP para [deviceId] esteja ativa e permaneça
+  /// ativa (nunca derrubada entre reproduções) — a tática de latência de
+  /// "conexão quente" do ARCHITECTURE.md §4.
   Future<Result<void>> keepRouteWarm(String deviceId);
 
   Future<Result<void>> openSystemBluetoothSettings();

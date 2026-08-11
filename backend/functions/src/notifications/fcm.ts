@@ -17,8 +17,9 @@ interface PushPayload {
 }
 
 /**
- * Sends a push through FCM to a topic, a resolved segment (only "favorites_users"
- * today — expand as new segments are needed), or a single user's registered devices.
+ * Envia um push via FCM para um tópico, um segmento resolvido (apenas "favorites_users"
+ * por enquanto — expanda conforme novos segmentos forem necessários), ou os dispositivos
+ * registrados de um único usuário.
  */
 export async function sendPush(
   target: NotificationTarget,
@@ -61,16 +62,17 @@ async function sendToTokens(
 }
 
 /**
- * Segment resolution is intentionally minimal today — only "favorites_users"
- * (anyone with >= 1 favorite). Extend here as the admin panel grows more
- * targeting options; keep the resolution logic out of the callable handlers.
+ * A resolução de segmentos é intencionalmente mínima por enquanto — apenas
+ * "favorites_users" (qualquer um com >= 1 favorito). Estenda aqui conforme o
+ * painel admin ganhar mais opções de segmentação; mantenha a lógica de
+ * resolução fora dos handlers callable.
  */
 async function resolveSegmentTokens(segment: string): Promise<string[]> {
   if (segment !== "favorites_users") {
     throw new Error(`Unknown notification segment: ${segment}`);
   }
-  // NOTE: naive collection-group scan; fine at current scale, revisit with a
-  // denormalized `hasFavorites` flag on the user doc if this gets expensive.
+  // NOTA: scan ingênuo de collection-group; ok na escala atual, revisitar com uma
+  // flag `hasFavorites` desnormalizada no doc do usuário se isso ficar caro.
   const favSnap = await db.collectionGroup("favorites").select().get();
   const uids = new Set(favSnap.docs.map((d) => d.ref.parent.parent!.id));
 

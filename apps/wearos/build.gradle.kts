@@ -1,4 +1,4 @@
-// Root build file — plugin versions declared here, applied per-module with `apply false`.
+// Arquivo de build raiz — versões dos plugins declaradas aqui, aplicadas por módulo com `apply false`.
 plugins {
     id("com.android.application") version "8.5.2" apply false
     id("com.android.library") version "8.5.2" apply false

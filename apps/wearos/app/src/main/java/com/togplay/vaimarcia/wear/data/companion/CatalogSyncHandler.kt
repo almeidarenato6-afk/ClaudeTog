@@ -10,10 +10,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * Parses a catalog-sync DataItem pushed from the phone and upserts it into the local Room
- * cache. Payload format mirrors the mobile app's incremental delta sync (docs/ARCHITECTURE.md
- * §7) but trimmed to just the fields the watch UI needs (id, category, title, favorite flag,
- * local file path once downloaded).
+ * Analisa um DataItem de sincronização de catálogo enviado pelo celular e faz o upsert no
+ * cache local do Room. O formato do payload espelha a sincronização incremental por delta do
+ * app mobile (docs/ARCHITECTURE.md §7), mas reduzido apenas aos campos que a UI do relógio
+ * precisa (id, categoria, título, flag de favorito, caminho do arquivo local uma vez baixado).
  */
 @Singleton
 class CatalogSyncHandler @Inject constructor(

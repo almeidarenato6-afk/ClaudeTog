@@ -61,7 +61,7 @@ export class AudioRepository {
     await this.col.doc(id).update({ ...patch, updatedAt: Timestamp.now() });
   }
 
-  /** Soft delete — catalog content is never hard-deleted, only hidden. */
+  /** Soft delete — conteúdo do catálogo nunca é excluído de forma definitiva, apenas ocultado. */
   async deactivate(id: string): Promise<void> {
     await this.update(id, { isActive: false });
   }

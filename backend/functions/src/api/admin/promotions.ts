@@ -20,9 +20,9 @@ const createPromotionSchema = z.object({
 });
 
 /**
- * Promotions today only drive the "Loja TogPlay" banner (external link) —
- * see domain/Promotion.ts for the deliberately-unimplemented e-commerce
- * extension fields (coupon/cashback/loyalty).
+ * Hoje as promoções só alimentam o banner "Loja TogPlay" (link externo) —
+ * veja domain/Promotion.ts para os campos de extensão de e-commerce
+ * deliberadamente não implementados (cupom/cashback/fidelidade).
  */
 export const createPromotion = onCall({ region: REGION }, async (request) => {
   const uid = requireAdmin(request);

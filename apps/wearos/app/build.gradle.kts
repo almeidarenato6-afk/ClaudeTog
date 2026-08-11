@@ -54,14 +54,14 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
     implementation("com.google.android.horologist:horologist-compose-layout:0.6.11")
 
-    // Wearable Data Layer (companion channel — Scenario B, and pairing metadata for Scenario A)
+    // Wearable Data Layer (canal de companion — Cenário B, e metadados de pareamento para o Cenário A)
     implementation("com.google.android.gms:play-services-wearable:18.2.0")
 
-    // Media3/ExoPlayer for local Scenario A playback
+    // Media3/ExoPlayer para reprodução local do Cenário A
     implementation("androidx.media3:media3-exoplayer:1.4.0")
     implementation("androidx.media3:media3-common:1.4.0")
 
-    // Room for local catalog subset + starter pack
+    // Room para o subconjunto local do catálogo + pacote inicial
     implementation("androidx.room:room-runtime:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
     ksp("androidx.room:room-compiler:2.6.1")
@@ -75,7 +75,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.8.1")
 
-    // Wear OS system UI (tiles/complications not in scope for v0.1, kept minimal)
+    // UI de sistema do Wear OS (tiles/complications fora do escopo da v0.1, mantido mínimo)
     implementation("androidx.wear:wear:1.3.0")
 
     testImplementation("junit:junit:4.13.2")

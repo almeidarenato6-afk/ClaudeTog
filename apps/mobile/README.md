@@ -1,149 +1,159 @@
 # Vai Márcia — App Mobile (Flutter)
 
-Beach Tennis motivational-audio soundboard, TogPlay. Tap a button, hear
-"Vai Márcia!" (or one of ~90 other clips) on your Bluetooth speaker in
-under 150ms — from the phone directly, or relayed from a paired
-smartwatch. See [`../../docs/ARCHITECTURE.md`](../../docs/ARCHITECTURE.md)
-and [`../../docs/DEVICE_DETECTION.md`](../../docs/DEVICE_DETECTION.md) for
-the full system design this app implements.
+Soundboard de áudio motivacional para Beach Tennis, TogPlay. Toque um botão, ouça
+"Vai Márcia!" (ou um dos outros ~90 clipes) na sua caixa de som Bluetooth em
+menos de 150ms — direto do celular, ou retransmitido a partir de um
+smartwatch pareado. Veja [`../../docs/ARCHITECTURE.md`](../../docs/ARCHITECTURE.md)
+e [`../../docs/DEVICE_DETECTION.md`](../../docs/DEVICE_DETECTION.md) para
+o design completo do sistema que este app implementa.
 
-## Setup
+## Configuração
 
 ```bash
 cd apps/mobile
 
-# 1. Regenerate the platform folders' boilerplate (gradlew, Podfile, etc.)
-#    without touching the hand-authored files — see android/README.md and
-#    ios/README.md for exactly what's real vs. regenerated.
+# 1. Regenerar o boilerplate das pastas de plataforma (gradlew, Podfile, etc.)
+#    sem tocar nos arquivos escritos manualmente — veja android/README.md e
+#    ios/README.md para saber exatamente o que é real vs. regenerado.
 flutter create --platforms=android,ios --org br.com.togplay .
 
-# 2. Firebase — lib/firebase_options.dart is a deliberately-broken
-#    placeholder (see the comment at the top of that file). Replace it:
+# 2. Firebase — lib/firebase_options.dart é um placeholder propositalmente
+#    quebrado (veja o comentário no topo desse arquivo). Substitua-o:
 dart pub global activate flutterfire_cli
 flutterfire configure
 
-# 3. Install packages
+# 3. Instalar pacotes
 flutter pub get
 
-# 4. Generate code (Freezed/json_serializable models, Drift tables,
-#    injectable DI registration, Riverpod codegen)
+# 4. Gerar código (modelos Freezed/json_serializable, tabelas Drift,
+#    registro de DI do injectable, codegen do Riverpod)
 dart run build_runner build --delete-conflicting-outputs
 
-# 5. Run
+# 5. Executar
 flutter run
 ```
 
-Re-run step 4 after touching any `@JsonSerializable`, `@DriftDatabase`,
-`@injectable`/`@lazySingleton`, or `@riverpod` annotation — those all
-depend on generated `*.g.dart`/`*.freezed.dart`/`injection.config.dart`
-files that are not checked in (standard practice for generated code).
+Execute novamente o passo 4 depois de mexer em qualquer anotação
+`@JsonSerializable`, `@DriftDatabase`, `@injectable`/`@lazySingleton` ou
+`@riverpod` — todas elas dependem de arquivos gerados
+`*.g.dart`/`*.freezed.dart`/`injection.config.dart` que não são versionados
+(prática padrão para código gerado).
 
-## Architecture
+## Arquitetura
 
-Clean Architecture, feature-first. Each `lib/features/<name>/` is
-vertically independent with its own `domain/` (entities, abstract
-repositories, use cases — zero Flutter/Firebase imports, unit-testable in
-isolation), `data/` (models, local/remote datasources, repository
-implementations), and `presentation/` (Riverpod providers/controllers,
-widgets, pages). Cross-feature communication goes through `domain`
-contracts, never `presentation` → `presentation`.
+Clean Architecture, feature-first. Cada `lib/features/<name>/` é
+verticalmente independente, com seu próprio `domain/` (entidades,
+repositórios abstratos, casos de uso — zero imports de Flutter/Firebase,
+testável isoladamente), `data/` (modelos, datasources locais/remotos,
+implementações de repositório) e `presentation/` (providers/controllers
+Riverpod, widgets, páginas). A comunicação entre features passa pelos
+contratos do `domain`, nunca `presentation` → `presentation`.
 
-State management: `flutter_riverpod` (providers colocated in each
-feature's `presentation/providers/`). DI: `get_it` + `injectable`
-(`lib/core/di/injection.dart`; annotate a class `@injectable` or
-`@LazySingleton(as: SomeAbstractType)` and it's wired automatically by
-codegen — see step 4 above).
+Gerenciamento de estado: `flutter_riverpod` (providers colocados no
+`presentation/providers/` de cada feature). DI: `get_it` + `injectable`
+(`lib/core/di/injection.dart`; anote uma classe com `@injectable` ou
+`@LazySingleton(as: SomeAbstractType)` e ela é conectada automaticamente
+pelo codegen — veja o passo 4 acima).
 
-## What's fully implemented (real, would compile against the declared deps)
+## O que está totalmente implementado (real, compilaria contra as deps declaradas)
 
-- **audio_playback** — pooled/preloaded `just_audio` players
-  (`AudioPlayerPool`), Drift-backed local cache, Firestore/Storage remote
-  datasource, offline-first repository, `BigButtonGrid` UI.
-- **categories, favorites** — full domain/data/presentation, Firestore +
-  Drift-backed, offline-first fallback to a seeded default category list.
-- **device_pairing** — `DecidePlaybackStrategyUseCase` is the algorithm
-  from `docs/DEVICE_DETECTION.md` transcribed verbatim (and unit tested);
-  `RunCapabilityProbeUseCase` orchestrates it; "Vamos configurar seu
-  equipamento" wizard UI.
-- **recording** — `record`-package-backed capture,
-  `AudioProcessingPipeline` seam with `PassthroughStage` wired in today.
-- **auth** — Google/Apple/email/anonymous via Firebase Auth, with
-  anonymous-account upgrade (`linkAnonymousToEmail`).
-- **store** — `ExternalLinkStoreRepository` (opens
-  `www.lojatogplay.com.br` via `url_launcher`), persistent banner, store
-  screen. `Product`/`Promotion`/`Cart` domain entities modeled but unused,
-  per spec, for a future e-commerce implementation.
-- **notifications** — FCM + `flutter_local_notifications` foreground
-  display, Firestore-backed in-app notification list.
-- **analytics** — `AnalyticsService` abstract + `FirebaseAnalyticsService`,
-  wired into playback/favorite events.
+- **audio_playback** — players `just_audio` com pool/preload
+  (`AudioPlayerPool`), cache local baseado em Drift, datasource remoto
+  Firestore/Storage, repositório offline-first, UI `BigButtonGrid`.
+- **categories, favorites** — domain/data/presentation completos,
+  baseados em Firestore + Drift, com fallback offline-first para uma
+  lista padrão de categorias pré-carregada.
+- **device_pairing** — `DecidePlaybackStrategyUseCase` é o algoritmo de
+  `docs/DEVICE_DETECTION.md` transcrito literalmente (e testado
+  unitariamente); `RunCapabilityProbeUseCase` o orquestra; UI do
+  assistente "Vamos configurar seu equipamento".
+- **recording** — captura baseada no pacote `record`, seam
+  `AudioProcessingPipeline` com `PassthroughStage` conectado por
+  enquanto.
+- **auth** — Google/Apple/e-mail/anônimo via Firebase Auth, com upgrade
+  de conta anônima (`linkAnonymousToEmail`).
+- **store** — `ExternalLinkStoreRepository` (abre
+  `www.lojatogplay.com.br` via `url_launcher`), banner persistente, tela
+  da loja. Entidades de domínio `Product`/`Promotion`/`Cart` modeladas
+  mas não utilizadas, conforme especificação, para uma futura
+  implementação de e-commerce.
+- **notifications** — FCM + exibição em primeiro plano via
+  `flutter_local_notifications`, lista de notificações in-app baseada em
+  Firestore.
+- **analytics** — `AnalyticsService` abstrato + `FirebaseAnalyticsService`,
+  conectado aos eventos de reprodução/favoritos.
 
-## What's a scaffold/stub (native platform-channel work required)
+## O que é scaffold/stub (requer trabalho nativo via platform-channel)
 
-Flutter has no first-party plugin that gives the level of control this
-product needs over Bluetooth Classic A2DP (persistent "warm" route,
-paired-device brand introspection) or the Wear OS Data Layer /
-WatchConnectivity companion channel. These are **not implementable in
-pure Dart** — they need real native code, which is scaffolded but not
-implemented:
+O Flutter não tem um plugin first-party que dê o nível de controle que
+este produto precisa sobre Bluetooth Classic A2DP (rota "quente"
+persistente, introspecção de marca do dispositivo pareado) ou sobre o
+canal companion Wear OS Data Layer / WatchConnectivity. Isso **não é
+implementável em Dart puro** — precisa de código nativo real, que está
+com o scaffold pronto mas não implementado:
 
-- `lib/features/bluetooth/` — `BluetoothTransport` interface is complete
-  and tested at the Dart boundary; `BluetoothPlatformDataSource` calls a
-  method/event channel whose native side
+- `lib/features/bluetooth/` — a interface `BluetoothTransport` está
+  completa e testada na fronteira com o Dart; `BluetoothPlatformDataSource`
+  chama um method/event channel cujo lado nativo
   (`android/.../BluetoothTransportPlugin.kt`,
-  `ios/Runner/BluetoothTransportPlugin.swift`) is a documented TODO stub
-  per method (`android/README.md` and `ios/README.md` explain exactly
-  what's missing and why, including an iOS platform limitation: no public
-  API lists *all* paired Bluetooth Classic devices, only the active
-  route).
-- `lib/features/watch_companion/` — same pattern for
+  `ios/Runner/BluetoothTransportPlugin.swift`) é um stub documentado com
+  TODO por método (`android/README.md` e `ios/README.md` explicam
+  exatamente o que falta e por quê, incluindo uma limitação de
+  plataforma no iOS: nenhuma API pública lista *todos* os dispositivos
+  Bluetooth Classic pareados, apenas a rota ativa).
+- `lib/features/watch_companion/` — mesmo padrão para
   `WatchCompanionPlugin.kt`/`.swift` (Wear OS `MessageClient`/
-  `CapabilityClient` on Android, `WCSession` on iOS).
+  `CapabilityClient` no Android, `WCSession` no iOS).
 - `lib/features/device_pairing/data/datasources/device_capability_probe_datasource.dart`
-  depends on the watch_companion channel above for the actual
-  `GET_CAPABILITIES` probe; until the native side exists it safely
-  degrades to `PlaybackStrategy.phoneOnly` rather than throwing.
+  depende do canal watch_companion acima para a sondagem real de
+  `GET_CAPABILITIES`; até que o lado nativo exista, ela degrada com
+  segurança para `PlaybackStrategy.phoneOnly` em vez de lançar exceção.
 
-Every stub method either throws `MissingPluginException` (caught and
-treated as "no data") in Dart, or `result.notImplemented()` /
-`FlutterMethodNotImplemented` on the native side — the app never crashes
-because of these gaps, it just can't yet do direct/relay playback for
-real until the native plugins are filled in.
+Todo método stub lança `MissingPluginException` (capturada e tratada
+como "sem dados") no Dart, ou `result.notImplemented()` /
+`FlutterMethodNotImplemented` no lado nativo — o app nunca quebra por
+causa dessas lacunas, apenas ainda não consegue fazer reprodução
+direta/relay de verdade até que os plugins nativos sejam preenchidos.
 
-`lib/firebase_options.dart` is a placeholder with `REPLACE_ME_*` values —
-see the file's header comment — that intentionally throws for platforms
-it wasn't generated for, so a build never silently talks to a nonexistent
-Firebase project.
+`lib/firebase_options.dart` é um placeholder com valores `REPLACE_ME_*` —
+veja o comentário no cabeçalho do arquivo — que lança exceção
+propositalmente para plataformas para as quais não foi gerado, de modo
+que um build nunca fale silenciosamente com um projeto Firebase
+inexistente.
 
-## AI extension seam (not implemented, by design)
+## Seam de extensão para IA (não implementado, por design)
 
 `lib/features/recording/domain/pipeline/audio_processing_pipeline.dart`
-defines `AudioProcessingStage` and wires only `PassthroughStage` in today.
-`NoiseReductionStage`, `VoiceEnhancementStage`, `PhraseSegmentationStage`,
-`AutoCategorizationStage` are documented as abstract interfaces with zero
-implementation — future work plugs in without touching
-`RecordingRepositoryImpl`, the recording UI, or the upload path.
+define `AudioProcessingStage` e conecta apenas `PassthroughStage` por
+enquanto. `NoiseReductionStage`, `VoiceEnhancementStage`,
+`PhraseSegmentationStage`, `AutoCategorizationStage` estão documentados
+como interfaces abstratas sem implementação — trabalho futuro se encaixa
+sem tocar em `RecordingRepositoryImpl`, na UI de gravação, ou no fluxo de
+upload.
 
-## Tests
+## Testes
 
 ```bash
 flutter test
 ```
 
 - `test/device_pairing/decide_playback_strategy_usecase_test.dart` —
-  exhaustively covers every branch of the DEVICE_DETECTION.md decision
-  table.
-- `test/audio_playback/audio_repository_impl_test.dart` — play-from-cache
-  vs. download-then-play, preload-only-missing-clips, failure mapping.
-- `test/favorites/toggle_favorite_usecase_test.dart` — toggle on/off,
-  local-authoritative-even-if-remote-sync-fails, failure mapping.
+  cobre exaustivamente todos os ramos da tabela de decisão do
+  DEVICE_DETECTION.md.
+- `test/audio_playback/audio_repository_impl_test.dart` — reprodução a
+  partir do cache vs. baixar-e-então-reproduzir, pré-carregamento apenas
+  dos clipes faltantes, mapeamento de falhas.
+- `test/favorites/toggle_favorite_usecase_test.dart` — alternar
+  ativado/desativado, autoridade local mesmo quando a sincronização
+  remota falha, mapeamento de falhas.
 
-All three use `mocktail` against the `domain`-facing interfaces, not
-Firebase/Drift/just_audio directly.
+Os três usam `mocktail` contra as interfaces voltadas ao `domain`, não
+diretamente Firebase/Drift/just_audio.
 
-## Brand palette placeholder
+## Placeholder da paleta de marca
 
-`lib/core/theme/app_colors.dart` uses a placeholder palette (coral/orange
-primary, deep navy secondary) — no official TogPlay brand kit exists yet.
-Every constant is commented `TOGPLAY_BRAND_PLACEHOLDER`; grep for that
-string when the real brand guideline lands.
+`lib/core/theme/app_colors.dart` usa uma paleta placeholder (coral/laranja
+primário, azul-marinho profundo secundário) — ainda não existe um kit de
+marca oficial da TogPlay. Toda constante tem o comentário
+`TOGPLAY_BRAND_PLACEHOLDER`; procure por essa string quando o guia de
+marca real chegar.

@@ -21,9 +21,10 @@ class AudioCategory extends Equatable {
   List<Object?> get props => <Object?>[id, name, iconName, colorHex, sortOrder, isUserCreated];
 }
 
-/// Fixed catalog seed for the ten launch categories referenced in
-/// ARCHITECTURE.md — Firestore remains the source of truth (this only
-/// backs the offline starter bundle / first-run UI before the first sync).
+/// Catálogo fixo pré-carregado para as dez categorias de lançamento
+/// referenciadas em ARCHITECTURE.md — o Firestore continua sendo a fonte
+/// de verdade (isto só sustenta o pacote offline inicial / UI de
+/// primeira execução antes da primeira sincronização).
 abstract final class DefaultCategories {
   static const List<AudioCategory> seed = <AudioCategory>[
     AudioCategory(id: 'motivacao', name: 'Motivação', iconName: 'bolt', colorHex: '#FF6B4A', sortOrder: 0),

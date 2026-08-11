@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Companion (phone) app required for first-run pairing + catalog sync, but the watch
-         app is fully usable standalone once content is cached (Scenario A on capable hardware). -->
+    <!-- O app companion (celular) é necessário para o pareamento inicial + sincronização do catálogo, mas o app
+         do relógio é totalmente utilizável de forma independente assim que o conteúdo está em cache (Cenário A em hardware compatível). -->
     <uses-feature android:name="android.hardware.type.watch" />
     <uses-feature android:name="android.hardware.bluetooth" android:required="false" />
     <uses-feature android:name="android.software.leanback" android:required="false" tools:node="remove" />
@@ -11,8 +11,8 @@
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <!-- Data Layer API (MessageClient/DataClient/CapabilityClient) does not require a
-         separate manifest permission beyond play-services-wearable + Google Play services. -->
+    <!-- A Data Layer API (MessageClient/DataClient/CapabilityClient) não exige uma
+         permissão separada no manifest além do play-services-wearable + Google Play services. -->
 
     <application
         android:name=".VaiMarciaWearApp"
@@ -22,9 +22,9 @@
         android:supportsRtl="true"
         android:theme="@android:style/Theme.DeviceDefault">
 
-        <!-- standalone="false": the watch app declares a companion phone app is expected
-             (catalog sync, first-run pairing metadata), but playback itself works without
-             the phone reachable in DIRECT mode once audio is cached locally. -->
+        <!-- standalone="false": o app do relógio declara que um app companion no celular é esperado
+             (sincronização do catálogo, metadados de pareamento inicial), mas a reprodução em si funciona sem
+             o celular acessível no modo DIRECT assim que o áudio está em cache localmente. -->
         <meta-data
             android:name="com.google.android.wearable.standalone"
             android:value="false" />
@@ -44,8 +44,8 @@
             </intent-filter>
         </activity>
 
-        <!-- Receives DataLayer messages (catalog sync pushes) even when the activity
-             is not foregrounded, so cache stays warm ahead of the next tap. -->
+        <!-- Recebe mensagens da DataLayer (envios de sincronização do catálogo) mesmo quando a activity
+             não está em primeiro plano, para manter o cache atualizado antes do próximo toque. -->
         <service
             android:name=".data.companion.WearCompanionListenerService"
             android:exported="true">

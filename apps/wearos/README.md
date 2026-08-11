@@ -1,48 +1,51 @@
 # Vai Márcia — Wear OS
 
-Kotlin + Jetpack Compose (Wear Compose) companion app. See `docs/ARCHITECTURE.md` and
-`docs/DEVICE_DETECTION.md` at the repo root for the cross-platform design this app implements.
+App companion em Kotlin + Jetpack Compose (Wear Compose). Veja `docs/ARCHITECTURE.md` e
+`docs/DEVICE_DETECTION.md` na raiz do repositório para o design multiplataforma que este app implementa.
 
-## Structure
+## Estrutura
 
-- `domain/` — pure Kotlin entities (`AudioClip`, `Category`, `PlaybackStrategy`,
-  `DeviceCapabilityProfile`). No Android imports; mirrors the mobile app's domain concepts.
-- `data/local/` — Room DB (`VaiMarciaDatabase`) holding the starter pack + synced catalog
-  subset, plus `AudioCacheStore` for the actual cached audio files on disk.
-- `data/companion/` — `WearCompanionClient` wraps the Wearable Data Layer API
-  (`MessageClient`/`DataClient`/`CapabilityClient`) for sending play commands (Scenario B)
-  and receiving catalog syncs pushed from the phone. `WearCompanionListenerService` receives
-  background pushes so the cache stays warm without the activity being open.
-- `playback/` — `DirectPlaybackEngine` (Media3/ExoPlayer, Scenario A), `RelayPlaybackDispatcher`
-  (Scenario B, delegates to `WearCompanionClient`), `PlaybackStrategyResolver` (implements the
-  decision algorithm from `docs/DEVICE_DETECTION.md`), and `PlaybackController` as the single
-  facade the UI calls.
-- `presentation/` — `MainActivity`, `GameModeScreen` ("Modo Jogo" big-button grid),
-  `FirstRunSetupScreen`, and a Wear Compose `theme/` with placeholder TogPlay brand colors.
-- `di/` — Hilt modules (`DataModule` provides the Room database; everything else uses
-  constructor injection directly).
+- `domain/` — entidades Kotlin puras (`AudioClip`, `Category`, `PlaybackStrategy`,
+  `DeviceCapabilityProfile`). Sem imports do Android; espelha os conceitos de domínio do app mobile.
+- `data/local/` — banco Room (`VaiMarciaDatabase`) contendo o pacote inicial + o subconjunto do
+  catálogo sincronizado, além do `AudioCacheStore` para os arquivos de áudio efetivamente
+  armazenados em cache no disco.
+- `data/companion/` — `WearCompanionClient` envolve a Wearable Data Layer API
+  (`MessageClient`/`DataClient`/`CapabilityClient`) para enviar comandos de reprodução (Cenário B)
+  e receber sincronizações de catálogo enviadas pelo celular. `WearCompanionListenerService` recebe
+  envios em segundo plano para manter o cache atualizado sem a necessidade da activity estar aberta.
+- `playback/` — `DirectPlaybackEngine` (Media3/ExoPlayer, Cenário A), `RelayPlaybackDispatcher`
+  (Cenário B, delega para `WearCompanionClient`), `PlaybackStrategyResolver` (implementa o
+  algoritmo de decisão de `docs/DEVICE_DETECTION.md`), e `PlaybackController` como a única
+  fachada que a UI chama.
+- `presentation/` — `MainActivity`, `GameModeScreen` (grade de botões grandes do "Modo Jogo"),
+  `FirstRunSetupScreen`, e um `theme/` em Wear Compose com cores provisórias da marca TogPlay.
+- `di/` — módulos Hilt (`DataModule` fornece o banco Room; todo o restante usa
+  injeção via construtor diretamente).
 
-## What's implemented vs scaffold
+## O que está implementado vs. esqueleto
 
-Implemented (real, idiomatic code, not runnable/compiled in this environment):
-- Full domain model, Room schema, DataLayer companion wrapper, ExoPlayer direct-playback
-  engine, relay dispatcher, strategy resolver following the documented algorithm, Compose UI
-  for Modo Jogo and first-run setup, Hilt wiring.
+Implementado (código real e idiomático, mas não executável/compilável neste ambiente):
+- Modelo de domínio completo, schema do Room, wrapper de companion via DataLayer, engine de
+  reprodução direta com ExoPlayer, dispatcher de relay, resolvedor de estratégia seguindo o
+  algoritmo documentado, UI em Compose para o Modo Jogo e configuração de primeira execução,
+  ligação via Hilt.
 
-Scaffold / TODO (explicitly out of scope per task, left as clear seams):
-- `GameModeViewModel.onCategoryTapped` picks a placeholder `"${category.id}_default"` audioId
-  instead of a real "pick next clip in category" use case (favorites rotation, most-recent,
-  etc.) — that logic belongs in a `domain` use case backed by `AudioClipDao`, same shape as
-  the mobile app's equivalent, and was left as a one-line seam to avoid inventing catalog
-  business rules not specified in the architecture docs.
-- LE Audio (Bluetooth 5.2+) capability detection in `PlaybackStrategyResolver` is stubbed to
-  `false` — requires `BluetoothLeAudioCodecConfig` (API 33+) and device-specific handling not
-  detailed in `docs/DEVICE_DETECTION.md`.
-- Launcher icon is a placeholder vector; final TogPlay brand mark to be supplied by design.
-- No tiles/complications (not requested).
+Esqueleto / TODO (explicitamente fora de escopo para esta tarefa, deixado como pontos claros de extensão):
+- `GameModeViewModel.onCategoryTapped` escolhe um audioId provisório `"${category.id}_default"`
+  em vez de um caso de uso real de "escolher o próximo clipe da categoria" (rotação de favoritos,
+  mais recente, etc.) — essa lógica pertence a um caso de uso de `domain` apoiado em
+  `AudioClipDao`, no mesmo formato do equivalente no app mobile, e foi deixada como um ponto de
+  extensão de uma linha para evitar inventar regras de negócio de catálogo não especificadas nos
+  documentos de arquitetura.
+- A detecção de capacidade LE Audio (Bluetooth 5.2+) em `PlaybackStrategyResolver` está fixada
+  em `false` — requer `BluetoothLeAudioCodecConfig` (API 33+) e tratamento específico por
+  dispositivo não detalhado em `docs/DEVICE_DETECTION.md`.
+- O ícone do launcher é um vetor provisório; a marca final da TogPlay será fornecida pelo design.
+- Sem tiles/complications (não solicitado).
 
 ## Build
 
-This is a standard Gradle multi-module Android/Wear OS project (`settings.gradle.kts` +
-root/app `build.gradle.kts`). It cannot be built in this text-only environment; open with
-Android Studio (Hedgehog+) with a Wear OS 3+ emulator/device target.
+Este é um projeto Gradle multi-módulo padrão para Android/Wear OS (`settings.gradle.kts` +
+`build.gradle.kts` na raiz/app). Não pode ser compilado neste ambiente somente-texto; abra com
+o Android Studio (Hedgehog ou superior) com um emulador/dispositivo alvo Wear OS 3+.

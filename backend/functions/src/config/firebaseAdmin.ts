@@ -4,9 +4,10 @@ import { getAuth, Auth } from "firebase-admin/auth";
 import { getStorage, Storage } from "firebase-admin/storage";
 import { getMessaging, Messaging } from "firebase-admin/messaging";
 
-// Single Admin SDK app instance shared by every function in this codebase.
-// Cloud Functions may cold-start multiple module instances, so guard against
-// re-initializing when `getApps()` already has one (common in emulator + test runs).
+// Instância única do app Admin SDK compartilhada por todas as functions deste codebase.
+// Cloud Functions pode fazer cold-start de múltiplas instâncias do módulo, então
+// protegemos contra reinicialização quando `getApps()` já retorna uma (comum em
+// execuções de emulador + testes).
 export const app: App = getApps().length > 0 ? getApps()[0] : initializeApp();
 
 export const db: Firestore = getFirestore(app);
@@ -14,7 +15,7 @@ export const auth: Auth = getAuth(app);
 export const storage: Storage = getStorage(app);
 export const messaging: Messaging = getMessaging(app);
 
-// Firestore ignores `undefined` fields by default in the Admin SDK, but we set
-// this explicitly so partial-update helpers (e.g. `{...patch}`) never crash
-// when an optional field is omitted.
+// O Firestore ignora campos `undefined` por padrão no Admin SDK, mas definimos
+// isso explicitamente para que os helpers de atualização parcial (ex.: `{...patch}`)
+// nunca quebrem quando um campo opcional for omitido.
 db.settings({ ignoreUndefinedProperties: true });

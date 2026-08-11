@@ -4,9 +4,10 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 
 /**
- * Small local Room DB holding the starter pack (bundled at install time) plus whatever
- * subset of the full catalog has been synced down from the phone. This is intentionally
- * NOT a mirror of the entire Firestore `audios` collection — watch storage is limited.
+ * Pequeno banco Room local contendo o pacote inicial (empacotado no momento da instalação)
+ * mais qualquer subconjunto do catálogo completo que tenha sido sincronizado a partir do
+ * celular. Isso NÃO é, propositalmente, um espelho de toda a coleção `audios` do Firestore —
+ * o armazenamento do relógio é limitado.
  */
 @Database(entities = [AudioClipEntity::class], version = 1, exportSchema = false)
 abstract class VaiMarciaDatabase : RoomDatabase() {

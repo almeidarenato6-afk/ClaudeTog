@@ -33,11 +33,12 @@ const recordAnalyticsEventSchema = z.object({
 });
 
 /**
- * Batched analytics ingestion. Clients queue events locally (offline-first)
- * and flush them here periodically, so this accepts an array rather than one
- * event per call. Firestore write here is the interim store; per
- * ARCHITECTURE.md §11 this should eventually stream through Pub/Sub into
- * BigQuery for high-volume export — not implemented yet.
+ * Ingestão de analytics em lote. Os clientes enfileiram eventos localmente
+ * (offline-first) e os enviam para cá periodicamente, por isso aceita um
+ * array em vez de um evento por chamada. A escrita no Firestore aqui é o
+ * armazenamento provisório; conforme ARCHITECTURE.md §11 isso deveria
+ * eventualmente fluir via Pub/Sub para o BigQuery para exportação de alto
+ * volume — ainda não implementado.
  */
 export const recordAnalyticsEvent = onCall({ region: REGION }, async (request) => {
   const uid = request.auth?.uid ?? null;

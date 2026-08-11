@@ -1,6 +1,6 @@
 import Foundation
 
-/// The five "Modo Jogo" categories — fixed set for the glanceable big-button grid.
+/// As cinco categorias do "Modo Jogo" — conjunto fixo para a grade de botões grandes de leitura rápida.
 enum Category: String, CaseIterable, Identifiable, Codable {
     case energia
     case bora

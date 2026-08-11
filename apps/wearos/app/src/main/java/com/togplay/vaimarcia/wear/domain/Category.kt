@@ -1,6 +1,6 @@
 package com.togplay.vaimarcia.wear.domain
 
-/** The five "Modo Jogo" categories — fixed set for the glanceable big-button grid. */
+/** As cinco categorias do "Modo Jogo" — conjunto fixo para a grade de botões grandes de leitura rápida. */
 enum class Category(val id: String, val emoji: String) {
     ENERGIA("energia", "🔥"),
     BORA("bora", "💪"),

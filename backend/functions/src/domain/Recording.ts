@@ -1,21 +1,21 @@
 import { Timestamp } from "firebase-admin/firestore";
 
 /**
- * Mirrors the client-side `AudioProcessingPipeline` stages described in
- * docs/ARCHITECTURE.md §8. Only `uploaded`/`ready`/`failed` are meaningful
- * today (a single `PassthroughStage`); `processing` is reserved for when a
- * future pipeline (noise reduction, voice enhancement, auto-categorization)
- * actually runs server-side. Not implemented yet — extension point only.
+ * Espelha os estágios do `AudioProcessingPipeline` do lado do cliente descritos
+ * em docs/ARCHITECTURE.md §8. Hoje só `uploaded`/`ready`/`failed` têm sentido
+ * (um único `PassthroughStage`); `processing` fica reservado para quando um
+ * futuro pipeline (redução de ruído, realce de voz, auto-categorização)
+ * realmente rodar no servidor. Ainda não implementado — apenas um ponto de extensão.
  */
 export type RecordingStatus = "uploaded" | "processing" | "ready" | "failed";
 
 /**
  * Firestore: `users/{uid}/recordings/{recordingId}`
- * Private by default — owner-only read/write (see firestore.rules).
+ * Privado por padrão — leitura/escrita restrita ao dono (veja firestore.rules).
  */
 export interface Recording {
   id: string;
-  storagePath: string; // users/{uid}/recordings/{fileName} in Cloud Storage
+  storagePath: string; // users/{uid}/recordings/{fileName} no Cloud Storage
   durationMs: number;
   status: RecordingStatus;
   createdAt: Timestamp;

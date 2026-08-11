@@ -21,10 +21,11 @@ function yesterdayUtcRange(): { date: string; start: Timestamp; end: Timestamp }
 }
 
 /**
- * Runs once a day and rolls the previous UTC day's `analytics_events` into a
- * single `analytics_daily/{date}` doc for cheap admin-panel reads. At current
- * scale a plain Firestore scan is fine; see ARCHITECTURE.md §11 for the
- * planned Pub/Sub → BigQuery path once event volume outgrows this.
+ * Executa uma vez por dia e consolida os `analytics_events` do dia UTC
+ * anterior em um único doc `analytics_daily/{date}` para leituras baratas no
+ * painel admin. Na escala atual, um scan simples do Firestore é suficiente;
+ * veja ARCHITECTURE.md §11 para o caminho planejado Pub/Sub → BigQuery quando
+ * o volume de eventos ultrapassar isso.
  */
 export const aggregateDailyAnalytics = onSchedule(
   { region: REGION, schedule: "every day 03:00", timeZone: "America/Sao_Paulo" },
@@ -101,8 +102,8 @@ export const aggregateDailyAnalytics = onSchedule(
 
     await analyticsRepository.saveDailyRollup(rollup);
 
-    // Sync denormalized AudioClip.playCount so catalog reads (e.g. "most
-    // played") don't need a join against analytics_daily.
+    // Sincroniza o AudioClip.playCount desnormalizado para que leituras do
+    // catálogo (ex.: "mais tocados") não precisem de um join com analytics_daily.
     await Promise.all(
       Object.entries(playsByAudio).map(([audioId, count]) =>
         audioRepository.incrementPlayCount(audioId, count)

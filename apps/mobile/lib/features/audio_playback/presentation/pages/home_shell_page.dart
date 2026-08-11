@@ -13,9 +13,10 @@ import 'package:vai_marcia/features/favorites/presentation/widgets/favorites_lis
 import 'package:vai_marcia/features/store/presentation/widgets/store_banner.dart';
 import 'package:vai_marcia/features/watch_companion/presentation/providers/watch_companion_providers.dart';
 
-/// Top-level scaffold: category chips + big button grid on the Home tab,
-/// Favorites on the second tab, bottom nav, persistent store banner, plus
-/// the always-on watch-command relay subscription (Cenário B).
+/// Scaffold de nível superior: chips de categoria + grade de botões
+/// grandes na aba Home, Favoritos na segunda aba, navegação inferior,
+/// banner persistente da loja, além da assinatura sempre ativa do relay
+/// de comandos do relógio (Cenário B).
 class HomeShellPage extends ConsumerStatefulWidget {
   const HomeShellPage({super.key});
 

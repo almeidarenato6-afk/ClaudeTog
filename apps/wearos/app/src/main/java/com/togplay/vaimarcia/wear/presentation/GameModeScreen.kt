@@ -19,8 +19,9 @@ import androidx.wear.compose.material.Text
 import com.togplay.vaimarcia.wear.domain.Category
 
 /**
- * "Modo Jogo" — a handful of huge, glanceable buttons. One tap starts playback immediately;
- * no confirmation dialogs, no nested navigation, minimal chrome so it stays usable mid-match.
+ * "Modo Jogo" — um punhado de botões enormes e de leitura rápida. Um toque inicia a reprodução
+ * imediatamente; sem diálogos de confirmação, sem navegação aninhada, chrome mínimo para
+ * continuar utilizável no meio de uma partida.
  */
 @Composable
 fun GameModeScreen(viewModel: GameModeViewModel = hiltViewModel()) {

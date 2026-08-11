@@ -1,9 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:vai_marcia/features/device_pairing/domain/entities/audio_codec.dart';
 
-/// Mirrors the model documented in docs/DEVICE_DETECTION.md — kept as a
-/// pure Dart entity (no Flutter/Firebase import) so the decision algorithm
-/// in [DecidePlaybackStrategyUseCase] is trivially unit-testable.
+/// Espelha o modelo documentado em docs/DEVICE_DETECTION.md — mantido
+/// como uma entidade Dart pura (sem import de Flutter/Firebase) para que
+/// o algoritmo de decisão em [DecidePlaybackStrategyUseCase] seja
+/// trivialmente testável unitariamente.
 class DeviceCapabilityProfile extends Equatable {
   const DeviceCapabilityProfile({
     required this.manufacturer,
@@ -45,18 +46,18 @@ class DeviceCapabilityProfile extends Equatable {
   final String osFamily;
   final String osVersion;
 
-  /// A2DP source capability.
+  /// Capacidade de fonte A2DP.
   final bool hasBluetoothClassicAudio;
 
   /// LE Audio (Bluetooth 5.2+).
   final bool hasBleAudioSupport;
   final Set<AudioCodec> supportedCodecs;
 
-  /// Whether the OS/API allows playing an arbitrary local audio file.
+  /// Se o SO/API permite reproduzir um arquivo de áudio local arbitrário.
   final bool canPlayArbitraryLocalAudio;
 
-  /// Whether Data Layer / WatchConnectivity is available for lightweight
-  /// commands.
+  /// Se Data Layer / WatchConnectivity está disponível para comandos
+  /// leves.
   final bool hasPersistentCompanionChannel;
   final int estimatedLatencyMs;
 

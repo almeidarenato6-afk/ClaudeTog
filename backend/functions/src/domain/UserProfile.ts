@@ -4,12 +4,13 @@ export type AuthProvider = "google" | "apple" | "email" | "anonymous";
 
 /**
  * Firestore: `users/{uid}`
- * Owner-only read/write (see firestore.rules).
+ * Leitura/escrita restrita ao dono (veja firestore.rules).
  *
- * Deliberately does NOT carry an admin-panel `role` field. Roles live only as
- * Firebase Auth custom claims (`request.auth.token.role`), set exclusively by
- * Cloud Functions with the Admin SDK — mirroring role into a client-writable
- * document would open a trivial privilege-escalation path.
+ * Deliberadamente NÃO carrega um campo `role` de painel admin. Os papéis vivem
+ * apenas como custom claims do Firebase Auth (`request.auth.token.role`),
+ * definidas exclusivamente por Cloud Functions com o Admin SDK — espelhar o
+ * papel em um documento gravável pelo cliente abriria um caminho trivial de
+ * escalonamento de privilégio.
  */
 export interface UserProfile {
   uid: string;
@@ -26,6 +27,6 @@ export type UserProfileUpdateInput = Partial<
   Pick<UserProfile, "displayName" | "photoURL">
 >;
 
-/** Roles are custom claims only — see comment above. Kept here as the single source of truth for valid values. */
+/** Papéis são apenas custom claims — veja o comentário acima. Mantido aqui como a fonte única da verdade para os valores válidos. */
 export type Role = "admin" | "content_manager" | "viewer";
 export const ROLES: readonly Role[] = ["admin", "content_manager", "viewer"];

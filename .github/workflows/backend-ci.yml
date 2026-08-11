@@ -24,7 +24,7 @@ jobs:
       - run: npm ci
       - run: npm run lint --if-present
       - run: npm run build
-      - name: Test against Firebase emulators
+      - name: Testar contra emuladores do Firebase
         run: npm run test --if-present
 
   rules-check:

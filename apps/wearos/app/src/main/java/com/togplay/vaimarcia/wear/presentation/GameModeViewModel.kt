@@ -30,13 +30,14 @@ class GameModeViewModel @Inject constructor(
         viewModelScope.launch { playbackController.refreshStrategy() }
     }
 
-    /** One tap = one clip from the given category's default/next audioId. */
+    /** Um toque = um clipe a partir do audioId padrão/próximo da categoria informada. */
     fun onCategoryTapped(category: Category) {
         viewModelScope.launch {
-            // The catalog resolution of "which audioId within this category plays now"
-            // (round-robin/random/most-recent-favorite) lives in a use case backed by
-            // AudioClipDao; omitted here to keep this scaffold focused on the playback
-            // routing contract, wired the same way the mobile app's use case is.
+            // A resolução de catálogo de "qual audioId dentro desta categoria toca agora"
+            // (rodízio/aleatório/favorito mais recente) fica em um caso de uso apoiado em
+            // AudioClipDao; omitido aqui para manter este esqueleto focado no contrato de
+            // roteamento de reprodução, conectado da mesma forma que o caso de uso
+            // equivalente do app mobile.
             val audioId = "${category.id}_default"
             when (val result = playbackController.play(audioId)) {
                 is PlaybackResult.Started -> _uiState.value = GameModeUiState(lastTapFeedback = null)

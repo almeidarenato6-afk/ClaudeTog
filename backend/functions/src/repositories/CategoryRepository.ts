@@ -39,7 +39,7 @@ export class CategoryRepository {
     await this.col.doc(id).update({ ...patch, updatedAt: Timestamp.now() });
   }
 
-  /** Soft delete — catalog content is never hard-deleted. */
+  /** Soft delete — conteúdo do catálogo nunca é excluído de forma definitiva. */
   async deactivate(id: string): Promise<void> {
     await this.update(id, { isActive: false });
   }

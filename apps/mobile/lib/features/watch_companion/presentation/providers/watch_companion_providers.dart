@@ -8,11 +8,12 @@ final Provider<WatchCompanionChannel> watchCompanionChannelProvider = Provider<W
   (Ref ref) => getIt<WatchCompanionChannel>(),
 );
 
-/// Subscribes to the watch's command stream for the lifetime of the
-/// provider and forwards `playAudio` commands straight to
-/// [PlaybackController] — this is the entire Cenário B relay path on the
-/// phone side. Kept alive from app boot (see main.dart) so the channel
-/// itself stays "warm", per ARCHITECTURE.md §4.
+/// Inscreve-se no stream de comandos do smartwatch pela vida útil do
+/// provider e repassa comandos `playAudio` diretamente para
+/// [PlaybackController] — este é todo o caminho de relay do Cenário B no
+/// lado do telefone. Mantido vivo desde a inicialização do app (veja
+/// main.dart) para que o canal em si permaneça "aquecido", conforme
+/// ARCHITECTURE.md §4.
 final Provider<void> watchCommandRelayProvider = Provider<void>(
   (Ref ref) {
     final WatchCompanionChannel channel = ref.watch(watchCompanionChannelProvider);

@@ -1,8 +1,9 @@
-// Shared domain types mirrored from the backend's Firestore schema /
-// Cloud Functions contract (see docs/ARCHITECTURE.md §6, §10). These are
-// hand-typed against the *plausible* contract described for the backend
-// agent's work-in-progress — reconcile against DATABASE_SCHEMA.md /
-// API_DESIGN.md once those land, and adjust field names if they drift.
+// Tipos de domínio compartilhados espelhando o schema do Firestore /
+// contrato de Cloud Functions do backend (ver docs/ARCHITECTURE.md §6, §10).
+// Foram tipados manualmente contra o contrato *plausível* descrito para o
+// trabalho em andamento do time de backend — reconciliar com
+// DATABASE_SCHEMA.md / API_DESIGN.md quando existirem, e ajustar os nomes
+// dos campos se houver divergência.
 
 export type StaffRole = "admin" | "content_manager" | "viewer";
 
@@ -10,7 +11,7 @@ export interface StaffClaims {
   role: StaffRole;
 }
 
-/** Product spec categories — "Personalizados" covers user-recorded audios. */
+/** Categorias definidas na especificação do produto — "Personalizados" cobre áudios gravados pelo usuário. */
 export type AudioCategoryId =
   | "motivacao"
   | "recuperacao"
@@ -27,8 +28,8 @@ export interface Category {
   id: string;
   name: string;
   slug: AudioCategoryId | string;
-  icon: string; // icon name/emoji reference rendered by clients
-  color: string; // hex, used for chips/badges across clients
+  icon: string; // nome do ícone/referência de emoji renderizado pelos clients
+  color: string; // hex, usado para chips/badges em todos os clients
   order: number;
   active: boolean;
   createdAt: string; // ISO 8601
@@ -62,7 +63,7 @@ export interface CreateAudioInput {
   phraseText: string;
   categoryId: string;
   active: boolean;
-  /** Storage path of the already-uploaded file, e.g. `audios/raw/<uuid>.m4a`. */
+  /** Storage path do arquivo já enviado, ex.: `audios/raw/<uuid>.m4a`. */
   storagePath: string;
 }
 

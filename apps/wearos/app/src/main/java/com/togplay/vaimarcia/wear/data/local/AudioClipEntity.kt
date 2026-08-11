@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.togplay.vaimarcia.wear.domain.AudioClip
 
-/** Room row for the local subset of the catalog synced from the phone (starter pack + deltas). */
+/** Linha do Room para o subconjunto local do catálogo sincronizado a partir do celular (pacote inicial + deltas). */
 @Entity(tableName = "audio_clips")
 data class AudioClipEntity(
     @PrimaryKey val id: String,

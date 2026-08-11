@@ -1,7 +1,7 @@
 import 'package:vai_marcia/features/device_pairing/domain/entities/device_capability_profile.dart';
 import 'package:vai_marcia/features/device_pairing/domain/entities/playback_strategy.dart';
 
-/// Pure decision function transcribed 1:1 from docs/DEVICE_DETECTION.md
+/// Função de decisão pura transcrita 1:1 de docs/DEVICE_DETECTION.md
 /// §"Decisão de estratégia":
 ///
 /// ```
@@ -15,8 +15,9 @@ import 'package:vai_marcia/features/device_pairing/domain/entities/playback_stra
 ///     senao: PHONE_ONLY
 /// ```
 ///
-/// Kept as a standalone use case (no I/O, no async) so the branch table is
-/// exhaustively unit-testable without mocking any repository.
+/// Mantida como um use case independente (sem I/O, sem async) para que a
+/// tabela de ramos seja testável unitariamente de forma exaustiva sem
+/// mockar nenhum repositório.
 class DecidePlaybackStrategyUseCase {
   const DecidePlaybackStrategyUseCase();
 

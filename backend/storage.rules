@@ -1,6 +1,6 @@
 rules_version = '2';
 
-// Vai Márcia (TogPlay) — Cloud Storage security rules.
+// Vai Márcia (TogPlay) — regras de segurança do Cloud Storage.
 service firebase.storage {
   match /b/{bucket}/o {
 
@@ -33,33 +33,33 @@ service firebase.storage {
     }
 
     // -----------------------------------------------------------------
-    // Catalog audio (masters + per-platform compressed variants).
-    // Public read (served straight to app/watch clients), admin/
-    // content_manager write only. 20 MB cap comfortably covers a
-    // compressed short voice clip while blocking abuse.
+    // Áudio do catálogo (masters + variantes comprimidas por plataforma).
+    // Leitura pública (servida direto para os clientes app/watch), escrita
+    // apenas para admin/content_manager. O limite de 20 MB cobre
+    // confortavelmente um clipe de voz curto comprimido enquanto bloqueia abuso.
     // -----------------------------------------------------------------
     match /catalog/audios/{audioId}/{fileName} {
       allow read: if true;
       allow write: if isContentManager() && isAudioFile() && underSize(20 * 1024 * 1024);
     }
 
-    // Category icons / promotion images / any other catalog artwork.
+    // Ícones de categoria / imagens de promoção / qualquer outra arte do catálogo.
     match /catalog/images/{allPaths=**} {
       allow read: if true;
       allow write: if isContentManager() && isImageFile() && underSize(5 * 1024 * 1024);
     }
 
     // -----------------------------------------------------------------
-    // User-generated recordings — private by default, owner-only.
-    // 25 MB cap allows a generous raw recording before future
-    // AI processing (see domain/Recording.ts) compresses it down.
+    // Gravações geradas pelo usuário — privadas por padrão, apenas do dono.
+    // O limite de 25 MB permite uma gravação bruta generosa antes que um
+    // futuro processamento com IA (veja domain/Recording.ts) a comprima.
     // -----------------------------------------------------------------
     match /users/{uid}/recordings/{fileName} {
       allow read, delete: if isOwner(uid);
       allow write: if isOwner(uid) && isAudioFile() && underSize(25 * 1024 * 1024);
     }
 
-    // Deny everything else by default.
+    // Nega tudo mais por padrão.
     match /{allPaths=**} {
       allow read, write: if false;
     }

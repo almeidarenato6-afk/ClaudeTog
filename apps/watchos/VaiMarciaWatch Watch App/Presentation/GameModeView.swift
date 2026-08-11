@@ -1,7 +1,8 @@
 import SwiftUI
 
-/// "Modo Jogo" — a handful of huge, glanceable buttons. One tap starts playback immediately;
-/// no confirmation dialogs, no nested navigation, minimal chrome so it stays usable mid-match.
+/// "Modo Jogo" — um punhado de botões enormes e de leitura rápida. Um toque inicia a reprodução
+/// imediatamente; sem diálogos de confirmação, sem navegação aninhada, chrome mínimo para
+/// continuar utilizável no meio de uma partida.
 struct GameModeView: View {
     @ObservedObject private var playbackController = PlaybackController.shared
     @State private var lastTapFeedback: String?
@@ -27,10 +28,11 @@ struct GameModeView: View {
     }
 
     private func onCategoryTapped(_ category: Category) {
-        // The catalog resolution of "which audioId within this category plays now"
-        // (round-robin/random/most-recent-favorite) lives in a use case backed by
-        // CatalogStore; omitted here to keep this scaffold focused on the playback
-        // routing contract, wired the same way the mobile app's use case is.
+        // A resolução de catálogo de "qual audioId dentro desta categoria toca agora"
+        // (rodízio/aleatório/favorito mais recente) fica em um caso de uso apoiado em
+        // CatalogStore; omitido aqui para manter este esqueleto focado no contrato de
+        // roteamento de reprodução, conectado da mesma forma que o caso de uso
+        // equivalente do app mobile.
         let audioId = "\(category.id)_default"
         playbackController.play(audioId: audioId) { result in
             switch result {

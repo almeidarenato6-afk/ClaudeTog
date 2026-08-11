@@ -1,7 +1,7 @@
 import Foundation
 
-/// Mirrors the mobile app's `AudioClip` domain entity conceptually (see
-/// apps/mobile/lib/features/audio_playback/domain). Pure Swift — no platform SDK imports.
+/// Espelha conceitualmente a entidade de domínio `AudioClip` do app mobile (veja
+/// apps/mobile/lib/features/audio_playback/domain). Swift puro — sem imports de SDK de plataforma.
 struct AudioClip: Identifiable, Equatable, Codable {
     let id: String
     let categoryId: String

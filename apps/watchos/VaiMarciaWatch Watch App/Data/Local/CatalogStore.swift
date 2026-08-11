@@ -1,9 +1,10 @@
 import Foundation
 
-/// Lightweight file-based persistence for the local subset of the catalog (starter pack +
-/// deltas synced from the phone). Deliberately not SwiftData: this target's deployment
-/// floor is watchOS 9 (to cover Series 4+ devices still eligible for RELAY mode, not just
-/// the watchOS 10+ SwiftData baseline), so a plain JSON-backed store is used instead.
+/// Persistência leve baseada em arquivo para o subconjunto local do catálogo (pacote inicial
+/// + deltas sincronizados a partir do celular). Deliberadamente não usa SwiftData: o piso de
+/// implantação deste target é o watchOS 9 (para cobrir dispositivos Series 4+ ainda elegíveis
+/// para o modo RELAY, não apenas o piso do watchOS 10+ exigido pelo SwiftData), então um
+/// armazenamento simples baseado em JSON é usado em vez disso.
 actor CatalogStore {
     static let shared = CatalogStore()
 

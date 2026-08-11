@@ -4,20 +4,23 @@ import 'package:vai_marcia/features/device_pairing/domain/entities/paired_speake
 import 'package:vai_marcia/features/device_pairing/domain/entities/playback_strategy.dart';
 
 abstract interface class DevicePairingRepository {
-  /// Step 1 (DEVICE_DETECTION.md): discovers a paired, compatible watch and
-  /// returns its capability profile (via [GET_CAPABILITIES] probe), or
-  /// `null` when none is paired/compatible.
+  /// Passo 1 (DEVICE_DETECTION.md): descobre um relógio pareado e
+  /// compatível e retorna seu perfil de capacidade (via sondagem
+  /// [GET_CAPABILITIES]), ou `null` quando nenhum está
+  /// pareado/compatível.
   Future<Result<DeviceCapabilityProfile?>> discoverPairedWatch();
 
-  /// Step 4: lists Bluetooth-paired speakers with an active A2DP profile.
+  /// Passo 4: lista caixas de som pareadas via Bluetooth com um perfil
+  /// A2DP ativo.
   Future<Result<List<PairedSpeaker>>> discoverPairedSpeakers();
 
-  /// Persists the decided strategy locally and mirrors it to
-  /// `users/{uid}/devices/{deviceId}` for analytics/support (Step 5).
+  /// Persiste a estratégia decidida localmente e a espelha em
+  /// `users/{uid}/devices/{deviceId}` para analytics/suporte (Passo 5).
   Future<Result<void>> persistStrategy(PlaybackStrategy strategy);
 
   Future<Result<PlaybackStrategy?>> loadPersistedStrategy();
 
-  /// Opens system Bluetooth settings via deep link, per the setup wizard.
+  /// Abre os ajustes de Bluetooth do sistema via deep link, conforme o
+  /// assistente de configuração.
   Future<Result<void>> openSystemBluetoothSettings();
 }

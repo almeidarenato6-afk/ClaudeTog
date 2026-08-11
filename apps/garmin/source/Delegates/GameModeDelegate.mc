@@ -1,10 +1,10 @@
 import Toybox.WatchUi;
 import Toybox.Lang;
 
-// Handles one-action-per-press selection from GameModeView's Menu2 and dispatches the
-// RELAY play command. Garmin apps operate in RELAY mode by default (see
-// resources/garmin_capability_table.json and ../../README.md) — there is no DirectPlaybackEngine
-// equivalent in this app.
+// Trata a seleção de uma-ação-por-toque do Menu2 do GameModeView e despacha o comando
+// de reprodução RELAY. Os apps Garmin operam em modo RELAY por padrão (veja
+// resources/garmin_capability_table.json e ../../README.md) — não existe um equivalente a
+// DirectPlaybackEngine neste app.
 class GameModeDelegate extends WatchUi.Menu2InputDelegate {
     private var _view as GameModeView;
     private var _channel as CompanionChannel;
@@ -17,9 +17,10 @@ class GameModeDelegate extends WatchUi.Menu2InputDelegate {
 
     function onSelect(item as WatchUi.MenuItem) as Void {
         var categoryId = item.getId() as String;
-        // The catalog resolution of "which audioId within this category plays now" lives
-        // on the phone side once RELAY delivers the categoryId-derived audioId; this
-        // scaffold sends a placeholder default id, same seam as the Wear OS/watchOS apps.
+        // A resolução no catálogo de "qual audioId dentro desta categoria toca agora" fica
+        // do lado do celular assim que o RELAY entrega o audioId derivado da categoryId;
+        // este esqueleto envia um id padrão provisório, mesmo ponto de extensão dos apps
+        // Wear OS/watchOS.
         var audioId = categoryId + "_default";
 
         WatchUi.pushView(new PlaybackStatusView("Enviando…"), null, WatchUi.SLIDE_IMMEDIATE);

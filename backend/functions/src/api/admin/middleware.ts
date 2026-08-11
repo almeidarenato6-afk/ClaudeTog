@@ -2,9 +2,10 @@ import { CallableRequest, HttpsError } from "firebase-functions/v2/https";
 import { Role } from "../../domain/UserProfile";
 
 /**
- * Throws if the caller isn't authenticated or doesn't carry one of `allowedRoles`
- * as their `role` custom claim. Call this first thing in every admin-panel
- * callable — mutating admin endpoints must never rely on client-side checks.
+ * Lança um erro se quem chamou não estiver autenticado ou não carregar um dos
+ * `allowedRoles` como sua custom claim `role`. Chame isso como a primeira coisa
+ * em todo callable de painel admin — endpoints admin que fazem mutação nunca
+ * devem confiar em checagens do lado do cliente.
  */
 export function requireRole(request: CallableRequest, allowedRoles: Role[]): string {
   const uid = request.auth?.uid;
@@ -21,12 +22,12 @@ export function requireRole(request: CallableRequest, allowedRoles: Role[]): str
   return uid;
 }
 
-/** Shorthand for the common "must be able to mutate content" check. */
+/** Atalho para a checagem comum de "precisa poder alterar conteúdo". */
 export function requireContentManager(request: CallableRequest): string {
   return requireRole(request, ["admin", "content_manager"]);
 }
 
-/** Shorthand for admin-only mutations (roles, notifications, promotions). */
+/** Atalho para mutações restritas a admin (papéis, notificações, promoções). */
 export function requireAdmin(request: CallableRequest): string {
   return requireRole(request, ["admin"]);
 }

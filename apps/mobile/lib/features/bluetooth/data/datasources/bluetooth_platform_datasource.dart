@@ -5,12 +5,12 @@ import 'package:injectable/injectable.dart';
 import 'package:vai_marcia/core/constants/app_constants.dart';
 import 'package:vai_marcia/features/bluetooth/domain/entities/bluetooth_connection_state.dart';
 
-/// Thin method/event-channel wrapper. Every method here has a real,
-/// documented native counterpart to implement — see
-/// android/app/src/main/kotlin/.../BluetoothTransportPlugin.kt (TODO
-/// stub) and ios/Runner/BluetoothTransportPlugin.swift (TODO stub).
-/// Until the native side lands, calls throw [MissingPluginException],
-/// which callers treat as "no data available" rather than crashing.
+/// Wrapper fino de method/event-channel. Cada método aqui tem uma
+/// contraparte nativa real e documentada a implementar — veja
+/// android/app/src/main/kotlin/.../BluetoothTransportPlugin.kt (stub
+/// TODO) e ios/Runner/BluetoothTransportPlugin.swift (stub TODO). Até que
+/// o lado nativo chegue, as chamadas lançam [MissingPluginException], que
+/// os chamadores tratam como "nenhum dado disponível" em vez de quebrar.
 @lazySingleton
 class BluetoothPlatformDataSource {
   BluetoothPlatformDataSource()
@@ -43,7 +43,8 @@ class BluetoothPlatformDataSource {
     try {
       await _methodChannel.invokeMethod<void>('keepRouteWarm', <String, String>{'deviceId': deviceId});
     } on MissingPluginException {
-      // Native A2DP route-keepalive not yet implemented — see class doc.
+      // Keepalive de rota A2DP nativa ainda não implementado — veja a
+      // documentação da classe.
     }
   }
 
@@ -51,7 +52,8 @@ class BluetoothPlatformDataSource {
     try {
       await _methodChannel.invokeMethod<void>('openBluetoothSettings');
     } on MissingPluginException {
-      // No-op fallback; setup wizard shows manual instructions instead.
+      // Fallback no-op; o assistente de configuração mostra instruções
+      // manuais em vez disso.
     }
   }
 }

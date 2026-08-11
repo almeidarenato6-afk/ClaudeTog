@@ -2,9 +2,9 @@ import 'package:injectable/injectable.dart';
 import 'package:vai_marcia/core/error/result.dart';
 import 'package:vai_marcia/features/audio_playback/domain/repositories/audio_repository.dart';
 
-/// Called when a category screen opens (or is predicted to open next) so
-/// every clip in it is already file-cached and pool-warmed by the time the
-/// user's finger reaches a button.
+/// Chamado quando a tela de uma categoria abre (ou é prevista para abrir
+/// em seguida), para que cada clipe nela já esteja em cache de arquivo e
+/// aquecido no pool quando o dedo do usuário alcançar um botão.
 @injectable
 class PreloadCategoryUseCase {
   const PreloadCategoryUseCase(this._repository);

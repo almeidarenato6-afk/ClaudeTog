@@ -18,10 +18,12 @@ class CapabilityProbeOutcome {
   final PlaybackStrategy strategy;
 }
 
-/// Orchestrates DEVICE_DETECTION.md steps 1-5: discover watch, decide
-/// strategy, discover speaker, persist. Runs at app boot, on Bluetooth
-/// pair/unpair system events, and on watch-pairing change — never
-/// synchronously in the tap-to-play path (ARCHITECTURE.md §4).
+/// Orquestra os passos 1-5 de DEVICE_DETECTION.md: descobrir o
+/// smartwatch, decidir a estratégia, descobrir a caixa de som, persistir.
+/// Executa na inicialização do app, em eventos de sistema de
+/// pareamento/despareamento de Bluetooth, e em mudanças de pareamento do
+/// smartwatch — nunca de forma síncrona no caminho de tap-to-play
+/// (ARCHITECTURE.md §4).
 @lazySingleton
 class RunCapabilityProbeUseCase {
   const RunCapabilityProbeUseCase(

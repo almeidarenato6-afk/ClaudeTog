@@ -2,23 +2,23 @@ import { Timestamp } from "firebase-admin/firestore";
 
 export type ClientPlatform = "ios" | "android" | "wearos" | "watchos" | "garmin";
 
-/** Mirrors the on-device `PlaybackStrategy` from docs/DEVICE_DETECTION.md. */
+/** Espelha o `PlaybackStrategy` do dispositivo definido em docs/DEVICE_DETECTION.md. */
 export type PlaybackStrategy = "DIRECT" | "RELAY" | "PHONE_ONLY";
 
 /**
  * Firestore: `users/{uid}/devices/{deviceId}`
- * Owner-only read; write only via the `registerDevice` callable (Admin SDK),
- * never directly from the client — keeps capability-probe data trustworthy
- * for analytics segmentation (watch model, bluetooth speaker brand, etc.).
+ * Leitura restrita ao dono; escrita apenas via o callable `registerDevice` (Admin SDK),
+ * nunca diretamente do cliente — isso mantém os dados de probe de capacidade confiáveis
+ * para a segmentação de analytics (modelo do watch, marca da caixa de som bluetooth, etc.).
  */
 export interface DeviceCapabilityProfile {
-  deviceId: string; // client-generated stable installation/device id
+  deviceId: string; // id de instalação/dispositivo estável gerado pelo cliente
   platform: ClientPlatform;
-  watchModel?: string; // e.g. "Galaxy Watch6", "Apple Watch Series 9"
-  phoneModel?: string; // e.g. "Pixel 8", "iPhone 15"
-  bluetoothSpeakerBrand?: string; // best-effort, only known when a speaker is paired
+  watchModel?: string; // ex.: "Galaxy Watch6", "Apple Watch Series 9"
+  phoneModel?: string; // ex.: "Pixel 8", "iPhone 15"
+  bluetoothSpeakerBrand?: string; // melhor esforço, só conhecido quando uma caixa de som está pareada
   playbackStrategy: PlaybackStrategy;
-  fcmToken?: string; // push token for this installation
+  fcmToken?: string; // token de push desta instalação
   appVersion: string;
   osVersion: string;
   createdAt: Timestamp;

@@ -1,8 +1,9 @@
 import Toybox.Lang;
 
-// Mirrors the mobile app's `AudioClip` domain entity conceptually (see
-// apps/mobile/lib/features/audio_playback/domain). Monkey C has no formal access
-// modifiers for immutability, so fields are treated as read-only by convention.
+// Espelha conceitualmente a entidade de domínio `AudioClip` do app mobile (veja
+// apps/mobile/lib/features/audio_playback/domain). Monkey C não tem modificadores formais
+// de acesso para imutabilidade, então os campos são tratados como somente leitura por
+// convenção.
 class AudioClip {
     var id as String;
     var categoryId as String;
@@ -17,7 +18,7 @@ class AudioClip {
     }
 }
 
-// The five "Modo Jogo" categories — fixed set for the button-grid-equivalent UI.
+// As cinco categorias do "Modo Jogo" — conjunto fixo para a UI equivalente à grade de botões.
 class Category {
     static const ENERGIA = "energia";
     static const BORA = "bora";

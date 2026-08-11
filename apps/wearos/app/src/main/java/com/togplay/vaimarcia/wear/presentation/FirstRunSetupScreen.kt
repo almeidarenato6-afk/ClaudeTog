@@ -15,9 +15,10 @@ import androidx.wear.compose.material.Text
 import com.togplay.vaimarcia.wear.domain.PlaybackStrategy
 
 /**
- * Minimal watch-side mirror of the phone's "Vamos configurar seu equipamento" wizard
- * (docs/DEVICE_DETECTION.md). The watch never asks the user anything detectable — it just
- * shows live status while the phone (source of truth for pairing) does the real work.
+ * Espelho mínimo, do lado do relógio, do assistente "Vamos configurar seu equipamento" do
+ * celular (docs/DEVICE_DETECTION.md). O relógio nunca pergunta nada perceptível ao usuário —
+ * apenas mostra o status ao vivo enquanto o celular (fonte da verdade para o pareamento) faz
+ * o trabalho de fato.
  */
 @Composable
 fun FirstRunSetupScreen(viewModel: GameModeViewModel = hiltViewModel(), onDone: () -> Unit) {

@@ -9,8 +9,8 @@
     <key>CFBundleVersion</key>
     <string>1</string>
 
-    <!-- Background audio mode: lets a clip finish playing (Scenario A, AVAudioPlayer)
-         even if the screen locks mid-tap during a match. -->
+    <!-- Modo de áudio em segundo plano: permite que um áudio termine de tocar (Cenário A, AVAudioPlayer)
+         mesmo se a tela travar no meio de um toque durante a partida. -->
     <key>UIBackgroundModes</key>
     <array>
         <string>audio</string>
@@ -20,8 +20,8 @@
         <string>audio</string>
     </array>
 
-    <!-- Recording happens on the phone, not the watch, so NSMicrophoneUsageDescription is
-         intentionally not declared here. -->
+    <!-- A gravação acontece no celular, não no relógio, então NSMicrophoneUsageDescription
+         é propositalmente não declarada aqui. -->
     <key>NSBluetoothAlwaysUsageDescription</key>
     <string>Vai Márcia usa Bluetooth para tocar áudios direto na sua caixa de som ou avisar seu celular.</string>
 

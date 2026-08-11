@@ -1,16 +1,18 @@
-// PLACEHOLDER — NOT REAL FIREBASE CONFIGURATION.
+// PLACEHOLDER — NÃO É CONFIGURAÇÃO REAL DO FIREBASE.
 //
-// This file must be regenerated with the FlutterFire CLI before any build
-// that talks to a real Firebase project:
+// Este arquivo precisa ser regenerado com o FlutterFire CLI antes de
+// qualquer build que se comunique com um projeto Firebase real:
 //
 //   dart pub global activate flutterfire_cli
 //   flutterfire configure --project=<your-firebase-project-id>
 //
-// That command overwrites this file with real per-platform API keys/app
-// IDs pulled from the Firebase console. The placeholder values below are
-// intentionally invalid (`REPLACE_ME_*`) so a build using them fails
-// loudly against real Firebase services instead of silently pointing at
-// nothing, and so this file is never mistaken for production config.
+// Esse comando sobrescreve este arquivo com chaves de API/IDs de app
+// reais por plataforma, obtidos do console do Firebase. Os valores de
+// placeholder abaixo são propositalmente inválidos (`REPLACE_ME_*`) para
+// que um build que os utilize falhe ruidosamente contra serviços reais
+// do Firebase em vez de silenciosamente apontar para lugar nenhum, e
+// para que este arquivo nunca seja confundido com configuração de
+// produção.
 //
 // ignore_for_file: type=lint
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;

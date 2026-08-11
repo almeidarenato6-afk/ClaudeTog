@@ -1,8 +1,9 @@
 import 'package:vai_marcia/core/error/failure.dart';
 
-/// Lightweight `Either`-style result so the domain layer stays free of
-/// third-party functional-programming packages (dartz, fpdart) — one less
-/// dependency to reason about for a small app surface.
+/// Resultado leve no estilo `Either`, para que a camada de domínio fique
+/// livre de pacotes de terceiros de programação funcional (dartz, fpdart)
+/// — uma dependência a menos para se preocupar em uma superfície de app
+/// pequena.
 sealed class Result<T> {
   const Result();
 
