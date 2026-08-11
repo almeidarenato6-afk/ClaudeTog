@@ -1,0 +1,12 @@
+{
+  "_comment": "Templates de URL de busca por fonte. '{query}' e substituido pela string 'marca modelo [versao]' URL-encoded. Os valores default ja embutidos no codigo (src/racket_image_agent/sourcing/prospin.py e merak.py) sao usados quando a chave correspondente aqui estiver ausente ou null. CONFIRME contra o site real durante a homologacao antes de rodar em modo real - ver docs/HOMOLOGACAO_CHECKLIST.md.",
+
+  "prospin": {
+    "search_url_template": "https://www.prospin.com.br/busca?q={query}"
+  },
+
+  "merak_beach_tennis": {
+    "_comment": "URL oficial da Merak Beach Tennis ainda nao confirmada. Preencha o template de busca real (ou sitemap.xml/API) antes da primeira execucao real.",
+    "search_url_template": null
+  }
+}
